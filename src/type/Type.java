@@ -35,6 +35,16 @@ public class Type implements TypeInterface {
 		}
 		return ans;
 	}
+	
+	public String getTypeMessage(String typeName){
+		String ans=new String();
+		ans+="[begin]\r\n";
+		ans+="[type name]\r\n";
+		ans+=typeName+"\r\n";
+		ans+="[type item]\r\n";
+		ans+=this.getTypeNumber()+"\r\n";
+		return ans;
+	}
 
 	@Override
 	public String getTypeMessage() {

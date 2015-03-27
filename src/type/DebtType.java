@@ -139,13 +139,7 @@ public class DebtType extends Type implements TypeInterface {
 	}
 	@Override
 	public String getTypeMessage() {
-		String ans=new String();
-		ans+="[begin]\r\n";
-		ans+="[type name]\r\n";
-		ans+="debt type\r\n";
-		ans+="[type item]\r\n";
-		ans+=this.getTypeNumber()+"\r\n";
-		return ans;
+		return super.getTypeMessage("debt type");
 	}
 	@Override
 	public int getTypeNumber() {
