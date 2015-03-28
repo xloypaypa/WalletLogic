@@ -7,15 +7,38 @@ import java.util.Date;
 import java.util.Vector;
 
 public class UserUpdateTime extends Type {
-	String type="month";
+	String type;
 	Date nextTime;
+	
+	public UserUpdateTime(){
+		type="month";
+		Calendar c=Calendar.getInstance();
+		c.set(1917, 11, 27);
+		nextTime=c.getTime();
+	}
+	
+	public void setMonth(int day){
+		this.removeExtra("month");
+		this.removeExtra("day");
+		this.type="month";
+		this.addExtra("day", day+"");
+	}
+	
+	public void setYear(int month,int day){
+		this.removeExtra("month");
+		this.removeExtra("day");
+		this.type="year";
+		this.addExtra("month", month+"");
+		this.addExtra("day", day+"");
+		
+	}
 	
 	public boolean needUpdate(Date last){
 		if (last.after(nextTime)) return true;
 		return false;
 	}
 	
-	public void getNextTime(Date last){
+	public Date getNextTime(Date last){
 		if (type=="month"){
 			Calendar ans=Calendar.getInstance();
 			int nextDay=Integer.valueOf(this.getExtraMessage("day"));
@@ -23,6 +46,11 @@ public class UserUpdateTime extends Type {
 			try {
 				ans.setTime(sdf.parse(sdf.format(last)));
 				ans.set(Calendar.DAY_OF_MONTH, nextDay);
+				if (ans.getTime().after(last)){
+					nextTime=ans.getTime();
+					return this.nextTime;
+				}
+				
 				int month=ans.get(Calendar.MONTH)+1;
 				if (month==12){
 					ans.set(Calendar.YEAR, ans.get(Calendar.YEAR)+1);
@@ -43,12 +71,23 @@ public class UserUpdateTime extends Type {
 				ans.setTime(sdf.parse(sdf.format(last)));
 				ans.set(Calendar.DAY_OF_MONTH, nextDay);
 				ans.set(Calendar.MONTH, nextMonth-1);
+				
+				if (ans.getTime().after(last)){
+					nextTime=ans.getTime();
+					return this.nextTime;
+				}
+				
 				ans.set(Calendar.YEAR, ans.get(Calendar.YEAR)+1);
 				nextTime=ans.getTime();
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
 		}
+		return this.nextTime;
+	}
+	
+	public Date getNextTime(){
+		return this.nextTime;
 	}
 	
 	@Override

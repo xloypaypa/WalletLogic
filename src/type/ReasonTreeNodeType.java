@@ -103,13 +103,7 @@ public class ReasonTreeNodeType extends ReasonType {
 	}
 	@Override
 	public String getTypeMessage() {
-		String ans=new String();
-		ans+="[begin]\r\n";
-		ans+="[type name]\r\n";
-		ans+="reason tree node type\r\n";
-		ans+="[type item]\r\n";
-		ans+=this.getTypeNumber()+"\r\n";
-		return ans;
+		return super.getTypeMessage("reason tree node type");
 	}
 	@Override
 	public int getTypeNumber() {

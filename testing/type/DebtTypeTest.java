@@ -30,5 +30,12 @@ public class DebtTypeTest {
 		d2=new DebtType("name", 1, d1.getDeadline());
 		assertEquals(d1.getAllMessage(), d2.getAllMessage());
 	}
+	
+	@Test
+	public void testExceed(){
+		DebtType debt=new DebtType("name", 3, new Date(), "null", 2);
+		assertEquals(9, debt.getMaxRepay(),1e-3);
+		assertEquals(9, debt.getMaxRepay(),1e-3);
+	}
 
 }
