@@ -91,5 +91,10 @@ public class ReasonType extends Type implements TypeInterface {
 		}
 		super.solveTypeMessage(message);
 	}
+
+	public void update() {
+		this.expenditure=0;
+		this.income=0;
+	}
 	
 }

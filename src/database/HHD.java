@@ -261,7 +261,7 @@ public class HHD {
             deleteFile(path);
         } else {
             File[] kid = file.listFiles();
-            for (int i = 0; i < kid.length; i++) {
+            if (kid!=null) for (int i = 0; i < kid.length; i++) {
                 if (kid[i].isFile()) {
                     deleteFile(kid[i].getPath());
                 } else {

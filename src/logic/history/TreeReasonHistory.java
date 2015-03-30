@@ -10,10 +10,15 @@ import database.HHD;
 import database.ReasonDB;
 import type.DetailType;
 import type.ReasonTreeNodeType;
+import type.ReasonType;
 
 public class TreeReasonHistory extends ReasonHistory {
 	
 	public static void buildTree(){
+		for (int i=0;i<allReason.size();i++){
+			ReasonTreeNodeType now=(ReasonTreeNodeType) allReason.get(i);
+			now.clearKid();
+		}
 		for (int i=0;i<allReason.size();i++){
 			String father=((ReasonTreeNodeType) allReason.get(i)).getFather();
 			int fPos=findReasonIndex(father);
@@ -28,7 +33,7 @@ public class TreeReasonHistory extends ReasonHistory {
 		if (reason.equals("root")) return false;
 		int now=findReasonIndex(reason);
 		while (now!=-1){
-			((ReasonTreeNodeType) allReason.get(now)).update();
+			((ReasonType) allReason.get(now)).update();
 			if (allReason.get(now).getExpenditure()+value>((ReasonTreeNodeType) allReason.get(now)).getMax()){
 				return false;
 			}
@@ -198,12 +203,12 @@ public class TreeReasonHistory extends ReasonHistory {
 				HHD.cleanFile(new ReasonDB(username, passWord).getAimPath());
 			}
 		}else if (last.getEvent().equals("remove reason tree node")){
-			ReasonTreeNodeType node=solveDetail(last);
+			ReasonType node=solveDetail(last);
 			allReason.add(node);
 			new ReasonDB(username, passWord).addReason(node);
 			solve(last,node.getName());
 		}else if (last.getEvent().equals("change reason tree node")){
-			ReasonTreeNodeType node=solveDetail(last);
+			ReasonType node=solveDetail(last);
 			int pos=findReasonIndex(last.getReason());
 			allReason.setElementAt(node, pos);
 			new ReasonDB(username, passWord).updateReason(last.getReason(), node);
@@ -267,7 +272,7 @@ public class TreeReasonHistory extends ReasonHistory {
 		double ans=node.getIncome();
 		Vector <Integer> kids=node.getKid();
 		for (int i=0;i<kids.size();i++){
-			ReasonTreeNodeType now=(ReasonTreeNodeType) allReason.get(kids.get(i));
+			ReasonType now=(ReasonType) allReason.get(kids.get(i));
 			ans-=now.getIncome();
 		}
 		return ans;
@@ -277,7 +282,7 @@ public class TreeReasonHistory extends ReasonHistory {
 		double ans=node.getExpenditure();
 		Vector <Integer> kids=node.getKid();
 		for (int i=0;i<kids.size();i++){
-			ReasonTreeNodeType now=(ReasonTreeNodeType) allReason.get(kids.get(i));
+			ReasonType now=(ReasonType) allReason.get(kids.get(i));
 			ans-=now.getExpenditure();
 		}
 		return ans;
@@ -332,18 +337,16 @@ public class TreeReasonHistory extends ReasonHistory {
 	}
 
 	private void saveTreeNode(ReasonTreeNodeType now, DetailType dt) {
-		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
 		dt.addExtra("past father", now.getFather());
 		dt.addExtra("past name", now.getName());
 		dt.addExtra("past min", now.getMin()+"");
 		dt.addExtra("past max", now.getMax()+"");
 		dt.addExtra("past income", now.getIncome()+"");
 		dt.addExtra("past expenditure", now.getExpenditure()+"");
-		dt.addExtra("past update", sdf.format(now.getUpdateTime().getTime()));
 		dt.addExtra("past rank", now.getRank()+"");
 	}
 	
-	private ReasonTreeNodeType solveDetail(DetailType last) {
+	private ReasonType solveDetail(DetailType last) {
 		String name=last.getExtraMessage("past name");
 		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
 		double in=Double.valueOf(last.getExtraMessage("past income"));
@@ -365,7 +368,6 @@ public class TreeReasonHistory extends ReasonHistory {
 		rt.setMax(max);
 		rt.setMin(min);
 		rt.setName(name);
-		rt.setUpdateTime(update);
 		rt.setRank(rank);
 		return rt;
 	}

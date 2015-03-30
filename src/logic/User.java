@@ -34,6 +34,7 @@ public class User {
 	}
 	
 	public static void reloadUserData(){
+		releaseUserData();
 		Wallet wallet=new Wallet();
 		History history=new History();
 		wallet.loadWallet();

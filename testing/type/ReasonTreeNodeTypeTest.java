@@ -12,7 +12,7 @@ public class ReasonTreeNodeTypeTest {
 	public void test() {
 		ReasonTreeNodeType r=new ReasonTreeNodeType();
 		r.setFatherName("name");
-		ReasonTreeNodeType r2=new ReasonTreeNodeType();
+		ReasonType r2=new ReasonTreeNodeType();
 		r2.solveTypeMessage(String2Vector.toVector(r.format()));
 		assertEquals(r.getAllMessage(), r2.getAllMessage());
 	}

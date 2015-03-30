@@ -15,6 +15,7 @@ public class UserUpdateTime extends Type {
 		Calendar c=Calendar.getInstance();
 		c.set(1917, 11, 27);
 		nextTime=c.getTime();
+		this.setMonth(1);
 	}
 	
 	public void setMonth(int day){

@@ -6,7 +6,7 @@ import java.util.*;
 
 public class DataBase {
 	static public String Root;
-	protected String name, passWord, detailPath, debtPath, moneyPath, reasonPath;
+	protected String name, passWord, detailPath, debtPath, moneyPath, reasonPath,settingPath;
 	protected String aimPath;
 	public DataBase(String user,String passWord) {
 		this.name=new String(user);
@@ -15,6 +15,7 @@ public class DataBase {
 		this.debtPath=new String("debt.txt");
 		this.moneyPath=new String("user.txt");
 		this.reasonPath=new String("reason.txt");
+		this.settingPath=new String("setting.txt");
 		this.aimPath=Root+"/all user.txt";
 	}
 	

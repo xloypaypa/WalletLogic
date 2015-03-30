@@ -165,4 +165,13 @@ public class ReasonHistory extends History {
 		}
 	}
 	
+	public static void update(){
+		for (int i=0;i<allReason.size();i++){
+			allReason.get(i).update();
+			new ReasonDB(username, passWord).updateReason(allReason.get(i).getName(), allReason.get(i));
+		}
+		
+		//TODO: export more message
+	}
+	
 }
