@@ -22,6 +22,7 @@ public class DetailType extends Type implements TypeInterface {
 		reason = new String(other.getReason());
 		type = new String(other.getType());
 		value = other.getValue();
+		this.extra=new Vector<>(other.extra);
 	}
 	
 	public void setTime(Date date){

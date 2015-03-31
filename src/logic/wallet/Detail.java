@@ -13,7 +13,7 @@ public class Detail extends Wallet {
 		if (allDetail.size()==0) return ans;
 		else return allDetail.get(allDetail.size()-1);
 	}
-	public Vector <DetailType> getRangeDetail(Calendar from,Calendar to){
+	public Vector <DetailType> getRangeDetail(Date from,Date to){
 		Vector <DetailType> ans=new Vector<DetailType>();
 		for (int i=0;i<allDetail.size();i++){
 			DetailType now=allDetail.get(i);
@@ -38,33 +38,6 @@ public class Detail extends Wallet {
 			details.addElement(dt);
 		}
 		solveDetail(details);
-	}
-	
-	
-	
-	public void pack(){
-		HHD.cleanFile(new DetailDB(username, passWord).getAimPath());
-		allDetail.clear();
-		
-		for (int i=0;i<allMoney.size();i++){
-			DetailType now=new DetailType();
-			now.setEvent("pack money type");
-			now.setType(allMoney.get(i).getType());
-			now.setValue(allMoney.get(i).getValue());
-			super.setDetailTime(now);
-			super.addDetail(now);
-		}
-		
-		for (int i=0;i<allDebt.size();i++){
-			DetailType now=new DetailType();
-			now.setEvent("pack debt");
-			now.setType("");
-			now.setValue(allDebt.get(i).getValue());
-			now.setTime(allDebt.get(i).getLastUpdateTime());
-			now.addExtra("pack rate", allDebt.get(i).getRate().getRate()+"");
-			now.addExtra("pack rate type", allDebt.get(i).getRate().getType());
-			super.addDetail(now);
-		}
 	}
 	
 	public void getExcel(String path){

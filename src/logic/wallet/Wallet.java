@@ -81,7 +81,7 @@ public class Wallet extends User {
 	}
 	
 	public void addDetail(DetailType dt){
-		allDetail.addElement(dt);
+		allDetail.addElement(new DetailType(dt));
 		new DetailDB(username, passWord).addDetail(dt);
 		new MoneyHistory().update();
 	}
