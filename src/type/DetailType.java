@@ -63,7 +63,6 @@ public class DetailType extends Type implements TypeInterface {
 		String ans=new String();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		DecimalFormat df = new DecimalFormat("0.00");
-		
 		ans+="[detail time]\r\n";
 		ans+=sdf.format(time.getTime())+"\r\n";
 		ans+="[detail event]\r\n";

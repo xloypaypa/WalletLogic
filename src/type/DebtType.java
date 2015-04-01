@@ -11,8 +11,10 @@ public class DebtType extends Type implements TypeInterface {
 	protected double value;
 	protected Date deadline,startingTime,lastUpdateTime;
 	protected RateType rate;
+	
 	public DebtType(){
 		this.debtID=-1;
+		this.id="-1";
 		this.creditor=new String("null");
 		this.value=0;
 		this.deadline=new Date();
@@ -22,6 +24,7 @@ public class DebtType extends Type implements TypeInterface {
 	}
 	public DebtType(String debtee,double val){
 		this.debtID=-1;
+		this.id="-1";
 		this.creditor=new String(debtee);
 		this.value=val; this.rate=new RateType();
 		this.deadline=new Date();
@@ -30,6 +33,7 @@ public class DebtType extends Type implements TypeInterface {
 	}
 	public DebtType(String debtee,double val,Date deadline){
 		this.debtID=-1;
+		this.id="-1";
 		this.creditor=new String(debtee);
 		this.value=val; this.rate=new RateType();
 		this.deadline=new Date();
@@ -39,6 +43,7 @@ public class DebtType extends Type implements TypeInterface {
 	}
 	public DebtType(String debtee,double val,Date deadline,String type,double rate){
 		this.debtID=-1;
+		this.id="-1";
 		this.creditor=new String(debtee);
 		this.value=val; this.rate=new RateType(type, rate);
 		this.deadline=new Date();
@@ -61,6 +66,7 @@ public class DebtType extends Type implements TypeInterface {
 	}
 	public void setID(int id){
 		this.debtID=id;
+		this.id=id+"";
 	}
 	public void updateLastUpdateTime(){
 		this.lastUpdateTime=new Date();
@@ -152,6 +158,7 @@ public class DebtType extends Type implements TypeInterface {
 			String body=message.get(i+1);
 			if (title.equals("[debt id]")){
 				this.debtID=Integer.valueOf(body);
+				this.id=""+this.debtID;
 			}else if (title.equals("[debt creditor]")){
 				this.creditor=body;
 			}else if (title.equals("[debt value]")){

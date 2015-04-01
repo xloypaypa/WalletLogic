@@ -1,64 +1,71 @@
 package database;
 
-import type.UserMessage;
+import java.util.Vector;
 
-import java.util.*;
+import type.Type;
 
-public class DataBase {
-	static public String Root;
-	protected String name, passWord, detailPath, debtPath, moneyPath, reasonPath,settingPath;
-	protected String aimPath;
-	public DataBase(String user,String passWord) {
-		this.name=new String(user);
-		this.passWord=new String(passWord);
-		this.detailPath=new String("detail.txt");
-		this.debtPath=new String("debt.txt");
-		this.moneyPath=new String("user.txt");
-		this.reasonPath=new String("reason.txt");
-		this.settingPath=new String("setting.txt");
-		this.aimPath=Root+"/all user.txt";
-	}
+public abstract class DataBase extends AbstractDataBase {
 	
-	public String getAimPath(){
-		return this.aimPath;
-	}
+	Type aim;
 	
-	public Vector < Vector<String> > loadFile(){
-		Vector <String> file=HHD.readFile(aimPath, passWord);
-		return solveFile(file);
+	protected String passWord;
+
+	@Override
+	public void addItem(Type type) {
+		HHD.addWriteFile(aimPath, type.getAllMessage(), passWord);
 	}
-	
-	public Vector < Vector<String> > loadNotEncryptedFile(){
-		Vector <String> file=HHD.readFile(aimPath);
-		return solveFile(file);
+
+	@Override
+	public void removeItem(String id) {
+		Vector <Type> now=this.load();
+		String ans=new String();
+		for (int i=0;i<now.size();i++){
+			if (now.get(i).getTypeID().equals(id)){
+				continue;
+			}else{
+				ans+=now.get(i).getAllMessage()+"\r\n";
+			}
+		}
+		HHD.writeFile(aimPath, ans,passWord);
 	}
-	
-	public void addUser(UserMessage um){
-		HHD.addWriteFile(aimPath, um.getAllMessage());
+
+	@Override
+	public void updateItem(String id, Type type) {
+		Vector <Type> now=this.load();
+		String ans=new String();
+		for (int i=0;i<now.size();i++){
+			if (now.get(i).getTypeID().equals(id)){
+				ans+=type.getAllMessage()+"\r\n";
+			}else{
+				ans+=now.get(i).getAllMessage()+"\r\n";
+			}
+		}
+		HHD.writeFile(aimPath, ans,passWord);
 	}
-	
-	public Vector <UserMessage> loadAllUser(){
-		Vector <UserMessage> ans=new Vector <UserMessage>();
-		Vector <Vector <String>> file=this.loadNotEncryptedFile();
+
+	@Override
+	public Vector<Type> load() {
+		Vector <Type> ans=new Vector <>();
+		Vector <Vector <String>> file=this.loadFile(aimPath);
 		
 		for (int i=0;i<file.size();i++){
-			UserMessage mu=new UserMessage();
-			mu.solveTypeMessage(file.get(i));
-			ans.add(mu);
+			aim=getNewType();
+			aim.solveTypeMessage(file.get(i));
+			ans.add(aim);
 		}
 		return ans;
 	}
 	
-	public static String getTypeMessage(Vector <String> message){
-		for (int i=0;i<message.size();i++){
-			if (message.get(i).equals("[type name]")){
-				return message.get(i+1);
-			}
-		}
-		return null;
+	public void setAimFile(String file){
+		this.aimPath=AbstractDataBase.root+"/"+file;
 	}
 	
-	public Vector<Vector<String>> solveFile(Vector<String> file) {
+	public void setPassword(String passWord){
+		this.passWord=passWord;
+	}
+	
+	protected Vector<Vector<String>> loadFile(String path){
+		Vector <String> file=HHD.readFile(aimPath, passWord);
 		Vector < Vector <String> > ans=new Vector<Vector<String>>();
 		Vector <String> message=new Vector<String>();
 		for (int i=0;i<file.size();i++){
@@ -74,7 +81,6 @@ public class DataBase {
 		return ans;
 	}
 	
-	public void clean(){
-		HHD.cleanFile(aimPath);
-	}
+	public abstract Type getNewType();
+	
 }

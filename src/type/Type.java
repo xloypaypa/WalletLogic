@@ -4,6 +4,7 @@ import java.util.Vector;
 
 public class Type implements TypeInterface {
 	
+	String id; 
 	Vector <ExtraType> extra=new Vector<ExtraType>();
 	
 	public Vector <ExtraType> getExtra(){
@@ -93,5 +94,9 @@ public class Type implements TypeInterface {
 	@Override
 	public String getAllMessage() {
 		return this.getTypeMessage()+this.format()+"[end]\r\n";
+	}
+	
+	public String getTypeID(){
+		return this.id;
 	}
 }
