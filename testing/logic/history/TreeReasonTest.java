@@ -73,5 +73,28 @@ public class TreeReasonTest extends HistoryTest {
 		assertEquals("1", tr.getRoots().get(0).getName());
 		assertEquals("4", tr.getRoots().get(1).getName());
 	}
+	
+	@Test
+	public void testBug1(){
+		TreeReasonHistory tr=new TreeReasonHistory();
+		ReasonTreeNodeType node;
+		tr.addReason("root", "father",0,50,1);
+		tr.addReason("father", "kid",0,100,1);
+		tr.addIncome("kid", 100);
+		
+		node=(ReasonTreeNodeType) tr.getReasonType().get(0);
+		assertEquals(100, node.getIncome(),1e-3);
+		node=(ReasonTreeNodeType) tr.getReasonType().get(1);
+		assertEquals(100, node.getIncome(),1e-3);
+		
+		tr.checkExpenditure("father", 50);
+		tr.addExpenditure("father", 50);
+		User.reloadUserData();
+		
+		node=(ReasonTreeNodeType) tr.getReasonType().get(0);
+		assertEquals(100, node.getIncome(),1e-3);
+		node=(ReasonTreeNodeType) tr.getReasonType().get(1);
+		assertEquals(100, node.getIncome(),1e-3);
+	}
 
 }

@@ -25,7 +25,24 @@ public class Detail extends Wallet {
 	}
 	
 	public void export(String path){
-		new DetailDB(username, passWord).exportTxt(path);
+		Calendar c=Calendar.getInstance();
+		c.set(0, 0, 0);
+		export(path,c.getTime(),new Date());
+	}
+	
+	public void export(String path,Date from,Date to){
+		int left,right;
+		for (left=0;left<allDetail.size();left++){
+			DetailType now=allDetail.get(left);
+			if (from.before(now.getTime())) break;
+		}
+		for (right=allDetail.size()-1;right>=0;right--){
+			DetailType now=allDetail.get(right);
+			if (to.after(now.getTime())) break;
+		}
+		right++;
+		
+		new DetailDB(username, passWord).exportTxt(path,left,right);
 	}
 	
 	public void importDetail(String path){

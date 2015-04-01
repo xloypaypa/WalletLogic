@@ -33,7 +33,6 @@ public class TreeReasonHistory extends ReasonHistory {
 		if (reason.equals("root")) return false;
 		int now=findReasonIndex(reason);
 		while (now!=-1){
-			((ReasonType) allReason.get(now)).update();
 			if (allReason.get(now).getExpenditure()+value>((ReasonTreeNodeType) allReason.get(now)).getMax()){
 				return false;
 			}
@@ -180,7 +179,6 @@ public class TreeReasonHistory extends ReasonHistory {
 		rt.setMax(max);
 		rt.setRank(rank);
 		rt.setFatherName(father);
-		rt.update();
 		
 		DetailType dt = getAddDetail(rt);
 		setDetailTime(time, dt);

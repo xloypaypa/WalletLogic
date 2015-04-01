@@ -45,9 +45,9 @@ public class DetailDB extends DataBase {
 			this.addDetail(a.get(i));
 		}
 	}
-	public void exportTxt(String to){
+	public void exportTxt(String to,int left,int right){
 		Vector <DetailType> a=this.loadDetail();
-		for (int i=0;i<a.size();i++){
+		for (int i=left;i<right;i++){
 			HHD.addWriteFile(to, a.get(i).getAllMessage()+"\r\n");
 		}
 	}
