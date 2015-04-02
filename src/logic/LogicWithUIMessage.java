@@ -1,5 +1,7 @@
 package logic;
 
+import java.text.DecimalFormat;
+
 import translater.Strings;
 import logicListener.LogicMessageListener;
 
@@ -25,12 +27,18 @@ public class LogicWithUIMessage extends Logic {
 	
 	public static void setExistentError(String name){
 		message.setErrorFlag(true);
-		message.setMessage(Strings.getWord("This "+name+" have exist."));
+		message.setMessage(Strings.getWord("This ")+name+Strings.getWord(" have exist."));
 	}
 	
 	public static void setNeedInputError(String name){
 		message.setErrorFlag(true);
-		message.setMessage(Strings.getWord("Please input "+name+"."));
+		message.setMessage(Strings.getWord("Please input ")+name+".");
+	}
+	
+	public static void setDebtRepayLimitError(double value){
+		message.setErrorFlag(true);
+		DecimalFormat df=new DecimalFormat("0.00");
+		message.setMessage(Strings.getWord("This debt onlu need")+df.format(value)+".");
 	}
 	
 	public static void setOKMessage(){

@@ -1,5 +1,7 @@
 package logic;
 
+import java.util.Date;
+
 import data.DebtKeeper;
 import data.DetailKeeper;
 import data.MoneyKeeper;
@@ -11,6 +13,7 @@ public class Operator extends Logic {
 	static TypeLogic type;
 	static CostLogic cost;
 	static ReasonLogic reason;
+	static DebtLogic debt;
 	
 	public static void login(String name,String pass){
 		if (UserLogic.login(name, pass)){
@@ -24,6 +27,7 @@ public class Operator extends Logic {
 			type=new TypeLogic();
 			cost=new CostLogic();
 			reason=new ReasonLogic();
+			debt=new DebtLogic();
 		}
 	}
 	
@@ -43,12 +47,12 @@ public class Operator extends Logic {
 		type.removeType(name);
 	}
 	
-	public static void income(String type,double value){
-		cost.income(type, value);
+	public static void income(String type,double value,String reason){
+		cost.income(type, value,reason);
 	}
 	
-	public static void expenditure(String type,double value){
-		cost.expenditure(type, value);
+	public static void expenditure(String type,double value,String reason){
+		cost.expenditure(type, value,reason);
 	}
 	
 	public static void transfer(String from, String to, double value){
@@ -73,6 +77,22 @@ public class Operator extends Logic {
 	
 	public static void renameTreeReason(String past,String name,String father,double min,double max,int rank){
 		
+	}
+	
+	public static void addBorrowing(String credior,double value,String moneyType,Date deadline,double rate,String rateType){
+		debt.addBorrowing(credior, value, moneyType, deadline, rate, rateType);
+	}
+	
+	public static void repayBorrowing(int id,double value,String moneyType){
+		debt.repayBorrowing(id, value, moneyType);
+	}
+	
+	public static void addLoan(String credior,double value,String moneyType,Date deadline,double rate,String rateType){
+		debt.addLoan(credior, value, moneyType, deadline, rate, rateType);
+	}
+	
+	public static void repayLoan(int id,double value,String moneyType){
+		debt.repayLoan(id, value, moneyType);
 	}
 	
 }

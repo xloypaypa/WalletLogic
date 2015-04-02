@@ -7,7 +7,7 @@ import java.util.*;
 
 public class DebtType extends Type implements TypeInterface {
 	protected int debtID;
-	protected String creditor;
+	protected String creditor,debtType;
 	protected double value;
 	protected Date deadline,startingTime,lastUpdateTime;
 	protected RateType rate;
@@ -16,6 +16,7 @@ public class DebtType extends Type implements TypeInterface {
 		this.debtID=-1;
 		this.id="-1";
 		this.creditor=new String("null");
+		this.debtType="borrow";
 		this.value=0;
 		this.deadline=new Date();
 		this.rate=new RateType();
@@ -26,6 +27,7 @@ public class DebtType extends Type implements TypeInterface {
 		this.debtID=-1;
 		this.id="-1";
 		this.creditor=new String(debtee);
+		this.debtType="borrow";
 		this.value=val; this.rate=new RateType();
 		this.deadline=new Date();
 		this.startingTime=new Date();
@@ -35,6 +37,7 @@ public class DebtType extends Type implements TypeInterface {
 		this.debtID=-1;
 		this.id="-1";
 		this.creditor=new String(debtee);
+		this.debtType="borrow";
 		this.value=val; this.rate=new RateType();
 		this.deadline=new Date();
 		this.deadline.setTime(deadline.getTime());
@@ -45,6 +48,7 @@ public class DebtType extends Type implements TypeInterface {
 		this.debtID=-1;
 		this.id="-1";
 		this.creditor=new String(debtee);
+		this.debtType="borrow";
 		this.value=val; this.rate=new RateType(type, rate);
 		this.deadline=new Date();
 		this.deadline.setTime(deadline.getTime());
@@ -64,6 +68,9 @@ public class DebtType extends Type implements TypeInterface {
 	public void setCreditor(String s){
 		this.creditor=s;
 	}
+	public void setDebtType(String type){
+		this.debtType=type;
+	}
 	public void setID(int id){
 		this.debtID=id;
 		this.id=id+"";
@@ -79,6 +86,9 @@ public class DebtType extends Type implements TypeInterface {
 	}
 	public String getCreditor(){
 		return this.creditor;
+	}
+	public String getDebtType(){
+		return this.debtType;
 	}
 	public RateType getRate(){
 		return this.rate;
@@ -136,6 +146,7 @@ public class DebtType extends Type implements TypeInterface {
 		ans="[debt id]\r\n"+this.debtID+"\r\n";
 		ans+="[debt creditor]\r\n"+this.creditor+"\r\n";
 		ans+="[debt value]\r\n"+df2.format(this.value)+"\r\n";
+		ans+="[debt type]\r\n"+this.debtType+"\r\n";
 		ans+="[debt starting time]\r\n"+df.format(this.startingTime.getTime())+"\r\n";
 		ans+="[debt last update time]\r\n"+df.format(this.lastUpdateTime.getTime())+"\r\n";
 		ans+="[debt deadline]\r\n"+df.format(this.deadline.getTime())+"\r\n";
@@ -149,7 +160,7 @@ public class DebtType extends Type implements TypeInterface {
 	}
 	@Override
 	public int getTypeNumber() {
-		return 6+this.rate.getTypeNumber()+super.getTypeNumber();
+		return 7+this.rate.getTypeNumber()+super.getTypeNumber();
 	}
 	@Override
 	public void solveTypeMessage(Vector <String> message) {
@@ -190,6 +201,8 @@ public class DebtType extends Type implements TypeInterface {
 				} catch (ParseException e) {
 					e.printStackTrace();
 				}
+			}else if (title.equals("[debt type]")){
+				this.debtType=body;
 			}
 		}
 		this.rate.solveTypeMessage(message);

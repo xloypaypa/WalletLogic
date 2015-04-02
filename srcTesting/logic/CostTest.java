@@ -15,8 +15,9 @@ public class CostTest extends OperatorTest {
 		MoneyType money;
 		Operator.addMoneyType("type one");
 		Operator.addMoneyType("type two");
+		Operator.addReason("reason one");
 		
-		Operator.income("type one", 100);
+		Operator.income("type one", 100,"reason one");
 		money=(MoneyType) keeper.getItem("type one");
 		assertEquals(100, money.getValue(),1e-3);
 		
@@ -26,7 +27,7 @@ public class CostTest extends OperatorTest {
 		money=(MoneyType) keeper.getItem("type two");
 		assertEquals(30, money.getValue(),1e-3);
 		
-		Operator.expenditure("type two", 10);
+		Operator.expenditure("type two", 10,"reason one");
 		money=(MoneyType) keeper.getItem("type two");
 		assertEquals(20, money.getValue(),1e-3);
 	}
@@ -35,10 +36,11 @@ public class CostTest extends OperatorTest {
 	public void testError(){
 		Operator.addMoneyType("type one");
 		Operator.addMoneyType("type two");
-		Operator.income("type one", -1);
+		Operator.addReason("reason one");
+		Operator.income("type one", -1,"reason one");
 		assertEquals("The value should be more than zero.", LogicWithUIMessage.message.getMessage());
-		Operator.income("type one", 10);
-		Operator.expenditure("type one", 20);
+		Operator.income("type one", 10,"reason one");
+		Operator.expenditure("type one", 20,"reason one");
 		assertEquals("Don't have enough money.", LogicWithUIMessage.message.getMessage());
 	}
 

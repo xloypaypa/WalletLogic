@@ -6,15 +6,15 @@ import logic.event.TransferEvent;
 
 public class CostLogic extends LogicWithUIMessage {
 	
-	public void income(String type,double value){
+	public void income(String type,double value,String reason){
 		IncomeEvent event=new IncomeEvent();
-		event.setValue(type, value);
+		event.setValue(type, value,reason);
 		event.doEvent();
 	}
 	
-	public void expenditure(String type,double value){
+	public void expenditure(String type,double value,String reason){
 		ExpenditureEvent event=new ExpenditureEvent();
-		event.setValue(type, value);
+		event.setValue(type, value,reason);
 		event.doEvent();
 	}
 	
