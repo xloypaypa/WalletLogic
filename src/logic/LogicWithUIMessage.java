@@ -4,9 +4,9 @@ import translater.Strings;
 import logicListener.LogicMessageListener;
 
 public class LogicWithUIMessage extends Logic {
-	static LogicMessageListener message=new LogicMessageListener() {
+	protected static LogicMessageListener message=new LogicMessageListener() {
 		@Override
-		public void logicUIAction() {}
+		public void UIAction() {}
 	};
 	
 	public static void setListenser(LogicMessageListener message){

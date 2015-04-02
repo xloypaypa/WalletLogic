@@ -13,7 +13,7 @@ public class UserLogicTest extends LogicTest {
 		super.setDB();
 		UserLogic.setListenser(new LogicMessageListener() {
 			@Override
-			public void logicUIAction() {
+			public void UIAction() {
 			}
 		});
 	}

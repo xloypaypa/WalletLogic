@@ -7,12 +7,8 @@ import database.DataBase;
 
 public class ReasonKeeper extends IDTypeKeeper {
 
-	String typeName="reason";
-	
-	@Override
-	public boolean isThisKeeper(String keeper) {
-		if (keeper.equals(typeName)) return true;
-		else return false;
+	public ReasonKeeper() {
+		super("reason");
 	}
 
 	protected void loadDataBase() {
@@ -26,7 +22,7 @@ public class ReasonKeeper extends IDTypeKeeper {
 				}
 			}
 		};
-		ans.setAimFile("/"+username+"/"+typeName+".txt");
+		ans.setAimFile("/"+username+"/"+keeperName+".txt");
 		ans.setPassword(password);
 		this.db=ans;
 	}

@@ -3,6 +3,10 @@ package data;
 import type.Type;
 
 public abstract class IDTypeKeeper extends TypeKeeper implements IDDataKeeper {
+	
+	public IDTypeKeeper(String keeperName) {
+		super(keeperName);
+	}
 
 	@Override
 	public void delete(String id) {

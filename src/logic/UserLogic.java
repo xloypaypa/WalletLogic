@@ -15,7 +15,7 @@ public class UserLogic extends LogicWithUIMessage {
 		}else{
 			message.setErrorFlag(true);
 			message.setMessage(Strings.getWord("user name or pass word wrong."));
-			message.logicUIAction();
+			message.UIAction();
 			return false;
 		}
 	}
@@ -23,29 +23,29 @@ public class UserLogic extends LogicWithUIMessage {
 	public static boolean register(String name,String pass,String repeat,String reason){
 		if (name.contains("[")||pass.contains("[")){
 			setLeftHalfBracketError();
-			message.logicUIAction();
+			message.UIAction();
 			return false;
 		}else if (name.equals("temp")){
 			message.setErrorFlag(true);
 			message.setMessage(Strings.getWord("This user is a system used."));
-			message.logicUIAction();
+			message.UIAction();
 			return false;
 		}else if (name.length()==0){
 			setNeedInputError("user name");
-			message.logicUIAction();
+			message.UIAction();
 			return false;
 		}else if (pass.length()==0){
 			setNeedInputError("password");
-			message.logicUIAction();
+			message.UIAction();
 			return false;
 		}else if (!repeat.equals(pass)){
 			message.setErrorFlag(true);
 			message.setMessage(Strings.getWord("Two password not same."));
-			message.logicUIAction();
+			message.UIAction();
 			return false;
 		}else if (UserPublicData.userExist(name)){
 			setExistentError("user");
-			message.logicUIAction();
+			message.UIAction();
 			return false;
 		}else{
 			UserMessage user=new UserMessage();

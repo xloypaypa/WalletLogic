@@ -29,7 +29,7 @@ public class TypeTest extends OperatorTest {
 		assertEquals("Please input type name.", LogicWithUIMessage.message.getMessage());
 		Operator.addMoneyType("type one");
 		Operator.addMoneyType("type one");
-		assertEquals("This type have exist.", LogicWithUIMessage.message.getMessage());
+		assertEquals("This name have exist.", LogicWithUIMessage.message.getMessage());
 	}
 
 }

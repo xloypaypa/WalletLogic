@@ -1,5 +1,5 @@
 package logicListener;
 
 public interface LogicListener {
-	public void logicUIAction();
+	public void UIAction();
 }

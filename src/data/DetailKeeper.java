@@ -11,12 +11,8 @@ import database.DataBase;
 
 public class DetailKeeper extends TypeKeeper implements DataKeeper {
 	
-	String typeName="detail";
-
-	@Override
-	public boolean isThisKeeper(String keeper) {
-		if (keeper.equals(typeName)) return true;
-		else return false;
+	public DetailKeeper() {
+		super("detail");
 	}
 	
 	@Override
@@ -33,7 +29,7 @@ public class DetailKeeper extends TypeKeeper implements DataKeeper {
 				return new DetailType();
 			}
 		};
-		ans.setAimFile("/"+username+"/"+typeName+".txt");
+		ans.setAimFile("/"+username+"/"+keeperName+".txt");
 		ans.setPassword(password);
 		this.db=ans;
 	}

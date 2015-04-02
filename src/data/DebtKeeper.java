@@ -6,12 +6,8 @@ import database.DataBase;
 
 public class DebtKeeper extends IDTypeKeeper {
 
-	String typeName="debt";
-	
-	@Override
-	public boolean isThisKeeper(String keeper) {
-		if (keeper.equals(typeName)) return true;
-		else return false;
+	public DebtKeeper() {
+		super("debt");
 	}
 
 	protected void loadDataBase() {
@@ -21,7 +17,7 @@ public class DebtKeeper extends IDTypeKeeper {
 				return new DebtType();
 			}
 		};
-		ans.setAimFile("/"+username+"/"+typeName+".txt");
+		ans.setAimFile("/"+username+"/"+keeperName+".txt");
 		ans.setPassword(password);
 		this.db=ans;
 	}

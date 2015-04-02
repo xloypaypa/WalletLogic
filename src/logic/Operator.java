@@ -10,6 +10,7 @@ public class Operator extends Logic {
 	
 	static TypeLogic type;
 	static CostLogic cost;
+	static ReasonLogic reason;
 	
 	public static void login(String name,String pass){
 		if (UserLogic.login(name, pass)){
@@ -22,6 +23,7 @@ public class Operator extends Logic {
 			
 			type=new TypeLogic();
 			cost=new CostLogic();
+			reason=new ReasonLogic();
 		}
 	}
 	
@@ -51,6 +53,26 @@ public class Operator extends Logic {
 	
 	public static void transfer(String from, String to, double value){
 		cost.transfer(from, to, value);
+	}
+	
+	public static void addReason(String name){
+		reason.addReason(name);
+	}
+	
+	public static void renameReason(String past,String name){
+		reason.renameReason(past, name);
+	}
+	
+	public static void removeReason(String name){
+		reason.removeReason(name);
+	}
+	
+	public static void addTreeReason(String name,String father,double min,double max,int rank){
+		
+	}
+	
+	public static void renameTreeReason(String past,String name,String father,double min,double max,int rank){
+		
 	}
 	
 }

@@ -7,10 +7,13 @@ import type.Type;
 
 public abstract class TypeKeeper extends UserPublicData implements DataKeeper {
 	
+	String keeperName;
+	
 	protected Vector <Type> allType=new Vector<>();
 	protected AbstractDataBase db;
 	
-	public TypeKeeper() {
+	public TypeKeeper(String keeperName) {
+		this.keeperName=keeperName;
 		loadDataBase();
 	}
 	
@@ -32,6 +35,17 @@ public abstract class TypeKeeper extends UserPublicData implements DataKeeper {
 	@Override
 	public void releaseData() {
 		allType.removeAllElements();
+	}
+	
+	@Override
+	public boolean isThisKeeper(String keeper) {
+		if (keeper.equals(keeperName)) return true;
+		else return false;
+	}
+	
+	@Override
+	public String getKeeperName(){
+		return keeperName;
 	}
 	
 	protected abstract void loadDataBase();
