@@ -1,8 +1,8 @@
 package logic;
 
-import logic.event.ExpenditureEvent;
-import logic.event.IncomeEvent;
-import logic.event.TransferEvent;
+import logic.event.money.ExpenditureEvent;
+import logic.event.money.IncomeEvent;
+import logic.event.money.TransferEvent;
 
 public class CostLogic extends LogicWithUIMessage {
 	

@@ -25,7 +25,7 @@ public abstract class AbstractEvent extends Logic {
 		this.check.addElement(check);
 	}
 	
-	public void cleanActor(){
+	public void cleanAction(){
 		this.actor.removeAllElements();
 	}
 	

@@ -40,7 +40,7 @@ public abstract class IDTypeKeeper extends TypeKeeper implements IDDataKeeper {
 		}
 	}
 	
-	private int getPos(String id){
+	protected int getPos(String id){
 		for (int i=0;i<allType.size();i++){
 			if (allType.get(i).getTypeID().equals(id)) return i;
 		}

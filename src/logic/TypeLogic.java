@@ -1,8 +1,8 @@
 package logic;
 
-import logic.event.AddTypeEvent;
-import logic.event.RemoveTypeEvent;
-import logic.event.RenameTypeEvent;
+import logic.event.type.AddTypeEvent;
+import logic.event.type.RemoveTypeEvent;
+import logic.event.type.RenameTypeEvent;
 
 public class TypeLogic extends LogicWithUIMessage {
 	

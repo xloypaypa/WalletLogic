@@ -1,6 +1,5 @@
 package data;
 
-import type.ReasonTreeNodeType;
 import type.ReasonType;
 import type.Type;
 import database.DataBase;
@@ -15,11 +14,7 @@ public class ReasonKeeper extends IDTypeKeeper {
 		DataBase ans=new DataBase() {
 			@Override
 			public Type getNewType() {
-				if (userType.equals("tree")){
-					return new ReasonTreeNodeType();
-				}else{
-					return new ReasonType();
-				}
+				return new ReasonType();
 			}
 		};
 		ans.setAimFile("/"+username+"/"+keeperName+".txt");

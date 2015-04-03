@@ -6,7 +6,9 @@ import data.DebtKeeper;
 import data.DetailKeeper;
 import data.MoneyKeeper;
 import data.ReasonKeeper;
+import data.TreeReasonKeeper;
 import data.UserData;
+import data.UserPublicData;
 
 public class Operator extends Logic {
 	
@@ -19,15 +21,21 @@ public class Operator extends Logic {
 		if (UserLogic.login(name, pass)){
 			data=new UserData();
 			data.addDataKeeper(new MoneyKeeper());
-			data.addDataKeeper(new ReasonKeeper());
 			data.addDataKeeper(new DebtKeeper());
 			data.addDataKeeper(new DetailKeeper());
 			data.loadAllData();
 			
 			type=new TypeLogic();
 			cost=new CostLogic();
-			reason=new ReasonLogic();
 			debt=new DebtLogic();
+			
+			if (UserPublicData.getUserReason(name).equals("tree")){
+				reason=new TreeReasonLogic();
+				data.addDataKeeper(new TreeReasonKeeper());
+			}else{
+				reason=new ReasonLogic();
+				data.addDataKeeper(new ReasonKeeper());
+			}
 		}
 	}
 	

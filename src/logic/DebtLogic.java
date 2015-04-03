@@ -2,10 +2,10 @@ package logic;
 
 import java.util.Date;
 
-import logic.event.AddBorrowingEvent;
-import logic.event.AddLoanEvent;
-import logic.event.RepayBorrowingEvent;
-import logic.event.RepayLoanEvent;
+import logic.event.debt.AddBorrowingEvent;
+import logic.event.debt.AddLoanEvent;
+import logic.event.debt.RepayBorrowingEvent;
+import logic.event.debt.RepayLoanEvent;
 
 public class DebtLogic extends LogicWithUIMessage {
 	

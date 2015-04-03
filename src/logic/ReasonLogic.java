@@ -1,8 +1,8 @@
 package logic;
 
-import logic.event.AddReasonEvent;
-import logic.event.RemoveReasonEvent;
-import logic.event.RenameReasonEvent;
+import logic.event.reason.AddReasonEvent;
+import logic.event.reason.RemoveReasonEvent;
+import logic.event.reason.RenameReasonEvent;
 
 public class ReasonLogic extends LogicWithUIMessage {
 	
