@@ -22,12 +22,14 @@ public class TreeReasonLoopCheck extends AbstractCheck {
 		
 		ReasonKeeper keeper=(ReasonKeeper) data.getData("reason");
 		
-		ReasonTreeNodeType now=(ReasonTreeNodeType) keeper.getItem(from);
+		ReasonTreeNodeType now=(ReasonTreeNodeType) keeper.getItem(to);
 		if (now.getFather().equals("root")) return true;
-		
 		now=(ReasonTreeNodeType) keeper.getItem(now.getFather());
 		while (true){
-			if (now.getName().equals(from)) return false;
+			if (now.getName().equals(from)){
+				setErrorMessage("Reason shouldn't have loop.");
+				return false;
+			}
 			else if (now.getFather().equals("root")) break;
 			now=(ReasonTreeNodeType) keeper.getItem(now.getFather());
 		}

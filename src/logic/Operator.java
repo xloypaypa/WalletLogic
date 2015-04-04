@@ -80,11 +80,11 @@ public class Operator extends Logic {
 	}
 	
 	public static void addTreeReason(String name,String father,double min,double max,int rank){
-		
+		((TreeReasonLogic)reason).addReason(name, father, min, max, rank);
 	}
 	
 	public static void renameTreeReason(String past,String name,String father,double min,double max,int rank){
-		
+		((TreeReasonLogic)reason).renameReason(past, name, father, min, max, rank);
 	}
 	
 	public static void addBorrowing(String credior,double value,String moneyType,Date deadline,double rate,String rateType){

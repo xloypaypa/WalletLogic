@@ -8,8 +8,13 @@ public class TreeReasonKeeper extends ReasonKeeper {
 	
 	@Override
 	public void loadData() {
-		super.loadData();
-		
+		super.loadData();	
+	}
+	
+	@Override
+	public boolean itemExist(String id) {
+		if (id.equals("root")) return true;
+		else return super.itemExist(id);
 	}
 	
 	protected void loadDataBase() {

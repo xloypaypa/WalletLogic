@@ -23,6 +23,7 @@ public class TreeReasonBudgetCheck extends AbstractCheck {
 		ReasonTreeNodeType now=(ReasonTreeNodeType) keeper.getItem(name);
 		while (true){
 			if (now.getExpenditure()+value > now.getMax()){
+				setErrorMessage("This reason is over-expenditure.");
 				return false;
 			}
 			if (now.getFather().equals("root")) break;

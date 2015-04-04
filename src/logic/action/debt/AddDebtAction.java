@@ -6,6 +6,7 @@ import java.util.Vector;
 import logic.action.AbstractAction;
 import type.DebtType;
 import type.Type;
+import data.DebtKeeper;
 import data.TypeKeeper;
 
 public abstract class AddDebtAction extends AbstractAction {
@@ -34,6 +35,16 @@ public abstract class AddDebtAction extends AbstractAction {
 			if (max<now.getID()) max=now.getID();
 		}
 		return max+1;
+	}
+
+	protected void setDebtMessage(DebtKeeper keeper, DebtType debt) {
+		debt.setCreditor(creditor);
+		debt.setDeadline(deadline);
+		debt.setRate(rateType, rate);
+		debt.setLastUpdateTime(new Date());
+		debt.setStartingTime(new Date());
+		debt.setValue(value);
+		debt.setID(getNewID());
 	}
 
 }

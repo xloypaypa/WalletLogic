@@ -11,7 +11,7 @@ public class TreeReasonExpenditureAction extends ReasonExpenditureAction {
 		ReasonTreeNodeType reason=(ReasonTreeNodeType) keeper.getItem(name);
 		while (true){
 			reason.setExpenditure(reason.getExpenditure()+value);
-			keeper.update(name, reason);
+			keeper.update(reason.getName(), reason);
 			if (reason.getFather().equals("root")) break;
 			reason=(ReasonTreeNodeType) keeper.getItem(reason.getFather());
 		}

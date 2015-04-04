@@ -11,7 +11,7 @@ public class TreeReasonIncomeAction extends ReasonIncomeAction {
 		ReasonTreeNodeType reason=(ReasonTreeNodeType) keeper.getItem(name);
 		while (true){
 			reason.setIncome(reason.getIncome()+value);
-			keeper.update(name, reason);
+			keeper.update(reason.getName(), reason);
 			if (reason.getFather().equals("root")) break;
 			reason=(ReasonTreeNodeType) keeper.getItem(reason.getFather());
 		}
