@@ -1,12 +1,17 @@
 package logic;
 
+import java.util.Date;
+
 import data.IDDataKeeper;
+import logic.action.detail.ReasonSaveDetailAction;
+import logic.action.detail.WriteDetailAction;
 import logic.action.reason.AddReasonAction;
 import logic.action.reason.RemoveReasonAction;
 import logic.action.reason.RenameReasonAction;
 import logic.check.ExistCheck;
 import logic.check.NameCheck;
 import logic.event.CheckThenActionEvent;
+import logic.event.FirstDetailThenCheckFinallyAction;
 
 public class ReasonLogic extends LogicWithUIMessage {
 	
@@ -26,6 +31,10 @@ public class ReasonLogic extends LogicWithUIMessage {
 		event.addAction(ara);
 		event.addCheck(ec);
 		event.addCheck(nc);
+		
+		WriteDetailAction detail=new WriteDetailAction();
+		detail.setValue(new Date(), "add reason", "", 0, name);
+		event.addAction(detail);
 		
 		event.doEvent();
 	}
@@ -47,16 +56,26 @@ public class ReasonLogic extends LogicWithUIMessage {
 		event.addCheck(ec);
 		event.addCheck(nc);
 		
+		WriteDetailAction detail=new WriteDetailAction();
+		detail.setValue(new Date(), "rename reason", "", 0, name);
+		detail.addExtra("past name", past);
+		event.addAction(detail);
+		
 		event.doEvent();
 	}
 	
 	public void removeReason(String name){
-		CheckThenActionEvent event=new CheckThenActionEvent("remove reason");
+		FirstDetailThenCheckFinallyAction event=new FirstDetailThenCheckFinallyAction("remove reason");
 		
 		RemoveReasonAction rra=new RemoveReasonAction();
 		rra.setValue(name);
 		
 		event.addAction(rra);
+		
+		ReasonSaveDetailAction detail=new ReasonSaveDetailAction();
+		detail.setValue(new Date(), "remove reason", "", 0, name);
+		detail.saveReason(name);
+		event.setDetailAction(detail);
 		
 		event.doEvent();
 	}

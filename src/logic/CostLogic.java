@@ -1,6 +1,9 @@
 package logic;
 
+import java.util.Date;
+
 import data.UserPublicData;
+import logic.action.detail.WriteDetailAction;
 import logic.action.money.ExpenditureAction;
 import logic.action.money.IncomeAction;
 import logic.action.money.TransferAction;
@@ -20,10 +23,12 @@ public class CostLogic extends LogicWithUIMessage {
 		
 		IncomeAction ia=new IncomeAction();
 		ia.setValue(type, value);
+		event.addAction(ia);
+		
 		ValueSignCheck vc=new ValueSignCheck();
 		vc.setValue(value);
+		event.addCheck(vc);
 		
-		event.addAction(ia);
 		if (UserPublicData.getUserReason(UserPublicData.getNowUser()).equals("tree")){
 			TreeReasonIncomeAction tria=new TreeReasonIncomeAction();
 			tria.setValue(reason, value);
@@ -33,7 +38,11 @@ public class CostLogic extends LogicWithUIMessage {
 			ria.setValue(reason, value);
 			event.addAction(ria);
 		}
-		event.addCheck(vc);
+		
+		WriteDetailAction detail=new WriteDetailAction();
+		detail.setValue(new Date(), "income", type, value, reason);
+		event.addAction(detail);
+		
 		event.doEvent();
 	}
 	
@@ -42,14 +51,16 @@ public class CostLogic extends LogicWithUIMessage {
 		
 		ExpenditureAction ea=new ExpenditureAction();
 		ea.setValue(type, value);
+		event.addAction(ea);
 		
 		ValueSignCheck vc=new ValueSignCheck();
 		vc.setValue(value);
+		event.addCheck(vc);
 		
 		MoneyEnoughCheck mec=new MoneyEnoughCheck();
 		mec.setValue(type, value);
+		event.addCheck(mec);
 		
-		event.addAction(ea);
 		if (UserPublicData.getUserReason(UserPublicData.getNowUser()).equals("tree")){
 			TreeReasonExpenditureAction trea=new TreeReasonExpenditureAction();
 			trea.setValue(reason, value);
@@ -64,8 +75,11 @@ public class CostLogic extends LogicWithUIMessage {
 			rea.setValue(reason, value);
 			event.addAction(rea);
 		}
-		event.addCheck(vc);
-		event.addCheck(mec);
+		
+		WriteDetailAction detail=new WriteDetailAction();
+		detail.setValue(new Date(), "expenditure", type, value, reason);
+		event.addAction(detail);
+		
 		event.doEvent();
 	}
 	
@@ -74,16 +88,20 @@ public class CostLogic extends LogicWithUIMessage {
 		
 		TransferAction ta=new TransferAction();
 		ta.setValue(from, to, value);
+		event.addAction(ta);
 		
 		ValueSignCheck vc=new ValueSignCheck();
 		vc.setValue(value);
+		event.addCheck(vc);
 		
 		MoneyEnoughCheck mec=new MoneyEnoughCheck();
 		mec.setValue(from, value);
-		
-		event.addAction(ta);
 		event.addCheck(mec);
-		event.addCheck(vc);
+		
+		WriteDetailAction detail=new WriteDetailAction();
+		detail.setValue(new Date(), "transfer", to, value, "");
+		detail.addExtra("from type", from);
+		event.addAction(detail);
 		
 		event.doEvent();
 	}
