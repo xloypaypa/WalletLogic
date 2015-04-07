@@ -2,7 +2,7 @@ package logic.action.detail;
 
 import type.ReasonTreeNodeType;
 
-public class TreeReasonSaveDetailAction extends ReasonSaveDetailAction {
+public class DetailSaveTreeReasonAction extends DetailSaveReasonAction {
 	
 	public void saveReason(String name){
 		ReasonTreeNodeType reason=(ReasonTreeNodeType) super.getReason(name);

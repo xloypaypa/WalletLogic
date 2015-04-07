@@ -1,11 +1,13 @@
-package database;
+package database.noPassword;
 
 import java.util.Vector;
 
+import database.HHD;
+import database.IDDataBase;
 import type.Type;
 import type.UserMessage;
 
-public class PublicDataBase extends AbstractDataBase {
+public class PublicDataBase extends NoPasswordDataBase implements IDDataBase {
 	
 	public PublicDataBase(){
 		this.aimPath=root+"/all user.txt";
@@ -50,10 +52,15 @@ public class PublicDataBase extends AbstractDataBase {
 		Vector <Vector <String>> file=this.loadNotEncryptedFile(aimPath);
 		
 		for (int i=0;i<file.size();i++){
-			UserMessage mu=new UserMessage();
+			Type mu=getNewType();
 			mu.solveTypeMessage(file.get(i));
 			ans.add(mu);
 		}
 		return ans;
+	}
+
+	@Override
+	public Type getNewType() {
+		return new UserMessage();
 	}
 }

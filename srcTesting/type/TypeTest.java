@@ -8,7 +8,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import tool.String2Vector;
-import database.DataBase;
+import database.password.DataBase;
 
 public class TypeTest {
 

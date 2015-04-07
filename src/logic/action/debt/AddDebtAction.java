@@ -27,7 +27,7 @@ public abstract class AddDebtAction extends AbstractAction {
 		this.rateType=rateType;
 	}
 
-	protected int getNewID() {
+	public static int getNewID() {
 		int max=-1;
 		Vector <Type> ret=((TypeKeeper) data.getData("debt")).getAllItem();
 		for (int i=0;i<ret.size();i++){

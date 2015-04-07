@@ -3,7 +3,7 @@ package logic.action.detail;
 import type.ReasonType;
 import data.ReasonKeeper;
 
-public class ReasonSaveDetailAction extends WriteDetailAction {
+public class DetailSaveReasonAction extends WriteDetailAction {
 	
 	public void saveReason(String name){
 		ReasonType reason = getReason(name);

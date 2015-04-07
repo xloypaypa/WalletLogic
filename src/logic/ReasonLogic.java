@@ -3,7 +3,7 @@ package logic;
 import java.util.Date;
 
 import data.IDDataKeeper;
-import logic.action.detail.ReasonSaveDetailAction;
+import logic.action.detail.DetailSaveReasonAction;
 import logic.action.detail.WriteDetailAction;
 import logic.action.reason.AddReasonAction;
 import logic.action.reason.RemoveReasonAction;
@@ -11,7 +11,7 @@ import logic.action.reason.RenameReasonAction;
 import logic.check.ExistCheck;
 import logic.check.NameCheck;
 import logic.event.CheckThenActionEvent;
-import logic.event.FirstDetailThenCheckFinallyAction;
+import logic.event.FirstCheckThenDetailFinallyAction;
 
 public class ReasonLogic extends LogicWithUIMessage {
 	
@@ -65,14 +65,14 @@ public class ReasonLogic extends LogicWithUIMessage {
 	}
 	
 	public void removeReason(String name){
-		FirstDetailThenCheckFinallyAction event=new FirstDetailThenCheckFinallyAction("remove reason");
+		FirstCheckThenDetailFinallyAction event=new FirstCheckThenDetailFinallyAction("remove reason");
 		
 		RemoveReasonAction rra=new RemoveReasonAction();
 		rra.setValue(name);
 		
 		event.addAction(rra);
 		
-		ReasonSaveDetailAction detail=new ReasonSaveDetailAction();
+		DetailSaveReasonAction detail=new DetailSaveReasonAction();
 		detail.setValue(new Date(), "remove reason", "", 0, name);
 		detail.saveReason(name);
 		event.setDetailAction(detail);

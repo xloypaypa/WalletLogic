@@ -7,7 +7,7 @@ import java.util.Vector;
 
 import type.DetailType;
 import type.Type;
-import database.DataBase;
+import database.password.DetailDataBase;
 
 public class DetailKeeper extends TypeKeeper implements DataKeeper {
 	
@@ -23,7 +23,7 @@ public class DetailKeeper extends TypeKeeper implements DataKeeper {
 
 	@Override
 	protected void loadDataBase() {
-		DataBase ans=new DataBase() {
+		DetailDataBase ans=new DetailDataBase() {
 			@Override
 			public Type getNewType() {
 				return new DetailType();
@@ -38,6 +38,13 @@ public class DetailKeeper extends TypeKeeper implements DataKeeper {
 		DetailType ans=new DetailType();
 		if (allType.size()==0) return ans;
 		else return (DetailType) allType.get(allType.size()-1);
+	}
+	
+	public void removeLastDetail() {
+		if (allType.size()==0) return ;
+		
+		allType.removeElementAt(allType.size()-1);
+		((DetailDataBase) this.db).removeLastItem();
 	}
 	
 	public Vector <DetailType> getRangeDetail(Date from,Date to){

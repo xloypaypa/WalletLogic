@@ -3,7 +3,7 @@ package data;
 import java.util.Vector;
 
 import database.AbstractDataBase;
-import database.PublicDataBase;
+import database.noPassword.PublicDataBase;
 import encryptionAlgorithm.MD5;
 import type.Type;
 import type.UserMessage;

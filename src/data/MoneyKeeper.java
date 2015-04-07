@@ -2,7 +2,7 @@ package data;
 
 import type.MoneyType;
 import type.Type;
-import database.DataBase;
+import database.password.DataBase;
 
 public class MoneyKeeper extends IDTypeKeeper {
 	

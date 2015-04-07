@@ -2,7 +2,7 @@ package data;
 
 import type.ReasonTreeNodeType;
 import type.Type;
-import database.DataBase;
+import database.password.DataBase;
 
 public class TreeReasonKeeper extends ReasonKeeper {
 	

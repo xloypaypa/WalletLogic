@@ -1,5 +1,6 @@
 package data;
 
+import database.IDDataBase;
 import type.Type;
 
 public abstract class IDTypeKeeper extends TypeKeeper implements IDDataKeeper {
@@ -13,7 +14,7 @@ public abstract class IDTypeKeeper extends TypeKeeper implements IDDataKeeper {
 		int pos=getPos(id);
 		if (pos==-1) return ;
 		allType.remove(pos);
-		db.removeItem(id);
+		((IDDataBase) db).removeItem(id);
 	}
 
 	@Override
@@ -22,7 +23,7 @@ public abstract class IDTypeKeeper extends TypeKeeper implements IDDataKeeper {
 		if (pos==-1) return ;
 		
 		allType.setElementAt(type, pos);
-		db.updateItem(id, type);
+		((IDDataBase) db).updateItem(id, type);
 	}
 
 	@Override

@@ -7,7 +7,7 @@ import java.util.Date;
 import org.junit.Test;
 
 import tool.String2Vector;
-import database.DataBase;
+import database.password.DataBase;
 
 public class DebtTypeTest {
 

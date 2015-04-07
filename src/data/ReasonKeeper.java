@@ -2,7 +2,7 @@ package data;
 
 import type.ReasonType;
 import type.Type;
-import database.DataBase;
+import database.password.DataBase;
 
 public class ReasonKeeper extends IDTypeKeeper {
 

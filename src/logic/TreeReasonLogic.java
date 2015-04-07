@@ -3,7 +3,7 @@ package logic;
 import java.util.Date;
 
 import data.IDDataKeeper;
-import logic.action.detail.TreeReasonSaveDetailAction;
+import logic.action.detail.DetailSaveTreeReasonAction;
 import logic.action.detail.WriteDetailAction;
 import logic.action.reason.AddTreeReasonAction;
 import logic.action.reason.RemoveTreeReasonAction;
@@ -12,7 +12,7 @@ import logic.check.ExistCheck;
 import logic.check.NameCheck;
 import logic.check.TreeReasonLoopCheck;
 import logic.event.CheckThenActionEvent;
-import logic.event.FirstDetailThenCheckFinallyAction;
+import logic.event.FirstCheckThenDetailFinallyAction;
 
 public class TreeReasonLogic extends ReasonLogic {
 	
@@ -35,14 +35,19 @@ public class TreeReasonLogic extends ReasonLogic {
 		event.addCheck(nc);
 		
 		WriteDetailAction detail=new WriteDetailAction();
-		detail.setValue(new Date(), "add reason", "", 0, name);
+		detail.setValue(new Date(), "add tree reason", "", 0, name);
+		detail.addExtra("operator name", name);
+		detail.addExtra("operator father", father);
+		detail.addExtra("operator min", min+"");
+		detail.addExtra("operator max", max+"");
+		detail.addExtra("operator rank", rank+"");
 		event.addAction(detail);
 		
 		event.doEvent();
 	}
 	
 	public void renameReason(String past,String name,String father,double min,double max,int rank){
-		FirstDetailThenCheckFinallyAction event=new FirstDetailThenCheckFinallyAction("rename reason");
+		FirstCheckThenDetailFinallyAction event=new FirstCheckThenDetailFinallyAction("rename reason");
 		
 		RenameTreeReasonAction rtra=new RenameTreeReasonAction();
 		rtra.setValue(past, name);
@@ -65,9 +70,15 @@ public class TreeReasonLogic extends ReasonLogic {
 		event.addCheck(nc);
 		event.addCheck(trlc);
 		
-		TreeReasonSaveDetailAction detail=new TreeReasonSaveDetailAction();
-		detail.setValue(new Date(), "rename reason", "", 0, name);
+		DetailSaveTreeReasonAction detail=new DetailSaveTreeReasonAction();
+		detail.setValue(new Date(), "rename tree reason", "", 0, name);
 		detail.saveReason(past);
+		detail.addExtra("operator past", past);
+		detail.addExtra("operator name", name);
+		detail.addExtra("operator father", father);
+		detail.addExtra("operator min", min+"");
+		detail.addExtra("operator max", max+"");
+		detail.addExtra("operator rank", rank+"");
 		event.setDetailAction(detail);
 		
 		event.doEvent();
@@ -75,15 +86,15 @@ public class TreeReasonLogic extends ReasonLogic {
 	
 	@Override
 	public void removeReason(String name) {
-		FirstDetailThenCheckFinallyAction event=new FirstDetailThenCheckFinallyAction("remove reason");
+		FirstCheckThenDetailFinallyAction event=new FirstCheckThenDetailFinallyAction("remove reason");
 		
 		RemoveTreeReasonAction rra=new RemoveTreeReasonAction();
 		rra.setValue(name);
 		
 		event.addAction(rra);
 		
-		TreeReasonSaveDetailAction detail=new TreeReasonSaveDetailAction();
-		detail.setValue(new Date(), "remove reason", "", 0, name);
+		DetailSaveTreeReasonAction detail=new DetailSaveTreeReasonAction();
+		detail.setValue(new Date(), "remove tree reason", "", 0, name);
 		detail.saveReason(name);
 		event.setDetailAction(detail);
 		

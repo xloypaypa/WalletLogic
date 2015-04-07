@@ -2,7 +2,7 @@ package data;
 
 import type.DebtType;
 import type.Type;
-import database.DataBase;
+import database.password.DataBase;
 
 public class DebtKeeper extends IDTypeKeeper {
 
