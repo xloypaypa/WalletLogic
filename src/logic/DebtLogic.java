@@ -21,9 +21,10 @@ import logic.event.FirstCheckThenDetailFinallyAction;
 public class DebtLogic extends LogicWithUIMessage {
 	
 	public void addBorrowing(String creditor,double value,String moneyType,Date deadline,double rate,String rateType){
+		int id=AddDebtAction.getNewID();
 		CheckThenActionEvent event=new CheckThenActionEvent("add borrowing");
 		AddDebtAction aba=new AddBorrowingAction();
-		aba.setValue(creditor, value, deadline, rate, rateType);
+		aba.setValue(id, creditor, value, deadline, rate, rateType);
 		event.addAction(aba);
 		
 		IncomeAction ia=new IncomeAction();
@@ -41,7 +42,7 @@ public class DebtLogic extends LogicWithUIMessage {
 		DetailSaveDebtAction detail=new DetailSaveDebtAction();
 		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
 		detail.setValue(new Date(), "add borrowing", moneyType, value, "");
-		detail.addExtra("debt id", AddDebtAction.getNewID()+"");
+		detail.addExtra("debt id", id+"");
 		detail.addExtra("operator creditor", creditor);
 		detail.addExtra("operator value", value+"");
 		detail.addExtra("operator money type", moneyType);
@@ -89,9 +90,10 @@ public class DebtLogic extends LogicWithUIMessage {
 	}
 	
 	public void addLoan(String creditor,double value,String moneyType,Date deadline,double rate,String rateType){
+		int id=AddDebtAction.getNewID();
 		CheckThenActionEvent event=new CheckThenActionEvent("add loan");
 		AddLoanAction aba=new AddLoanAction();
-		aba.setValue(creditor, value, deadline, rate, rateType);
+		aba.setValue(id,creditor, value, deadline, rate, rateType);
 		event.addAction(aba);
 		
 		ExpenditureAction ia=new ExpenditureAction();
@@ -113,7 +115,7 @@ public class DebtLogic extends LogicWithUIMessage {
 		WriteDetailAction detail=new WriteDetailAction();
 		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
 		detail.setValue(new Date(), "add loan", moneyType, value, "");
-		detail.addExtra("debt id", AddDebtAction.getNewID()+"");
+		detail.addExtra("debt id", id+"");
 		detail.addExtra("operator creditor", creditor);
 		detail.addExtra("operator value", value+"");
 		detail.addExtra("operator money type", moneyType);

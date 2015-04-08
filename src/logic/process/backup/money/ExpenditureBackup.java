@@ -1,9 +1,12 @@
 package logic.process.backup.money;
 
+import data.UserPublicData;
 import logic.action.money.IncomeAction;
-import logic.process.AbstractProcess;
+import logic.action.reason.ReasonExpenditureAction;
+import logic.action.reason.TreeReasonExpenditureAction;
+import logic.process.backup.AbstractBackup;
 
-public class ExpenditureBackup extends AbstractProcess {
+public class ExpenditureBackup extends AbstractBackup {
 
 	public ExpenditureBackup() {
 		super("expenditure");
@@ -14,6 +17,15 @@ public class ExpenditureBackup extends AbstractProcess {
 		IncomeAction ia=new IncomeAction();
 		ia.setValue(detail.getType(), detail.getValue());
 		ia.action();
+		
+		ReasonExpenditureAction rea;
+		if (UserPublicData.getUserType().equals("tree")) {
+			rea=new TreeReasonExpenditureAction();
+		}else{
+			rea=new ReasonExpenditureAction();
+		}
+		rea.setValue(detail.getReason(), -detail.getValue());
+		rea.action();
 	}
 
 }

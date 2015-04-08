@@ -2,9 +2,9 @@ package logic.process.backup.money;
 
 import logic.action.money.ExpenditureAction;
 import logic.action.money.IncomeAction;
-import logic.process.AbstractProcess;
+import logic.process.backup.AbstractBackup;
 
-public class TransferBackup extends AbstractProcess {
+public class TransferBackup extends AbstractBackup {
 	
 	public TransferBackup() {
 		super("transfer");

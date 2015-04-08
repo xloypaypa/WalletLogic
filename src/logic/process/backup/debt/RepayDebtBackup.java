@@ -5,9 +5,9 @@ import java.text.SimpleDateFormat;
 
 import data.DebtKeeper;
 import type.DebtType;
-import logic.process.AbstractProcess;
+import logic.process.backup.AbstractBackup;
 
-public class RepayDebtBackup extends AbstractProcess {
+public class RepayDebtBackup extends AbstractBackup {
 
 	public RepayDebtBackup(String processName) {
 		super(processName);
@@ -17,7 +17,7 @@ public class RepayDebtBackup extends AbstractProcess {
 	public void backup() {
 		String id=detail.getExtraMessage("past debt id");
 		DebtType debt=new DebtType();
-		debt.setCreditor(detail.getExtraMessage("past creditor"));
+		debt.setCreditor(detail.getExtraMessage("past debt creditor"));
 		
 		try {
 			SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
@@ -30,11 +30,16 @@ public class RepayDebtBackup extends AbstractProcess {
 		
 		debt.setDebtType(detail.getExtraMessage("past debt type"));
 		debt.setID(Integer.valueOf(detail.getExtraMessage("past debt id")));
-		debt.setRate(debt.getExtraMessage("past debt rate type"), Double.valueOf(debt.getExtraMessage("debt past rate")));
+		debt.setRate(detail.getExtraMessage("past debt rate type"), Double.valueOf(detail.getExtraMessage("past debt rate")));
 		debt.setValue(Double.valueOf(detail.getExtraMessage("past debt value")));
 		
 		DebtKeeper keeper=(DebtKeeper) data.getData("debt");
-		keeper.update(id, debt);
+		if (keeper.itemExist(id)){
+			keeper.update(id, debt);
+		}else{
+			keeper.add(debt);
+		}
+		
 	}
 
 }

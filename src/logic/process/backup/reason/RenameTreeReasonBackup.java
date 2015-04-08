@@ -1,9 +1,9 @@
 package logic.process.backup.reason;
 
 import logic.action.reason.RenameTreeReasonAction;
-import logic.process.AbstractProcess;
+import logic.process.backup.AbstractBackup;
 
-public class RenameTreeReasonBackup extends AbstractProcess {
+public class RenameTreeReasonBackup extends AbstractBackup {
 	
 	public RenameTreeReasonBackup() {
 		super("rename tree reason");

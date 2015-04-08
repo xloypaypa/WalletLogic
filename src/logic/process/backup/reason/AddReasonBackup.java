@@ -1,9 +1,9 @@
 package logic.process.backup.reason;
 
 import logic.action.reason.RemoveReasonAction;
-import logic.process.AbstractProcess;
+import logic.process.backup.AbstractBackup;
 
-public class AddReasonBackup extends AbstractProcess {
+public class AddReasonBackup extends AbstractBackup {
 	
 	public AddReasonBackup() {
 		super("add reason");

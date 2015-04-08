@@ -1,9 +1,9 @@
 package logic.process.backup.debt;
 
 import data.DebtKeeper;
-import logic.process.AbstractProcess;
+import logic.process.backup.AbstractBackup;
 
-public class AddDebtBackup extends AbstractProcess {
+public class AddDebtBackup extends AbstractBackup {
 
 	public AddDebtBackup(String processName) {
 		super(processName);

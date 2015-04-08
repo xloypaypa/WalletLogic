@@ -1,9 +1,17 @@
 package logic.process.backup.reason;
 
-import logic.action.reason.AddTreeReasonAction;
-import logic.process.AbstractProcess;
+import java.util.Vector;
 
-public class RemoveTreeReasonBackup extends AbstractProcess {
+import type.ExtraType;
+import type.ReasonTreeNodeType;
+import data.TreeReasonKeeper;
+import logic.action.reason.AddTreeReasonAction;
+import logic.action.reason.RenameTreeReasonAction;
+import logic.action.reason.TreeReasonExpenditureAction;
+import logic.action.reason.TreeReasonIncomeAction;
+import logic.process.backup.AbstractBackup;
+
+public class RemoveTreeReasonBackup extends AbstractBackup {
 	
 	public RemoveTreeReasonBackup() {
 		super("remove tree reason");
@@ -18,6 +26,27 @@ public class RemoveTreeReasonBackup extends AbstractProcess {
 				Double.valueOf(detail.getExtraMessage("past reason max")), 
 				Integer.valueOf(detail.getExtraMessage("past reason rank")));
 		atra.action();
+		
+		TreeReasonExpenditureAction trea=new TreeReasonExpenditureAction();
+		trea.setValue(detail.getReason(), Double.valueOf(detail.getExtraMessage("past reason expenditure")));
+		trea.action();
+		
+		TreeReasonIncomeAction tria=new TreeReasonIncomeAction();
+		tria.setValue(detail.getReason(), Double.valueOf(detail.getExtraMessage("past reason income")));
+		tria.action();
+		
+		RenameTreeReasonAction rtra=new RenameTreeReasonAction();
+		TreeReasonKeeper keeper=(TreeReasonKeeper) data.getData("reason");
+		Vector <ExtraType> all=detail.getExtra();
+		for (int i=0;i<all.size();i++){
+			if (all.get(i).getTitle().equals("have kid reason")){
+				ReasonTreeNodeType reason=(ReasonTreeNodeType) keeper.getItem(all.get(i).getMessage());
+				rtra.setValue(reason.getName(), reason.getName());
+				rtra.setValue(detail.getExtraMessage("past reason name"), 
+						reason.getMin(), reason.getMax(), reason.getRank());
+				rtra.action();
+			}
+		}
 	}
 
 }

@@ -1,6 +1,5 @@
 package logic.process;
 
-import data.DetailKeeper;
 import type.DetailType;
 import logic.LogicWithUIMessage;
 
@@ -22,12 +21,7 @@ public abstract class AbstractProcess extends LogicWithUIMessage {
 		this.detail=detail;
 	}
 	
-	public void process(){
-		this.backup();
-		
-		DetailKeeper keeper=new DetailKeeper();
-		keeper.removeLastDetail();
-	}
+	public abstract void process();
 	
 	public abstract void backup();
 

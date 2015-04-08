@@ -2,7 +2,6 @@ package logic.action.debt;
 
 import java.util.Date;
 import java.util.Vector;
-
 import logic.action.AbstractAction;
 import type.DebtType;
 import type.Type;
@@ -11,6 +10,7 @@ import data.TypeKeeper;
 
 public abstract class AddDebtAction extends AbstractAction {
 	
+	int id;
 	String creditor,rateType;
 	double value,rate;
 	Date deadline;
@@ -19,7 +19,8 @@ public abstract class AddDebtAction extends AbstractAction {
 		super("add debt");
 	}
 	
-	public void setValue(String credior,double value,Date deadline,double rate,String rateType){
+	public void setValue(int id, String credior,double value,Date deadline,double rate,String rateType){
+		this.id=id;
 		this.creditor=credior;
 		this.value=value;
 		this.deadline=deadline;
@@ -44,7 +45,7 @@ public abstract class AddDebtAction extends AbstractAction {
 		debt.setLastUpdateTime(new Date());
 		debt.setStartingTime(new Date());
 		debt.setValue(value);
-		debt.setID(getNewID());
+		debt.setID(id);
 	}
 
 }

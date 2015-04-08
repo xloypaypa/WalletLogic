@@ -1,9 +1,9 @@
 package logic.process.backup.money;
 
 import logic.action.money.RenameTypeAction;
-import logic.process.AbstractProcess;
+import logic.process.backup.AbstractBackup;
 
-public class RenameTypeBackup extends AbstractProcess {
+public class RenameTypeBackup extends AbstractBackup {
 	
 	public RenameTypeBackup() {
 		super("rename type");

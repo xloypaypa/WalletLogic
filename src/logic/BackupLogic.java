@@ -1,15 +1,14 @@
-package logic.process.backup;
+package logic;
 
 import java.util.Vector;
 
 import data.DetailKeeper;
 import type.DetailType;
-import logic.LogicWithUIMessage;
 import logic.process.AbstractProcess;
 
-public class Backup extends LogicWithUIMessage {
+public class BackupLogic extends LogicWithUIMessage {
 	
-	static Vector <AbstractProcess> allProcess=new Vector<>();
+	Vector <AbstractProcess> allProcess=new Vector<>();
 	
 	public void addBackup(AbstractProcess backup){
 		allProcess.addElement(backup);
@@ -22,7 +21,7 @@ public class Backup extends LogicWithUIMessage {
 		for (int i=0;i<allProcess.size();i++){
 			if (allProcess.get(i).isThisProcess(last.getEvent())){
 				allProcess.get(i).setDetail(last);
-				allProcess.get(i).backup();
+				allProcess.get(i).process();
 				flag=true;
 			}
 		}

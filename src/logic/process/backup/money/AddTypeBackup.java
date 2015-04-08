@@ -1,9 +1,9 @@
 package logic.process.backup.money;
 
 import logic.action.money.RemoveTypeAction;
-import logic.process.AbstractProcess;
+import logic.process.backup.AbstractBackup;
 
-public class AddTypeBackup extends AbstractProcess {
+public class AddTypeBackup extends AbstractBackup {
 	
 	public AddTypeBackup() {
 		super("add type");

@@ -1,9 +1,9 @@
 package logic.process.backup.reason;
 
 import logic.action.reason.RemoveTreeReasonAction;
-import logic.process.AbstractProcess;
+import logic.process.backup.AbstractBackup;
 
-public class AddTreeReasonBackup extends AbstractProcess {
+public class AddTreeReasonBackup extends AbstractBackup {
 	
 	public AddTreeReasonBackup() {
 		super("add tree reason");
