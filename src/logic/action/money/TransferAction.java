@@ -1,5 +1,6 @@
 package logic.action.money;
 
+import logic.LogicWithUIMessage;
 import logic.action.AbstractAction;
 import type.MoneyType;
 import data.MoneyKeeper;
@@ -27,6 +28,7 @@ public class TransferAction extends AbstractAction {
 		m2.setValue(m2.getValue()+value);
 		keeper.update(from, m1);
 		keeper.update(to, m2);
+		LogicWithUIMessage.setOKMessage();
 	}
 
 }

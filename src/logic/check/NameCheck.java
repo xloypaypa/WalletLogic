@@ -1,5 +1,7 @@
 package logic.check;
 
+import logic.LogicWithUIMessage;
+
 
 public class NameCheck extends AbstractCheck {
 	
@@ -16,12 +18,12 @@ public class NameCheck extends AbstractCheck {
 	@Override
 	public boolean check() {
 		if (value.length()==0){
-			setNeedInputError("type name");
-			message.UIAction();
+			LogicWithUIMessage.setNeedInputError("type name");
+			LogicWithUIMessage.UIAction();
 			return false;
 		}else if (value.contains("[")){
-			setLeftHalfBracketError();
-			message.UIAction();
+			LogicWithUIMessage.setLeftHalfBracketError();
+			LogicWithUIMessage.UIAction();
 			return false;
 		}
 		return true;

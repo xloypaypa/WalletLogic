@@ -1,5 +1,6 @@
 package logic.check;
 
+import logic.LogicWithUIMessage;
 import data.IDDataKeeper;
 
 public class ExistCheck extends AbstractCheck {
@@ -22,8 +23,8 @@ public class ExistCheck extends AbstractCheck {
 	@Override
 	public boolean check() {
 		if (keeper.itemExist(id)){
-			setExistentError("name");
-			message.UIAction();
+			LogicWithUIMessage.setExistentError("name");
+			LogicWithUIMessage.UIAction();
 			return false;
 		}
 		return true;

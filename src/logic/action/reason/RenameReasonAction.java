@@ -1,5 +1,6 @@
 package logic.action.reason;
 
+import logic.LogicWithUIMessage;
 import logic.action.AbstractAction;
 import type.ReasonType;
 import data.ReasonKeeper;
@@ -23,7 +24,7 @@ public class RenameReasonAction extends AbstractAction {
 		ReasonType reason=(ReasonType) keeper.getItem(past);
 		reason.setName(name);
 		keeper.update(past, reason);
-		setOKMessage();
+		LogicWithUIMessage.setOKMessage();
 	}
 
 }

@@ -1,7 +1,7 @@
 package logic;
 
 import static org.junit.Assert.*;
-import logicListener.LogicMessageListener;
+import logic.logicListener.LogicMessageListener;
 
 import org.junit.Before;
 import org.junit.Test;

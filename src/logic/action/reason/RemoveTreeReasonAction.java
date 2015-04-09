@@ -2,6 +2,7 @@ package logic.action.reason;
 
 import java.util.Vector;
 
+import logic.LogicWithUIMessage;
 import data.ReasonKeeper;
 import type.ReasonTreeNodeType;
 import type.Type;
@@ -22,7 +23,7 @@ public class RemoveTreeReasonAction extends RemoveReasonAction {
 			}
 		}
 		
-		setOKMessage();
+		LogicWithUIMessage.setOKMessage();
 	}
 
 }

@@ -1,5 +1,6 @@
 package logic.action.money;
 
+import logic.LogicWithUIMessage;
 import logic.action.AbstractAction;
 import type.MoneyType;
 import data.MoneyKeeper;
@@ -23,7 +24,7 @@ public class IncomeAction extends AbstractAction {
 		MoneyType money=(MoneyType) keeper.getItem(type);
 		money.setType(type); money.setValue(money.getValue()+value);
 		keeper.update(type, money);
-		setOKMessage();
+		LogicWithUIMessage.setOKMessage();
 	}
 
 }

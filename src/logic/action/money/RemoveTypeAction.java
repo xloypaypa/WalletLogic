@@ -1,5 +1,6 @@
 package logic.action.money;
 
+import logic.LogicWithUIMessage;
 import logic.action.AbstractAction;
 import data.MoneyKeeper;
 
@@ -19,7 +20,7 @@ public class RemoveTypeAction extends AbstractAction {
 	public void action() {
 		MoneyKeeper keeper=(MoneyKeeper) data.getData("money");
 		keeper.delete(type);
-		setOKMessage();
+		LogicWithUIMessage.setOKMessage();
 	}
 
 }

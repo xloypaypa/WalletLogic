@@ -1,5 +1,6 @@
 package logic.action.money;
 
+import logic.LogicWithUIMessage;
 import logic.action.AbstractAction;
 import type.MoneyType;
 import data.MoneyKeeper;
@@ -23,7 +24,7 @@ public class RenameTypeAction extends AbstractAction {
 		MoneyType money=(MoneyType) keeper.getItem(past);
 		money.setType(now);
 		keeper.update(past, money);
-		setOKMessage();
+		LogicWithUIMessage.setOKMessage();
 	}
 
 }

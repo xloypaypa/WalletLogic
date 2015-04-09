@@ -2,22 +2,21 @@ package logic.action.debt;
 
 import type.DebtType;
 import data.DebtKeeper;
+import logic.LogicWithUIMessage;
 import logic.action.AbstractAction;
 
 public class RepayDebtAction extends AbstractAction {
 	
-	int id;
-	String type;
-	double value;
+	protected int id;
+	protected double value;
 	
 	public RepayDebtAction() {
 		super("repay debt");
 	}
 	
-	public void setValue(int id,double value,String type){
+	public void setValue(int id,double value){
 		this.id=id;
 		this.value=value;
-		this.type=type;
 	}
 	
 	@Override
@@ -27,7 +26,7 @@ public class RepayDebtAction extends AbstractAction {
 		debt.repayment(value);
 		if (debt.getMaxRepay()>1e-3) keeper.update(id+"", debt);
 		else keeper.delete(id+"");
-		setOKMessage();
+		LogicWithUIMessage.setOKMessage();
 	}
 
 }

@@ -1,8 +1,8 @@
 package logic.check;
 
-import logic.LogicWithUIMessage;
+import logic.Logic;
 
-public abstract class AbstractCheck extends LogicWithUIMessage {
+public abstract class AbstractCheck extends Logic {
 	
 	String checkName;
 	

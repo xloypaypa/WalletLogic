@@ -1,5 +1,6 @@
 package logic.action.reason;
 
+import logic.LogicWithUIMessage;
 import type.ReasonTreeNodeType;
 import data.ReasonKeeper;
 
@@ -26,7 +27,7 @@ public class AddTreeReasonAction extends AddReasonAction {
 		reason.setName(name);
 		reason.setRank(rank);
 		keeper.add(reason);
-		setOKMessage();
+		LogicWithUIMessage.setOKMessage();
 	}
 
 }

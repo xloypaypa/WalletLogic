@@ -1,9 +1,9 @@
 package logic.process;
 
 import type.DetailType;
-import logic.LogicWithUIMessage;
+import logic.Logic;
 
-public abstract class AbstractProcess extends LogicWithUIMessage {
+public abstract class AbstractProcess extends Logic {
 	
 	String processName;
 	protected DetailType detail;
@@ -19,10 +19,8 @@ public abstract class AbstractProcess extends LogicWithUIMessage {
 	
 	public void setDetail(DetailType detail) {
 		this.detail=detail;
-	}
+	}	
 	
 	public abstract void process();
-	
-	public abstract void backup();
 
 }

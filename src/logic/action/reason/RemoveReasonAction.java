@@ -1,5 +1,6 @@
 package logic.action.reason;
 
+import logic.LogicWithUIMessage;
 import logic.action.AbstractAction;
 import data.ReasonKeeper;
 
@@ -19,7 +20,7 @@ public class RemoveReasonAction extends AbstractAction {
 	public void action() {
 		ReasonKeeper keeper=(ReasonKeeper) data.getData("reason");
 		keeper.delete(name);
-		setOKMessage();
+		LogicWithUIMessage.setOKMessage();
 	}
 
 }

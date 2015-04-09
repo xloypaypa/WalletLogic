@@ -2,6 +2,8 @@ package logic.check;
 
 import java.util.Date;
 
+import logic.LogicWithUIMessage;
+
 public class AfterTimeChecker extends AbstractCheck {
 	
 	Date time,now;
@@ -18,8 +20,8 @@ public class AfterTimeChecker extends AbstractCheck {
 	@Override
 	public boolean check() {
 		if (time.before(now)){
-			setErrorMessage("This time before now time!");
-			message.UIAction();
+			LogicWithUIMessage.setErrorMessage("This time before now time!");
+			LogicWithUIMessage.UIAction();
 			return false;
 		}
 		return true;

@@ -1,5 +1,6 @@
 package logic.check;
 
+import logic.LogicWithUIMessage;
 import data.TreeReasonKeeper;
 import type.ReasonTreeNodeType;
 
@@ -23,7 +24,8 @@ public class TreeReasonBudgetCheck extends AbstractCheck {
 		ReasonTreeNodeType now=(ReasonTreeNodeType) keeper.getItem(name);
 		while (true){
 			if (now.getExpenditure()+value > now.getMax()){
-				setErrorMessage("This reason is over-expenditure.");
+				LogicWithUIMessage.setErrorMessage("This reason is over-expenditure.");
+				LogicWithUIMessage.UIAction();
 				return false;
 			}
 			if (now.getFather().equals("root")) break;

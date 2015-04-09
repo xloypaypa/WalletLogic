@@ -6,7 +6,7 @@ import data.DetailKeeper;
 import type.DetailType;
 import logic.process.AbstractProcess;
 
-public class BackupLogic extends LogicWithUIMessage {
+public class BackupLogic extends Logic {
 	
 	Vector <AbstractProcess> allProcess=new Vector<>();
 	
@@ -26,8 +26,8 @@ public class BackupLogic extends LogicWithUIMessage {
 			}
 		}
 		if (!flag){
-			setErrorMessage("Last detail can't be removed.");
-			message.UIAction();
+			LogicWithUIMessage.setErrorMessage("Last detail can't be removed.");
+			LogicWithUIMessage.UIAction();
 		}
 	}
 

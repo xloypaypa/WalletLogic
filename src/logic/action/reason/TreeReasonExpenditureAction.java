@@ -1,5 +1,6 @@
 package logic.action.reason;
 
+import logic.LogicWithUIMessage;
 import type.ReasonTreeNodeType;
 import data.ReasonKeeper;
 
@@ -15,7 +16,7 @@ public class TreeReasonExpenditureAction extends ReasonExpenditureAction {
 			if (reason.getFather().equals("root")) break;
 			reason=(ReasonTreeNodeType) keeper.getItem(reason.getFather());
 		}
-		setOKMessage();
+		LogicWithUIMessage.setOKMessage();
 	}
 	
 }

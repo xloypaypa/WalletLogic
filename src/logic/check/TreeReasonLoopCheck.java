@@ -1,5 +1,6 @@
 package logic.check;
 
+import logic.LogicWithUIMessage;
 import data.ReasonKeeper;
 import type.ReasonTreeNodeType;
 
@@ -27,7 +28,8 @@ public class TreeReasonLoopCheck extends AbstractCheck {
 		now=(ReasonTreeNodeType) keeper.getItem(now.getFather());
 		while (true){
 			if (now.getName().equals(from)){
-				setErrorMessage("Reason shouldn't have loop.");
+				LogicWithUIMessage.setErrorMessage("Reason shouldn't have loop.");
+				LogicWithUIMessage.UIAction();
 				return false;
 			}
 			else if (now.getFather().equals("root")) break;

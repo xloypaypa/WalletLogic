@@ -1,5 +1,6 @@
 package logic.check;
 
+import logic.LogicWithUIMessage;
 import type.DebtType;
 import data.DebtKeeper;
 
@@ -21,8 +22,8 @@ public class DebtValueLimitCheck extends AbstractCheck {
 		DebtKeeper keeper=(DebtKeeper) data.getData("debt");
 		DebtType debt=(DebtType) keeper.getItem(id+"");
 		if (debt.getMaxRepay()<value){
-			setDebtRepayLimitError(value);
-			message.UIAction();
+			LogicWithUIMessage.setDebtRepayLimitError(value);
+			LogicWithUIMessage.UIAction();
 			return false;
 		}
 		return true;

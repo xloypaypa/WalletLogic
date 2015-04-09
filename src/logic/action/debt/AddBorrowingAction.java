@@ -1,5 +1,6 @@
 package logic.action.debt;
 
+import logic.LogicWithUIMessage;
 import type.DebtType;
 import data.DebtKeeper;
 
@@ -12,7 +13,7 @@ public class AddBorrowingAction extends AddDebtAction {
 		setDebtMessage(keeper, debt);
 		debt.setDebtType("borrow");
 		keeper.add(debt);
-		setOKMessage();
+		LogicWithUIMessage.setOKMessage();
 	}
 
 }

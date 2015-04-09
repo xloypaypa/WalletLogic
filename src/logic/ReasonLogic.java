@@ -13,7 +13,7 @@ import logic.check.NameCheck;
 import logic.event.CheckThenActionEvent;
 import logic.event.FirstCheckThenDetailFinallyAction;
 
-public class ReasonLogic extends LogicWithUIMessage {
+public class ReasonLogic extends Logic {
 	
 	public void addReason(String name){
 		CheckThenActionEvent event=new CheckThenActionEvent("add reason");

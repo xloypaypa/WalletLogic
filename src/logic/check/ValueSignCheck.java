@@ -1,5 +1,7 @@
 package logic.check;
 
+import logic.LogicWithUIMessage;
+
 public class ValueSignCheck extends AbstractCheck {
 	
 	double value;
@@ -15,8 +17,8 @@ public class ValueSignCheck extends AbstractCheck {
 	@Override
 	public boolean check() {
 		if (value<0){
-			setErrorMessage("The value should be more than zero.");
-			message.UIAction();
+			LogicWithUIMessage.setErrorMessage("The value should be more than zero.");
+			LogicWithUIMessage.UIAction();
 			return false;
 		}
 		else return true;

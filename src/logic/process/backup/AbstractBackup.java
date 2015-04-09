@@ -16,5 +16,7 @@ public abstract class AbstractBackup extends AbstractProcess {
 		DetailKeeper keeper=(DetailKeeper) data.getData("detail");
 		keeper.removeLastDetail();
 	}
+	
+	public abstract void backup();
 
 }

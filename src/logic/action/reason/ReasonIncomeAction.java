@@ -1,5 +1,6 @@
 package logic.action.reason;
 
+import logic.LogicWithUIMessage;
 import logic.action.AbstractAction;
 import type.ReasonType;
 import data.ReasonKeeper;
@@ -23,7 +24,7 @@ public class ReasonIncomeAction extends AbstractAction {
 		ReasonType reason=(ReasonType) keeper.getItem(name);
 		reason.setIncome(reason.getIncome()+value);
 		keeper.update(name, reason);
-		setOKMessage();
+		LogicWithUIMessage.setOKMessage();
 	}
 
 }

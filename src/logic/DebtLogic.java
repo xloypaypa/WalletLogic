@@ -59,7 +59,7 @@ public class DebtLogic extends LogicWithUIMessage {
 		FirstCheckThenDetailFinallyAction event=new FirstCheckThenDetailFinallyAction("repay borrowing");
 		
 		RepayDebtAction rba=new RepayDebtAction();
-		rba.setValue(id, value, moneyType);
+		rba.setValue(id, value);
 		event.addAction(rba);
 		
 		ExpenditureAction ea=new ExpenditureAction();
@@ -132,7 +132,7 @@ public class DebtLogic extends LogicWithUIMessage {
 		FirstCheckThenDetailFinallyAction event=new FirstCheckThenDetailFinallyAction("repay loan");
 		
 		RepayDebtAction rba=new RepayDebtAction();
-		rba.setValue(id, value, moneyType);
+		rba.setValue(id, value);
 		event.addAction(rba);
 		
 		IncomeAction ea=new IncomeAction();

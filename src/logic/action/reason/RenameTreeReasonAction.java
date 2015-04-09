@@ -2,6 +2,7 @@ package logic.action.reason;
 
 import java.util.Vector;
 
+import logic.LogicWithUIMessage;
 import type.ReasonTreeNodeType;
 import type.Type;
 import data.ReasonKeeper;
@@ -39,7 +40,7 @@ public class RenameTreeReasonAction extends RenameReasonAction {
 			}
 		}
 		
-		setOKMessage();
+		LogicWithUIMessage.setOKMessage();
 	}
 
 }

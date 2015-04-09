@@ -1,4 +1,4 @@
-package logicListener;
+package logic.logicListener;
 
 public abstract class LogicMessageListener implements LogicListener {
 	

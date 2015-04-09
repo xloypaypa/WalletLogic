@@ -3,9 +3,9 @@ package logic;
 import java.text.DecimalFormat;
 
 import translater.Strings;
-import logicListener.LogicMessageListener;
+import logic.logicListener.LogicMessageListener;
 
-public class LogicWithUIMessage extends Logic {
+public class LogicWithUIMessage {
 	protected static LogicMessageListener message=new LogicMessageListener() {
 		@Override
 		public void UIAction() {}
@@ -44,6 +44,10 @@ public class LogicWithUIMessage extends Logic {
 	public static void setOKMessage(){
 		message.setErrorFlag(false);
 		message.setMessage(Strings.getWord("ok."));
+	}
+	
+	public static void UIAction(){
+		message.UIAction();
 	}
 	
 }

@@ -1,8 +1,8 @@
 package logic.action;
 
-import logic.LogicWithUIMessage;
+import logic.Logic;
 
-public abstract class AbstractAction extends LogicWithUIMessage {
+public abstract class AbstractAction extends Logic {
 	
 	String actionName;
 	

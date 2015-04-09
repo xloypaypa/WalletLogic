@@ -13,7 +13,7 @@ import logic.check.NameCheck;
 import logic.event.CheckThenActionEvent;
 import logic.event.FirstCheckThenDetailFinallyAction;
 
-public class TypeLogic extends LogicWithUIMessage {
+public class TypeLogic extends Logic {
 	
 	public void addType(String type){
 		CheckThenActionEvent event=new CheckThenActionEvent("add type");
