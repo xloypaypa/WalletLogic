@@ -1,0 +1,253 @@
+[begin]
+[type name]
+detail type
+[type item]
+5
+[detail time]
+2015-04-11 01:34:44
+[detail event]
+add type
+[detail value]
+0.00
+[detail type]
+type one
+[detail reason]
+
+[end]
+
+[begin]
+[type name]
+detail type
+[type item]
+5
+[detail time]
+2015-04-11 01:34:44
+[detail event]
+add reason
+[detail value]
+0.00
+[detail type]
+
+[detail reason]
+reason one
+[end]
+
+[begin]
+[type name]
+detail type
+[type item]
+21
+[detail time]
+2015-04-11 01:34:44
+[detail event]
+add borrowing
+[detail value]
+100.00
+[detail type]
+type one
+[detail reason]
+
+[extra title]
+debt id
+[extra message]
+0
+[extra title]
+operator creditor
+[extra message]
+name
+[extra title]
+operator value
+[extra message]
+100.0
+[extra title]
+operator money type
+[extra message]
+type one
+[extra title]
+operator deadline
+[extra message]
+2100-01-01
+[extra title]
+operator rate
+[extra message]
+0.0
+[extra title]
+operator rate type
+[extra message]
+null
+[extra title]
+operator type
+[extra message]
+borrowing
+[end]
+
+[begin]
+[type name]
+detail type
+[type item]
+5
+[detail time]
+2015-04-11 01:34:44
+[detail event]
+expenditure
+[detail value]
+20.00
+[detail type]
+type one
+[detail reason]
+reason one
+[end]
+
+[begin]
+[type name]
+detail type
+[type item]
+7
+[detail time]
+2015-04-11 01:34:44
+[detail event]
+rename type
+[detail value]
+0.00
+[detail type]
+type two
+[detail reason]
+
+[extra title]
+past type name
+[extra message]
+type one
+[end]
+
+[begin]
+[type name]
+detail type
+[type item]
+7
+[detail time]
+2015-04-11 01:34:44
+[detail event]
+rename reason
+[detail value]
+0.00
+[detail type]
+
+[detail reason]
+reason two
+[extra title]
+past name
+[extra message]
+reason one
+[end]
+
+[begin]
+[type name]
+detail type
+[type item]
+5
+[detail time]
+2015-04-11 01:34:44
+[detail event]
+add reason
+[detail value]
+0.00
+[detail type]
+
+[detail reason]
+reason three
+[end]
+
+[begin]
+[type name]
+detail type
+[type item]
+11
+[detail time]
+2015-04-11 01:34:44
+[detail event]
+remove reason
+[detail value]
+0.00
+[detail type]
+
+[detail reason]
+reason three
+[extra title]
+past reason name
+[extra message]
+reason three
+[extra title]
+past reason income
+[extra message]
+0.0
+[extra title]
+past reason expenditure
+[extra message]
+0.0
+[end]
+
+[begin]
+[type name]
+detail type
+[type item]
+29
+[detail time]
+2015-04-11 01:34:44
+[detail event]
+repay borrowing
+[detail value]
+20.00
+[detail type]
+type two
+[detail reason]
+
+[extra title]
+past debt id
+[extra message]
+0
+[extra title]
+past debt creditor
+[extra message]
+name
+[extra title]
+past debt type
+[extra message]
+borrow
+[extra title]
+past debt deadline
+[extra message]
+2100-01-01
+[extra title]
+past debt update
+[extra message]
+2015-04-11
+[extra title]
+past debt starting
+[extra message]
+2015-04-11
+[extra title]
+past debt rate
+[extra message]
+0.0
+[extra title]
+past debt rate type
+[extra message]
+null
+[extra title]
+past debt value
+[extra message]
+100.0
+[extra title]
+operator id
+[extra message]
+0
+[extra title]
+operator value
+[extra message]
+20.0
+[extra title]
+operator money type
+[extra message]
+type two
+[end]
+

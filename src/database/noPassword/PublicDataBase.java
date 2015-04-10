@@ -14,11 +14,6 @@ public class PublicDataBase extends NoPasswordDataBase implements IDDataBase {
 	}
 
 	@Override
-	public void addItem(Type type) {
-		HHD.addWriteFile(aimPath, type.getAllMessage());
-	}
-
-	@Override
 	public void removeItem(String id) {
 		Vector <Type> now=this.load();
 		String ans=new String();
@@ -44,19 +39,6 @@ public class PublicDataBase extends NoPasswordDataBase implements IDDataBase {
 			}
 		}
 		HHD.writeFile(aimPath, ans);
-	}
-
-	@Override
-	public Vector<Type> load() {
-		Vector <Type> ans=new Vector <>();
-		Vector <Vector <String>> file=this.loadNotEncryptedFile(aimPath);
-		
-		for (int i=0;i<file.size();i++){
-			Type mu=getNewType();
-			mu.solveTypeMessage(file.get(i));
-			ans.add(mu);
-		}
-		return ans;
 	}
 
 	@Override

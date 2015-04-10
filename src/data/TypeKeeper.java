@@ -20,6 +20,12 @@ public abstract class TypeKeeper extends UserPublicData implements DataKeeper {
 	public Vector <Type> getAllItem(){
 		return allType;
 	}
+	
+	@Override
+	public void clean(){
+		releaseData();
+		db.clean();
+	}
 
 	@Override
 	public void add(Type type) {

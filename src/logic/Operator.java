@@ -2,22 +2,6 @@ package logic;
 
 import java.util.Date;
 
-import logic.process.backup.debt.AddBorrowingBackup;
-import logic.process.backup.debt.AddLoanBackup;
-import logic.process.backup.debt.RepayBorrowingBackup;
-import logic.process.backup.debt.RepayLoanBackup;
-import logic.process.backup.money.AddTypeBackup;
-import logic.process.backup.money.ExpenditureBackup;
-import logic.process.backup.money.IncomeBackup;
-import logic.process.backup.money.RemoveTypeBackup;
-import logic.process.backup.money.RenameTypeBackup;
-import logic.process.backup.money.TransferBackup;
-import logic.process.backup.reason.AddReasonBackup;
-import logic.process.backup.reason.AddTreeReasonBackup;
-import logic.process.backup.reason.RemoveReasonBackup;
-import logic.process.backup.reason.RemoveTreeReasonBackup;
-import logic.process.backup.reason.RenameReasonBackup;
-import logic.process.backup.reason.RenameTreeReasonBackup;
 import data.DebtKeeper;
 import data.DetailKeeper;
 import data.MoneyKeeper;
@@ -25,6 +9,7 @@ import data.ReasonKeeper;
 import data.TreeReasonKeeper;
 import data.UserData;
 import data.UserPublicData;
+import database.HHD;
 
 public class Operator extends Logic {
 	
@@ -33,6 +18,7 @@ public class Operator extends Logic {
 	private static ReasonLogic reason;
 	private static DebtLogic debt;
 	private static BackupLogic backup;
+	private static DoDetailLogic dodetail;
 	
 	public static void login(String name,String pass){
 		if (UserLogic.login(name, pass)){
@@ -46,35 +32,14 @@ public class Operator extends Logic {
 			cost=new CostLogic();
 			debt=new DebtLogic();
 			backup=new BackupLogic();
-			
-			backup.addBackup(new AddBorrowingBackup());
-			backup.addBackup(new AddLoanBackup());
-			
-			backup.addBackup(new RepayBorrowingBackup());
-			backup.addBackup(new RepayLoanBackup());
-			
-			backup.addBackup(new ExpenditureBackup());
-			backup.addBackup(new IncomeBackup());
-			backup.addBackup(new TransferBackup());
-			
-			backup.addBackup(new AddTypeBackup());
-			backup.addBackup(new RemoveTypeBackup());
-			backup.addBackup(new RenameTypeBackup());
+			dodetail=new DoDetailLogic();
 			
 			if (UserPublicData.getUserReason(name).equals("tree")){
 				reason=new TreeReasonLogic();
 				data.addDataKeeper(new TreeReasonKeeper());
-				
-				backup.addBackup(new AddTreeReasonBackup());
-				backup.addBackup(new RemoveTreeReasonBackup());
-				backup.addBackup(new RenameTreeReasonBackup());
 			}else{
 				reason=new ReasonLogic();
 				data.addDataKeeper(new ReasonKeeper());
-				
-				backup.addBackup(new AddReasonBackup());
-				backup.addBackup(new RemoveReasonBackup());
-				backup.addBackup(new RenameReasonBackup());
 			}
 			
 		}
@@ -145,7 +110,17 @@ public class Operator extends Logic {
 	}
 	
 	public static void backup(){
-		backup.backup();
+		backup.runProcess();
+	}
+	
+	public static void doDetail(String path){
+		dodetail.setPath(path);
+	}
+	
+	public static void export(String path){
+		HHD.cleanFile(path+"/detail.txt");
+		DetailKeeper keeper=(DetailKeeper) data.getData("detail");
+		keeper.export(path+"/detail.txt");
 	}
 	
 }

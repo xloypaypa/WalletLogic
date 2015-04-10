@@ -24,7 +24,7 @@ public class DoAddBorrowingDetail extends AbstractDoDetail {
 		AddBorrowingWithTimeAction aba=new AddBorrowingWithTimeAction();
 		try {
 			SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
-			aba.setValue(Integer.valueOf(detail.getTypeMessage("debt id")),
+			aba.setValue(Integer.valueOf(detail.getExtraMessage("debt id")),
 					detail.getExtraMessage("operator creditor"),
 					detail.getValue(),
 					sdf.parse(detail.getExtraMessage("operator deadline")),

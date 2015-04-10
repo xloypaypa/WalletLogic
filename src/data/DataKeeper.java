@@ -8,4 +8,5 @@ public interface DataKeeper {
 	public void add(Type type);
 	public void loadData();
 	public void releaseData();
+	public void clean();
 }

@@ -7,6 +7,7 @@ import java.util.Vector;
 
 import type.DetailType;
 import type.Type;
+import database.noPassword.NoPasswordDataBase;
 import database.password.DetailDataBase;
 
 public class DetailKeeper extends TypeKeeper implements DataKeeper {
@@ -73,6 +74,41 @@ public class DetailKeeper extends TypeKeeper implements DataKeeper {
 		for (int i=0;i<a.length;i++){
 			allType.addElement(a[i]);
 		}
+	}
+	
+	public void export(String path){
+		NoPasswordDataBase db=new NoPasswordDataBase() {
+			@Override
+			public Type getNewType() {return null;}
+			
+			@Override
+			public void addItem(Type type) {
+				aimPath=path;
+				super.addItem(type);
+			}
+		};
+		
+		for (int i=0;i<allType.size();i++){
+			db.addItem(allType.get(i));
+		}
+	}
+	
+	public void load(String path){
+		this.releaseData();
+		NoPasswordDataBase db=new NoPasswordDataBase() {
+			
+			@Override
+			public Type getNewType() {
+				return new DetailType();
+			}
+			
+			@Override
+			public Vector<Type> load() {
+				aimPath=path;
+				return super.load();
+			}
+		};
+		allType=db.load();
 	}
 
 }

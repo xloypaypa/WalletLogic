@@ -24,7 +24,7 @@ public class DoAddLoanDetail extends AbstractDoDetail {
 		AddLoanWithTimeAction aba=new AddLoanWithTimeAction();
 		try {
 			SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
-			aba.setValue(Integer.valueOf(detail.getTypeMessage("debt id")),
+			aba.setValue(Integer.valueOf(detail.getExtraMessage("debt id")),
 					detail.getExtraMessage("operator creditor"),
 					detail.getValue(),
 					sdf.parse(detail.getExtraMessage("operator deadline")),

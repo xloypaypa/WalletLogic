@@ -15,6 +15,18 @@ public class UserData {
 		}
 	}
 	
+	public void cleanAllData(){
+		for (int i=0;i<allData.size();i++){
+			allData.get(i).clean();
+		}
+	}
+	
+	public void releaseAllData(){
+		for (int i=0;i<allData.size();i++){
+			allData.get(i).releaseData();
+		}
+	}
+	
 	public void reloadAllData(){
 		for (int i=0;i<allData.size();i++){
 			allData.get(i).releaseData();
@@ -30,11 +42,28 @@ public class UserData {
 		}
 	}
 	
+	public void releaseData(String dataName){
+		for (int i=0;i<this.allData.size();i++){
+			if (this.allData.get(i).isThisKeeper(dataName)){
+				allData.get(i).releaseData();
+			}
+		}
+	}
+	
 	public void reloadData(String dataName){
 		for (int i=0;i<this.allData.size();i++){
 			if (this.allData.get(i).isThisKeeper(dataName)){
 				allData.get(i).releaseData();
 				allData.get(i).loadData();
+			}
+		}
+	}
+	
+	public void cleanData(String dataName){
+		for (int i=0;i<this.allData.size();i++){
+			if (this.allData.get(i).isThisKeeper(dataName)){
+				allData.get(i).releaseData();
+				allData.get(i).clean();
 			}
 		}
 	}
