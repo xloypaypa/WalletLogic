@@ -123,4 +123,10 @@ public class Operator extends Logic {
 		keeper.export(path+"/detail.txt");
 	}
 	
+	public static void exportExcel(String path){
+		HHD.cleanFile(path+"/detail.xls");
+		DetailKeeper keeper=(DetailKeeper) data.getData("detail");
+		keeper.exportExcel(path+"/detail.xls");
+	}
+	
 }
