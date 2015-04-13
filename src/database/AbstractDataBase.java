@@ -22,6 +22,10 @@ public abstract class AbstractDataBase {
 		this.aimPath=AbstractDataBase.root+"/"+file;
 	}
 	
+	public String getAimFile(){
+		return this.aimPath;
+	}
+	
 	public void clean(){
 		HHD.cleanFile(aimPath);
 	}

@@ -41,7 +41,6 @@ public class Operator extends Logic {
 				reason=new ReasonLogic();
 				data.addDataKeeper(new ReasonKeeper());
 			}
-			
 		}
 	}
 	

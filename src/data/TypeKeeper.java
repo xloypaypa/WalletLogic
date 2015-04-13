@@ -21,6 +21,10 @@ public abstract class TypeKeeper extends UserPublicData implements DataKeeper {
 		return allType;
 	}
 	
+	final public String getDataFilePath(){
+		return db.getAimFile();
+	}
+	
 	@Override
 	public void clean(){
 		releaseData();
