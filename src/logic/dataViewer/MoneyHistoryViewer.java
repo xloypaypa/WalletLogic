@@ -18,12 +18,13 @@ public class MoneyHistoryViewer extends Logic {
 		Vector <MoneyHistoryType> ans=new Vector<MoneyHistoryType>();
 		for (int i=0;i<detail.size();i++){
 			DetailType now=(DetailType) detail.get(i);
-			if (now.getEvent().equals("add money type")||now.getEvent().equals("pack money type")){
+			if (now.getEvent().equals("add type")||now.getEvent().equals("pack money type")){
 				MoneyHistoryType mht=new MoneyHistoryType(now.getType(), now.getValue());
 				mht.addHistory(now);
 				ans.addElement(mht);
 			}else if (now.getEvent().equals("rename type")){
-				int pos=getAimType(now.getExtraMessage("past name"),ans);
+				int pos=getAimType(now.getExtraMessage("past type name"),ans);
+				System.out.println(now.getExtraMessage("past type name"));
 				ans.get(pos).addHistory(now);
 			}else if (now.getEvent().equals("transfer")){
 				int pos=getAimType(now.getType(), ans);
@@ -47,6 +48,7 @@ public class MoneyHistoryViewer extends Logic {
 	
 	private int getAimType(String type, Vector <MoneyHistoryType> history){
 		for (int i=0;i<history.size();i++){
+			System.out.println("item "+history.get(i).getName());
 			if (history.get(i).getName().equals(type)) return i;
 		}
 		return -1;

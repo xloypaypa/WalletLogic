@@ -12,6 +12,8 @@ public class ReasonTest extends OperatorTest {
 	@Test
 	public void testBaseFeature() {
 		Operator.addReason("reason one");
+		Operator.data.releaseAllData();
+		Operator.login("name", "pass");
 		ReasonKeeper keeper=(ReasonKeeper) Operator.data.getData("reason");
 		assertTrue(keeper.itemExist("reason one"));
 		Operator.renameReason("reason one", "reason two");

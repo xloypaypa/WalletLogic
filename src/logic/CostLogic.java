@@ -12,6 +12,7 @@ import logic.action.reason.ReasonIncomeAction;
 import logic.action.reason.TreeReasonExpenditureAction;
 import logic.action.reason.TreeReasonIncomeAction;
 import logic.check.MoneyEnoughCheck;
+import logic.check.TransferSameTypeCheck;
 import logic.check.TreeReasonBudgetCheck;
 import logic.check.ValueSignCheck;
 import logic.event.CheckThenActionEvent;
@@ -93,6 +94,10 @@ public class CostLogic extends LogicWithUIMessage {
 		ValueSignCheck vc=new ValueSignCheck();
 		vc.setValue(value);
 		event.addCheck(vc);
+		
+		TransferSameTypeCheck tstc=new TransferSameTypeCheck();
+		tstc.setValue(from, to);
+		event.addCheck(tstc);
 		
 		MoneyEnoughCheck mec=new MoneyEnoughCheck();
 		mec.setValue(from, value);

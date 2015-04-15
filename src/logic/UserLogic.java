@@ -54,7 +54,6 @@ public class UserLogic extends LogicWithUIMessage {
 			user.setReason(reason);
 			UserPublicData.addUser(user);
 			setOKMessage();
-			message.UIAction();
 			return true;
 		}
 	}

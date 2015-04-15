@@ -26,7 +26,6 @@ public class Operator extends Logic {
 			data.addDataKeeper(new MoneyKeeper());
 			data.addDataKeeper(new DebtKeeper());
 			data.addDataKeeper(new DetailKeeper());
-			data.loadAllData();
 			
 			type=new TypeLogic();
 			cost=new CostLogic();
@@ -41,6 +40,8 @@ public class Operator extends Logic {
 				reason=new ReasonLogic();
 				data.addDataKeeper(new ReasonKeeper());
 			}
+			
+			data.loadAllData();
 		}
 	}
 	
