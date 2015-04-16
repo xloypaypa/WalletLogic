@@ -1,4 +1,4 @@
-package logic.dataViewer;
+package dataViewer;
 
 import java.util.Vector;
 

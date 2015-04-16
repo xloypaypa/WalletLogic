@@ -11,7 +11,7 @@ public class AddBorrowingAction extends AddDebtAction {
 		DebtKeeper keeper=(DebtKeeper) data.getData("debt");
 		DebtType debt=new DebtType();
 		setDebtMessage(keeper, debt);
-		debt.setDebtType("borrow");
+		debt.setDebtType("borrowing");
 		keeper.add(debt);
 		LogicWithUIMessage.setOKMessage();
 	}

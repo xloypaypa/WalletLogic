@@ -38,7 +38,7 @@ public class LogicWithUIMessage {
 	public static void setDebtRepayLimitError(double value){
 		message.setErrorFlag(true);
 		DecimalFormat df=new DecimalFormat("0.00");
-		message.setMessage(Strings.getWord("This debt onlu need")+df.format(value)+".");
+		message.setMessage(Strings.getWord("This debt onlu need ")+df.format(value)+".");
 	}
 	
 	public static void setOKMessage(){

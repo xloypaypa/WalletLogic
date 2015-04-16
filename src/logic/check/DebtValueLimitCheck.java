@@ -22,7 +22,7 @@ public class DebtValueLimitCheck extends AbstractCheck {
 		DebtKeeper keeper=(DebtKeeper) data.getData("debt");
 		DebtType debt=(DebtType) keeper.getItem(id+"");
 		if (debt.getMaxRepay()<value){
-			LogicWithUIMessage.setDebtRepayLimitError(value);
+			LogicWithUIMessage.setDebtRepayLimitError(debt.getMaxRepay());
 			LogicWithUIMessage.UIAction();
 			return false;
 		}
