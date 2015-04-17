@@ -1,17 +1,14 @@
-package logic.analysis;
+package dataViewer;
 
 import java.util.Vector;
 
-import data.ReasonKeeper;
 import type.ReasonTreeNodeType;
 import type.ReasonType;
 import type.Type;
-import logic.Logic;
 
-public class TreeReasonSolver extends Logic {
+public class TreeReasonViewer extends IDDataViewer {
 	
-	public static double solveIncome(ReasonTreeNodeType node) {
-		ReasonKeeper keeper=(ReasonKeeper) data.getData("reason");
+	public double solveIncome(ReasonTreeNodeType node) {
 		double ans=node.getIncome();
 		Vector <Integer> kids=node.getKid();
 		for (int i=0;i<kids.size();i++){
@@ -21,8 +18,7 @@ public class TreeReasonSolver extends Logic {
 		return ans;
 	}
 	
-	public static double solveExpenditure(ReasonTreeNodeType node) {
-		ReasonKeeper keeper=(ReasonKeeper) data.getData("reason");
+	public double solveExpenditure(ReasonTreeNodeType node) {
 		double ans=node.getExpenditure();
 		Vector <Integer> kids=node.getKid();
 		for (int i=0;i<kids.size();i++){
@@ -32,8 +28,7 @@ public class TreeReasonSolver extends Logic {
 		return ans;
 	}
 	
-	public static Vector <ReasonTreeNodeType> getRoots(){
-		ReasonKeeper keeper=(ReasonKeeper) data.getData("reason");
+	public Vector <ReasonTreeNodeType> getRoots(){
 		Vector <ReasonTreeNodeType> ans=new Vector<ReasonTreeNodeType>();
 		Vector<Type> allType=keeper.getAllItem();
 		for (int i=0;i<allType.size();i++){
@@ -44,8 +39,7 @@ public class TreeReasonSolver extends Logic {
 		return ans;
 	}
 	
-	public static Vector <ReasonTreeNodeType> getKid(ReasonTreeNodeType now){
-		ReasonKeeper keeper=(ReasonKeeper) data.getData("reason");
+	public Vector <ReasonTreeNodeType> getKid(ReasonTreeNodeType now){
 		Vector <ReasonTreeNodeType> ans=new Vector<ReasonTreeNodeType>();
 		Vector<Type> allReason=keeper.getAllItem();
 		Vector <Integer> kids=now.getKid();

@@ -2,7 +2,7 @@ package logic.action.reason;
 
 import logic.LogicWithUIMessage;
 import type.ReasonTreeNodeType;
-import data.ReasonKeeper;
+import data.TreeReasonKeeper;
 
 public class AddTreeReasonAction extends AddReasonAction {
 	
@@ -19,7 +19,7 @@ public class AddTreeReasonAction extends AddReasonAction {
 
 	@Override
 	public void action() {
-		ReasonKeeper keeper=(ReasonKeeper) data.getData("reason");
+		TreeReasonKeeper keeper=(TreeReasonKeeper) data.getData("reason");
 		ReasonTreeNodeType reason=new ReasonTreeNodeType();
 		reason.setFatherName(father);
 		reason.setMax(max);
@@ -27,6 +27,7 @@ public class AddTreeReasonAction extends AddReasonAction {
 		reason.setName(name);
 		reason.setRank(rank);
 		keeper.add(reason);
+		keeper.buildTree();
 		LogicWithUIMessage.setOKMessage();
 	}
 

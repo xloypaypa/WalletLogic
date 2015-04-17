@@ -4,6 +4,7 @@ import java.util.Vector;
 
 import data.MoneyKeeper;
 import data.TreeReasonKeeper;
+import dataViewer.TreeReasonViewer;
 import type.MoneyType;
 import type.ReasonTreeNodeType;
 import type.Type;
@@ -23,7 +24,8 @@ public class Analyst extends Logic {
 			money+=((MoneyType) allTypes.get(i)).getValue();
 		}
 		
-		Vector <ReasonTreeNodeType> roots=TreeReasonSolver.getRoots();
+		TreeReasonViewer tree=new TreeReasonViewer(); tree.loadData("reason");
+		Vector <ReasonTreeNodeType> roots=tree.getRoots();
 		double sum;
 		
 		for (level=5;level>=0;level--){
@@ -51,7 +53,8 @@ public class Analyst extends Logic {
 
 	private double getValue(ReasonTreeNodeType now) {
 		double ans=0;
-		Vector <ReasonTreeNodeType> kid=TreeReasonSolver.getKid(now);
+		TreeReasonViewer tree=new TreeReasonViewer(); tree.loadData("reason");
+		Vector <ReasonTreeNodeType> kid=tree.getKid(now);
 		
 		for (int i=0;i<kid.size();i++){
 			ans+=getValue(kid.get(i));
