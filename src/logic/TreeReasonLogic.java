@@ -11,6 +11,7 @@ import logic.action.reason.RenameTreeReasonAction;
 import logic.check.ExistCheck;
 import logic.check.NameCheck;
 import logic.check.TreeReasonLoopCheck;
+import logic.check.TreeReasonMinMaxCheck;
 import logic.event.CheckThenActionEvent;
 import logic.event.FirstCheckThenDetailFinallyAction;
 
@@ -26,6 +27,9 @@ public class TreeReasonLogic extends ReasonLogic {
 		NameCheck nc=new NameCheck();
 		nc.setName(name);
 		
+		TreeReasonMinMaxCheck trmmc=new TreeReasonMinMaxCheck();
+		trmmc.setValue(min, max);
+		
 		ExistCheck ec=new ExistCheck();
 		ec.setKeeper((IDDataKeeper) data.getData("reason"));
 		ec.setID(name);
@@ -33,6 +37,7 @@ public class TreeReasonLogic extends ReasonLogic {
 		event.addAction(ara);
 		event.addCheck(ec);
 		event.addCheck(nc);
+		event.addCheck(trmmc);
 		
 		WriteDetailAction detail=new WriteDetailAction();
 		detail.setValue(new Date(), "add tree reason", "", 0, name);

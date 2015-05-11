@@ -48,6 +48,17 @@ public class TreeReasonTest extends TreeOperatorTest {
 	}
 	
 	@Test
+	public void testMinMax() {
+		TreeReasonKeeper keeper=(TreeReasonKeeper) Operator.data.getData("reason");
+		Operator.addTreeReason("reason one", "root", 1, 0, 0);
+		assertFalse(keeper.itemExist("reason one"));
+		
+		Operator.addTreeReason("reason one", "root", 0, 1, 0);
+		Operator.addTreeReason("root", "reason one", 0, 1, 0);
+		assertNotEquals("ok.", LogicWithUIMessage.message.getMessage());
+	}
+	
+	@Test
 	public void testError(){
 		Operator.addTreeReason("reason one", "root", 0, 0, 0);
 		Operator.addTreeReason("reason two", "reason one", 0, 0, 0);
