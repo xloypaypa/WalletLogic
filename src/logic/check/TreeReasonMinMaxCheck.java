@@ -1,5 +1,7 @@
 package logic.check;
 
+import logic.LogicWithUIMessage;
+
 
 public class TreeReasonMinMaxCheck extends AbstractCheck {
 	
@@ -16,7 +18,12 @@ public class TreeReasonMinMaxCheck extends AbstractCheck {
 
 	@Override
 	public boolean check() {
-		return min<=max;
+		if (min>max) {
+			LogicWithUIMessage.setErrorMessage("Min expenditure should be lower than the max.");
+			LogicWithUIMessage.UIAction();
+			return false;
+		}
+		return true;
 	}
 
 }
