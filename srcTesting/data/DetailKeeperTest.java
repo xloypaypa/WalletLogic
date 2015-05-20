@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import database.operator.DetailKeeper;
 import tool.TimeGeter;
 import type.DetailType;
 

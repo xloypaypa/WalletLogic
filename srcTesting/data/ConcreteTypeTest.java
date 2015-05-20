@@ -4,6 +4,10 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import database.operator.DebtKeeper;
+import database.operator.DetailKeeper;
+import database.operator.MoneyKeeper;
+import database.operator.ReasonKeeper;
 import type.MoneyType;
 
 public class ConcreteTypeTest extends TypeTest {

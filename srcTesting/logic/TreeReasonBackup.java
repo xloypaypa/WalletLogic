@@ -4,8 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import database.operator.ReasonKeeper;
 import type.ReasonTreeNodeType;
-import data.ReasonKeeper;
 
 public class TreeReasonBackup extends TreeOperatorTest {
 	

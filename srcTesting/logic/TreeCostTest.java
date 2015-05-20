@@ -4,8 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import database.operator.TreeReasonKeeper;
 import type.ReasonTreeNodeType;
-import data.TreeReasonKeeper;
 
 public class TreeCostTest extends TreeOperatorTest {
 	
@@ -22,14 +22,14 @@ public class TreeCostTest extends TreeOperatorTest {
 		assertEquals(100, reason.getIncome(), 1e-3);
 		
 		Operator.expenditure("type one", 100, "reason two");
-		assertNotEquals("ok.", LogicWithUIMessage.message.getMessage());
+		assertNotEquals("ok.", ListenerManager.message.getMessage());
 		reason=(ReasonTreeNodeType) keeper.getItem("reason one");
 		assertEquals(0, reason.getExpenditure(), 1e-3);
 		reason=(ReasonTreeNodeType) keeper.getItem("reason two");
 		assertEquals(0, reason.getExpenditure(), 1e-3);
 		
 		Operator.expenditure("type one", 50, "reason two");
-		assertEquals("ok.", LogicWithUIMessage.message.getMessage());
+		assertEquals("ok.", ListenerManager.message.getMessage());
 		reason=(ReasonTreeNodeType) keeper.getItem("reason one");
 		assertEquals(50, reason.getExpenditure(), 1e-3);
 		reason=(ReasonTreeNodeType) keeper.getItem("reason two");

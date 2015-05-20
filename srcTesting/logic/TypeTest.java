@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import data.MoneyKeeper;
+import database.operator.MoneyKeeper;
 
 public class TypeTest extends OperatorTest {
 
@@ -24,12 +24,12 @@ public class TypeTest extends OperatorTest {
 	@Test
 	public void testError(){
 		Operator.addMoneyType("[type]");
-		assertEquals("Please don't use '['!", LogicWithUIMessage.message.getMessage());
+		assertEquals("Please don't use '['!", ListenerManager.message.getMessage());
 		Operator.addMoneyType("");
-		assertEquals("Please input type name.", LogicWithUIMessage.message.getMessage());
+		assertEquals("Please input type name.", ListenerManager.message.getMessage());
 		Operator.addMoneyType("type one");
 		Operator.addMoneyType("type one");
-		assertEquals("This name have exist.", LogicWithUIMessage.message.getMessage());
+		assertEquals("This name have exist.", ListenerManager.message.getMessage());
 	}
 
 }

@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import database.viewer.TreeReasonViewer;
 import type.ReasonTreeNodeType;
 import logic.Operator;
 import logic.TreeOperatorTest;

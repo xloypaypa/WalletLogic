@@ -3,9 +3,9 @@ package logic;
 import org.junit.After;
 import org.junit.Before;
 
-import data.UserPublicData;
 import database.AbstractDataBase;
 import database.HHD;
+import database.operator.UserPublicData;
 
 public class LogicTest {
 

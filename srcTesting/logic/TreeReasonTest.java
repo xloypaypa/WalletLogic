@@ -4,8 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import database.operator.TreeReasonKeeper;
 import type.ReasonTreeNodeType;
-import data.TreeReasonKeeper;
 
 public class TreeReasonTest extends TreeOperatorTest {
 
@@ -55,22 +55,22 @@ public class TreeReasonTest extends TreeOperatorTest {
 		
 		Operator.addTreeReason("reason one", "root", 0, 1, 0);
 		Operator.addTreeReason("root", "reason one", 0, 1, 0);
-		assertNotEquals("ok.", LogicWithUIMessage.message.getMessage());
+		assertNotEquals("ok.", ListenerManager.message.getMessage());
 	}
 	
 	@Test
 	public void testError(){
 		Operator.addTreeReason("reason one", "root", 0, 0, 0);
 		Operator.addTreeReason("reason two", "reason one", 0, 0, 0);
-		assertEquals("ok.", LogicWithUIMessage.message.getMessage());
+		assertEquals("ok.", ListenerManager.message.getMessage());
 		Operator.renameTreeReason("reason one", "reason one", "reason two", 0, 0, 0);
-		assertEquals("Reason shouldn't have loop.", LogicWithUIMessage.message.getMessage());
+		assertEquals("Reason shouldn't have loop.", ListenerManager.message.getMessage());
 		
 		Operator.renameTreeReason("reason one", "reason one", "root", 0, 0, 0);
-		assertEquals("ok.", LogicWithUIMessage.message.getMessage());
+		assertEquals("ok.", ListenerManager.message.getMessage());
 		
 		Operator.renameTreeReason("reason one", "root", "root", 0, 0, 0);
-		assertEquals("This name have exist.", LogicWithUIMessage.message.getMessage());
+		assertEquals("This name have exist.", ListenerManager.message.getMessage());
 	}
 
 }

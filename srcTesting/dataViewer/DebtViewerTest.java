@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import database.viewer.DebtViewer;
 import tool.TimeGeter;
 import logic.Operator;
 import logic.OperatorTest;

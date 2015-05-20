@@ -10,6 +10,8 @@ import type.MoneyType;
 import type.UserMessage;
 import database.AbstractDataBase;
 import database.HHD;
+import database.operator.MoneyKeeper;
+import database.operator.UserPublicData;
 import encryptionAlgorithm.MD5;
 
 public class TypeTest extends DataTest {

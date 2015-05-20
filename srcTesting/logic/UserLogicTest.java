@@ -1,6 +1,7 @@
 package logic;
 
 import static org.junit.Assert.*;
+import logic.logic.UserLogic;
 import logic.logicListener.LogicMessageListener;
 
 import org.junit.Before;

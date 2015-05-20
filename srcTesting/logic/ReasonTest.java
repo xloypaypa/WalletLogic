@@ -4,8 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import database.operator.ReasonKeeper;
 import type.ReasonType;
-import data.ReasonKeeper;
 
 public class ReasonTest extends OperatorTest {
 

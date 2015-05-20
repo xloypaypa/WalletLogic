@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import database.operator.UserPublicData;
 import encryptionAlgorithm.MD5;
 import type.UserMessage;
 

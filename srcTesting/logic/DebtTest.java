@@ -4,10 +4,10 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import database.operator.DebtKeeper;
+import database.operator.MoneyKeeper;
 import tool.TimeGeter;
 import type.MoneyType;
-import data.DebtKeeper;
-import data.MoneyKeeper;
 
 public class DebtTest extends OperatorTest {
 

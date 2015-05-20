@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import database.operator.MoneyKeeper;
+import database.operator.UserData;
 import type.MoneyType;
 
 public class UserDataTest extends TypeTest {

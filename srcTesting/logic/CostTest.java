@@ -4,8 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import database.operator.MoneyKeeper;
 import type.MoneyType;
-import data.MoneyKeeper;
 
 public class CostTest extends OperatorTest {
 
@@ -38,10 +38,10 @@ public class CostTest extends OperatorTest {
 		Operator.addMoneyType("type two");
 		Operator.addReason("reason one");
 		Operator.income("type one", -1,"reason one");
-		assertEquals("The value should be more than zero.", LogicWithUIMessage.message.getMessage());
+		assertEquals("The value should be more than zero.", ListenerManager.message.getMessage());
 		Operator.income("type one", 10,"reason one");
 		Operator.expenditure("type one", 20,"reason one");
-		assertEquals("Don't have enough money.", LogicWithUIMessage.message.getMessage());
+		assertEquals("Don't have enough money.", ListenerManager.message.getMessage());
 	}
 
 }
