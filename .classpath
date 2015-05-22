@@ -7,7 +7,7 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="/home/xlo/Documents/tools/JAVA/jexcelapi/jxl.jar"/>
 	<classpathentry kind="lib" path="/home/xlo/Documents/workspace/encryption.jar"/>
+	<classpathentry kind="lib" path="/home/xlo/Documents/public workspace/FileSharing.jar"/>
 	<classpathentry kind="src" path="srcTesting"/>
-	<classpathentry kind="src" path="web"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

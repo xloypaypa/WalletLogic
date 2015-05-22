@@ -19,7 +19,7 @@ public class TransferSameTypeCheck extends AbstractSteep {
 	@Override
 	public boolean action() {
 		if (from.equals(to)){
-			ListenerManager.setErrorMessage("from type and aim type should not be same!");
+			ListenerManager.setErrorMessage("From type and aim type should not be same!");
 			ListenerManager.UIAction();
 			return false;
 		}
