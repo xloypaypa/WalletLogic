@@ -4,8 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import database.operator.DebtKeeper;
-import database.operator.MoneyKeeper;
+import database.operator.DebtOperator;
+import database.operator.MoneyOperator;
 import tool.TimeGeter;
 import type.MoneyType;
 
@@ -13,9 +13,9 @@ public class DebtTest extends OperatorTest {
 
 	@Test
 	public void testBaseFeature() {
-		MoneyKeeper mk=(MoneyKeeper) Operator.data.getData("money");
+		MoneyOperator mk=(MoneyOperator) Operator.data.getData("money");
 		MoneyType m;
-		DebtKeeper dk=(DebtKeeper) Operator.data.getData("debt");
+		DebtOperator dk=(DebtOperator) Operator.data.getData("debt");
 		
 		Operator.addMoneyType("type one");
 		Operator.addReason("reason one");

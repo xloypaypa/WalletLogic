@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import database.operator.MoneyKeeper;
+import database.operator.MoneyOperator;
 import database.operator.UserData;
 import type.MoneyType;
 
@@ -13,7 +13,7 @@ public class UserDataTest extends TypeTest {
 	@Test
 	public void test() {
 		
-		MoneyKeeper mk=new MoneyKeeper();
+		MoneyOperator mk=new MoneyOperator();
 		MoneyType mt=new MoneyType();
 		mt.setType("type one");
 		mt.setValue(123);
@@ -24,24 +24,24 @@ public class UserDataTest extends TypeTest {
 		assertTrue(mk.itemExist("type one"));
 		
 		UserData data=new UserData();
-		data.addDataKeeper(new MoneyKeeper());
+		data.addDataKeeper(new MoneyOperator());
 		data.loadData("money");
-		mk=(MoneyKeeper) data.getData("money");
+		mk=(MoneyOperator) data.getData("money");
 		assertNotNull(mk);
 		assertTrue(mk.itemExist("type one"));
 		
 		data.reloadAllData();
-		mk=(MoneyKeeper) data.getData("money");
+		mk=(MoneyOperator) data.getData("money");
 		assertNotNull(mk);
 		assertTrue(mk.itemExist("type one"));
 		
 		data.loadAllData();
-		mk=(MoneyKeeper) data.getData("money");
+		mk=(MoneyOperator) data.getData("money");
 		assertNotNull(mk);
 		assertTrue(mk.itemExist("type one"));
 		
 		data.reloadData("money");
-		mk=(MoneyKeeper) data.getData("money");
+		mk=(MoneyOperator) data.getData("money");
 		assertNotNull(mk);
 		assertTrue(mk.itemExist("type one"));
 	}

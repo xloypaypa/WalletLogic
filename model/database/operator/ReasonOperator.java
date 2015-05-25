@@ -4,9 +4,9 @@ import type.ReasonType;
 import type.Type;
 import database.password.DataBase;
 
-public class ReasonKeeper extends IDTypeKeeper {
+public class ReasonOperator extends IDTypeOperator {
 
-	public ReasonKeeper() {
+	public ReasonOperator() {
 		super("reason");
 	}
 

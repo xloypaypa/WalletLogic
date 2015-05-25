@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import tool.String2Vector;
+import tool.String2Element;
 
 public class DetailTypeTest {
 
@@ -12,9 +12,9 @@ public class DetailTypeTest {
 	public void test() {
 		DetailType d1=new DetailType();
 		DetailType d2=new DetailType(d1);
-		assertEquals(d1.getAllMessage(), d2.getAllMessage());
-		d2.solveTypeMessage(String2Vector.toVector(d1.format()));
-		assertEquals(d1.getAllMessage(), d2.getAllMessage());
+		assertEquals(d1.format(), d2.format());
+		d2.solveTypeMessage(String2Element.toElement(d1.format()));
+		assertEquals(d1.getEvent(), d2.getEvent());
 	}
 
 }

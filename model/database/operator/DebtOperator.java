@@ -4,9 +4,9 @@ import type.DebtType;
 import type.Type;
 import database.password.DataBase;
 
-public class DebtKeeper extends IDTypeKeeper {
+public class DebtOperator extends IDTypeOperator {
 
-	public DebtKeeper() {
+	public DebtOperator() {
 		super("debt");
 	}
 

@@ -4,23 +4,22 @@ import static org.junit.Assert.*;
 
 import java.util.Date;
 
+import org.dom4j.DocumentException;
+import org.dom4j.DocumentHelper;
 import org.junit.Test;
-
-import tool.String2Vector;
-import database.password.DataBase;
 
 public class DebtTypeTest {
 
 	@Test
 	public void testFormat(){
 		DebtType debt=new DebtType("name", 10086, new Date(), "null", 2),ans=new DebtType();
-		ans.solveTypeMessage(String2Vector.toVector(debt.format()));
+		try {
+			ans.solveTypeMessage(DocumentHelper.parseText(debt.format()).getRootElement());
+		} catch (DocumentException e) {
+			e.printStackTrace();
+			fail();
+		}
 		assertEquals(debt.format(),ans.format());
-	}
-	
-	@Test
-	public void testTitle(){
-		assertEquals("debt type", DataBase.getTypeMessage(String2Vector.toVector(new DebtType().getTypeMessage())));
 	}
 	
 	@Test
@@ -28,7 +27,7 @@ public class DebtTypeTest {
 		DebtType d1,d2;
 		d1=new DebtType("name", 1);
 		d2=new DebtType("name", 1, d1.getDeadline());
-		assertEquals(d1.getAllMessage(), d2.getAllMessage());
+		assertEquals(d1.format(), d2.format());
 	}
 	
 	@Test

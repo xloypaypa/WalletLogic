@@ -13,9 +13,9 @@ import database.ExcelWriter;
 import database.noPassword.NoPasswordDataBase;
 import database.password.DetailDataBase;
 
-public class DetailKeeper extends TypeKeeper implements DataKeeper {
+public class DetailOperator extends TypeOperator implements DataOperator {
 	
-	public DetailKeeper() {
+	public DetailOperator() {
 		super("detail");
 	}
 	

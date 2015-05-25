@@ -5,14 +5,14 @@ import java.util.Vector;
 import database.AbstractDataBase;
 import type.Type;
 
-public abstract class TypeKeeper extends UserPublicData implements DataKeeper {
+public abstract class TypeOperator extends UserPublicData implements DataOperator {
 	
 	String keeperName;
 	
 	protected Vector <Type> allType=new Vector<>();
 	protected AbstractDataBase db;
 	
-	public TypeKeeper(String keeperName) {
+	public TypeOperator(String keeperName) {
 		this.keeperName=keeperName;
 		loadDataBase();
 	}

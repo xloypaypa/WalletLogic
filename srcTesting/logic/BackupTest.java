@@ -4,9 +4,9 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import database.operator.DebtKeeper;
-import database.operator.MoneyKeeper;
-import database.operator.ReasonKeeper;
+import database.operator.DebtOperator;
+import database.operator.MoneyOperator;
+import database.operator.ReasonOperator;
 import tool.TimeGeter;
 import type.DebtType;
 import type.MoneyType;
@@ -16,7 +16,7 @@ public class BackupTest extends OperatorTest {
 
 	@Test
 	public void testType() {
-		MoneyKeeper keeper=(MoneyKeeper) Operator.data.getData("money");
+		MoneyOperator keeper=(MoneyOperator) Operator.data.getData("money");
 		Operator.addMoneyType("type one");
 		assertTrue(keeper.itemExist("type one"));
 		Operator.backup();
@@ -44,9 +44,9 @@ public class BackupTest extends OperatorTest {
 	
 	@Test
 	public void testCost(){
-		MoneyKeeper keeper=(MoneyKeeper) Operator.data.getData("money");
+		MoneyOperator keeper=(MoneyOperator) Operator.data.getData("money");
 		MoneyType money;
-		ReasonKeeper rk=(ReasonKeeper) Operator.data.getData("reason");
+		ReasonOperator rk=(ReasonOperator) Operator.data.getData("reason");
 		ReasonType reason;
 		
 		Operator.addMoneyType("type one");
@@ -95,7 +95,7 @@ public class BackupTest extends OperatorTest {
 	
 	@Test
 	public void testReason(){
-		ReasonKeeper keeper=(ReasonKeeper) Operator.data.getData("reason");
+		ReasonOperator keeper=(ReasonOperator) Operator.data.getData("reason");
 		ReasonType reason;
 		Operator.addReason("reason one");
 		Operator.addMoneyType("type one");
@@ -127,9 +127,9 @@ public class BackupTest extends OperatorTest {
 	
 	@Test
 	public void testDebt(){
-		DebtKeeper keeper=(DebtKeeper) Operator.data.getData("debt");
+		DebtOperator keeper=(DebtOperator) Operator.data.getData("debt");
 		DebtType debt;
-		MoneyKeeper mk=(MoneyKeeper) Operator.data.getData("money");
+		MoneyOperator mk=(MoneyOperator) Operator.data.getData("money");
 		MoneyType money;
 		
 		Operator.addMoneyType("type one");

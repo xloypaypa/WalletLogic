@@ -7,7 +7,7 @@ import java.util.Date;
 
 import org.junit.Test;
 
-import tool.String2Vector;
+import tool.String2Element;
 import tool.TimeGeter;
 
 public class UserUpdateTimeTest {
@@ -54,8 +54,8 @@ public class UserUpdateTimeTest {
 		user.setYear(4, 1);
 		user.getNextTime(TimeGeter.getTime(2000, 4, 1));
 		UserUpdateTime a=new UserUpdateTime();
-		a.solveTypeMessage(String2Vector.toVector(user.format()));
-		assertEquals(user.getAllMessage(),a.getAllMessage());
+		a.solveTypeMessage(String2Element.toElement(user.format()));
+		assertEquals(user.format(),a.format());
 		
 	}
 

@@ -4,22 +4,22 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import database.operator.DebtKeeper;
-import database.operator.DetailKeeper;
-import database.operator.MoneyKeeper;
-import database.operator.ReasonKeeper;
+import database.operator.DebtOperator;
+import database.operator.DetailOperator;
+import database.operator.MoneyOperator;
+import database.operator.ReasonOperator;
 import type.MoneyType;
 
 public class ConcreteTypeTest extends TypeTest {
 	
 	@Test
 	public void moneyKeeper(){
-		assertTrue(new MoneyKeeper().isThisKeeper("money"));
+		assertTrue(new MoneyOperator().isThisKeeper("money"));
 	}
 	
 	@Test
 	public void moneyBaseFeature(){
-		MoneyKeeper mk=new MoneyKeeper();
+		MoneyOperator mk=new MoneyOperator();
 		MoneyType mt=new MoneyType();
 		mt.setType("type one");
 		mt.setValue(12);
@@ -36,16 +36,16 @@ public class ConcreteTypeTest extends TypeTest {
 	
 	@Test
 	public void reasonKeeper(){
-		assertTrue(new ReasonKeeper().isThisKeeper("reason"));
+		assertTrue(new ReasonOperator().isThisKeeper("reason"));
 	}
 	
 	@Test
 	public void debtKeeper(){
-		assertTrue(new DebtKeeper().isThisKeeper("debt"));
+		assertTrue(new DebtOperator().isThisKeeper("debt"));
 	}
 	
 	@Test
 	public void detailKeeper(){
-		assertTrue(new DetailKeeper().isThisKeeper("detail"));
+		assertTrue(new DetailOperator().isThisKeeper("detail"));
 	}
 }

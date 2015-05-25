@@ -4,14 +4,14 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import database.operator.MoneyKeeper;
+import database.operator.MoneyOperator;
 import type.MoneyType;
 
 public class CostTest extends OperatorTest {
 
 	@Test
 	public void testBaseFeature() {
-		MoneyKeeper keeper=(MoneyKeeper) Operator.data.getData("money");
+		MoneyOperator keeper=(MoneyOperator) Operator.data.getData("money");
 		MoneyType money;
 		Operator.addMoneyType("type one");
 		Operator.addMoneyType("type two");

@@ -2,6 +2,10 @@ package translater;
 
 import java.util.Vector;
 
+import org.dom4j.DocumentException;
+import org.dom4j.DocumentHelper;
+import org.dom4j.Element;
+
 import type.Type;
 
 public class Strings {
@@ -35,27 +39,28 @@ public class Strings {
 			Word now=words.get(i);
 			Type t=new Type();
 			t.addExtra(now.getWord(), now.getAns());
-			ans+=t.getAllMessage()+"\r\n";
+			ans+=t.format()+"\r\n";
 		}
 		return ans;
 	}
 	
 	public static void solve(Vector <String> file){
-		Vector <String> message=new Vector<String>();
-		for (int i=0;i<file.size();i++){
-			if (file.get(i).equals("[end]")){
-				Type type=new Type();
-				type.solveTypeMessage(message);
-				if (wordExist(type.getExtra().get(0).getTitle())){
-					changeWord(type.getExtra().get(0).getTitle(), type.getExtra().get(0).getMessage());
+		String all = new String();
+		for (int i=0;i<file.size();i++) {
+			all += file.get(i);
+		}
+		try {
+			Element element = DocumentHelper.parseText(all).getRootElement();
+			for (int i=0;i<element.elements().size();i++) {
+				Element now = (Element) element.elements().get(i);
+				if (wordExist(now.getName())) {
+					changeWord(now.getName(), now.getText());
 				}else{
-					words.addElement(new Word(type.getExtra().get(0).getTitle(), type.getExtra().get(0).getMessage()));
+					words.addElement(new Word(now.getName(), now.getText()));
 				}
-			}else if (file.get(i).equals("[begin]")){
-				message=new Vector<String>();
-			}else{
-				message.add(file.get(i));
 			}
+		} catch (DocumentException e) {
+			e.printStackTrace();
 		}
 	}
 }

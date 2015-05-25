@@ -4,14 +4,14 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import database.operator.TreeReasonKeeper;
+import database.operator.TreeReasonOperator;
 import type.ReasonTreeNodeType;
 
 public class TreeCostTest extends TreeOperatorTest {
 	
 	@Test
 	public void testBaseFeature(){
-		TreeReasonKeeper keeper=(TreeReasonKeeper) Operator.data.getData("reason");
+		TreeReasonOperator keeper=(TreeReasonOperator) Operator.data.getData("reason");
 		ReasonTreeNodeType reason;
 		Operator.addMoneyType("type one");
 		Operator.addMoneyType("type two");

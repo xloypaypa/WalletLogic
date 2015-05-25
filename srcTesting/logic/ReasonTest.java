@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import database.operator.ReasonKeeper;
+import database.operator.ReasonOperator;
 import type.ReasonType;
 
 public class ReasonTest extends OperatorTest {
@@ -14,7 +14,7 @@ public class ReasonTest extends OperatorTest {
 		Operator.addReason("reason one");
 		Operator.data.releaseAllData();
 		Operator.login("name", "pass");
-		ReasonKeeper keeper=(ReasonKeeper) Operator.data.getData("reason");
+		ReasonOperator keeper=(ReasonOperator) Operator.data.getData("reason");
 		assertTrue(keeper.itemExist("reason one"));
 		Operator.renameReason("reason one", "reason two");
 		assertFalse(keeper.itemExist("reason one"));
@@ -26,7 +26,7 @@ public class ReasonTest extends OperatorTest {
 	
 	@Test
 	public void testIO(){
-		ReasonKeeper keeper=(ReasonKeeper) Operator.data.getData("reason");
+		ReasonOperator keeper=(ReasonOperator) Operator.data.getData("reason");
 		ReasonType reason;
 		Operator.addMoneyType("type one");
 		Operator.addMoneyType("type two");

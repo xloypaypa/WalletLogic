@@ -4,9 +4,9 @@ import type.MoneyType;
 import type.Type;
 import database.password.DataBase;
 
-public class MoneyKeeper extends IDTypeKeeper {
+public class MoneyOperator extends IDTypeOperator {
 	
-	public MoneyKeeper() {
+	public MoneyOperator() {
 		super("money");
 	}
 

@@ -10,7 +10,7 @@ import net.type.Node;
 import type.Type;
 import database.AbstractDataBase;
 import database.HHD;
-import database.operator.DetailKeeper;
+import database.operator.DetailOperator;
 import database.operator.UserPublicData;
 import database.viewer.DataViewer;
 
@@ -55,7 +55,7 @@ public class Web extends UserPublicData {
 		getPath();
 		download();
 		
-		DetailKeeper detail=new DetailKeeper(); detail.load(AbstractDataBase.root+"/"+"temp"+"/detail.txt");
+		DetailOperator detail=new DetailOperator(); detail.load(AbstractDataBase.root+"/"+"temp"+"/detail.txt");
 		Vector<Type> phone=detail.getAllItem();
 		DataViewer data=new DataViewer(); data.loadData("detail");
 		Vector<Type> allDetail=data.getAllItem();

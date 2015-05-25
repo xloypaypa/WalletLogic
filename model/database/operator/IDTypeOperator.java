@@ -3,9 +3,9 @@ package database.operator;
 import database.IDDataBase;
 import type.Type;
 
-public abstract class IDTypeKeeper extends TypeKeeper implements IDDataKeeper {
+public abstract class IDTypeOperator extends TypeOperator implements IDDataOperator {
 	
-	public IDTypeKeeper(String keeperName) {
+	public IDTypeOperator(String keeperName) {
 		super(keeperName);
 	}
 

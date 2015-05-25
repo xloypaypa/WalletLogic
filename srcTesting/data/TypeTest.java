@@ -10,7 +10,7 @@ import type.MoneyType;
 import type.UserMessage;
 import database.AbstractDataBase;
 import database.HHD;
-import database.operator.MoneyKeeper;
+import database.operator.MoneyOperator;
 import database.operator.UserPublicData;
 import encryptionAlgorithm.MD5;
 
@@ -26,7 +26,7 @@ public class TypeTest extends DataTest {
 	
 	@Test
 	public void testDelete(){
-		MoneyKeeper mk=new MoneyKeeper();
+		MoneyOperator mk=new MoneyOperator();
 		MoneyType mt=new MoneyType();
 		mt.setType("type one");
 		mt.setValue(123);
@@ -42,7 +42,7 @@ public class TypeTest extends DataTest {
 	
 	@Test
 	public void testUpdate(){
-		MoneyKeeper mk=new MoneyKeeper();
+		MoneyOperator mk=new MoneyOperator();
 		MoneyType mt=new MoneyType();
 		mt.setType("type one");
 		mt.setValue(123);

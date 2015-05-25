@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import database.operator.DetailKeeper;
+import database.operator.DetailOperator;
 import tool.TimeGeter;
 import type.DetailType;
 
@@ -12,7 +12,7 @@ public class DetailKeeperTest extends TypeTest {
 
 	@Test
 	public void test() {
-		DetailKeeper dk=new DetailKeeper();
+		DetailOperator dk=new DetailOperator();
 		DetailType dt=new DetailType();
 		dt.setTime(TimeGeter.getTime(2000, 1, 1));
 		dt.setEvent("event one");
@@ -22,7 +22,7 @@ public class DetailKeeperTest extends TypeTest {
 		dk.add(dt);
 		
 		dk.loadData();
-		assertEquals(dt.getAllMessage(), dk.getLastDetail().getAllMessage());
+		assertEquals(dt.format(), dk.getLastDetail().format());
 		
 		dt=new DetailType();
 		dt.setTime(TimeGeter.getTime(1000, 1, 1));

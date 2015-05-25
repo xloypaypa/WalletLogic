@@ -4,14 +4,14 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import database.operator.ReasonKeeper;
+import database.operator.ReasonOperator;
 import type.ReasonTreeNodeType;
 
 public class TreeReasonBackup extends TreeOperatorTest {
 	
 	@Test
 	public void testReason(){
-		ReasonKeeper keeper=(ReasonKeeper) Operator.data.getData("reason");
+		ReasonOperator keeper=(ReasonOperator) Operator.data.getData("reason");
 		ReasonTreeNodeType reason;
 		Operator.addTreeReason("reason one", "root", 0, 100, 0);
 		Operator.addTreeReason("reason two", "reason one", 0, 100, 0);

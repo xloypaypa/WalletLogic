@@ -4,14 +4,14 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import database.operator.TreeReasonKeeper;
+import database.operator.TreeReasonOperator;
 import type.ReasonTreeNodeType;
 
 public class TreeReasonTest extends TreeOperatorTest {
 
 	@Test
 	public void testBaseFeature() {
-		TreeReasonKeeper keeper=(TreeReasonKeeper) Operator.data.getData("reason");
+		TreeReasonOperator keeper=(TreeReasonOperator) Operator.data.getData("reason");
 		ReasonTreeNodeType reason;
 		Operator.addTreeReason("reason one", "root", 0, 0, 0);
 		assertTrue(keeper.itemExist("reason one"));
@@ -49,7 +49,7 @@ public class TreeReasonTest extends TreeOperatorTest {
 	
 	@Test
 	public void testMinMax() {
-		TreeReasonKeeper keeper=(TreeReasonKeeper) Operator.data.getData("reason");
+		TreeReasonOperator keeper=(TreeReasonOperator) Operator.data.getData("reason");
 		Operator.addTreeReason("reason one", "root", 1, 0, 0);
 		assertFalse(keeper.itemExist("reason one"));
 		

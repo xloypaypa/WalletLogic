@@ -5,9 +5,9 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import database.AbstractDataBase;
-import database.operator.DebtKeeper;
-import database.operator.MoneyKeeper;
-import database.operator.ReasonKeeper;
+import database.operator.DebtOperator;
+import database.operator.MoneyOperator;
+import database.operator.ReasonOperator;
 import tool.TimeGeter;
 import type.MoneyType;
 import type.ReasonType;
@@ -18,9 +18,9 @@ public class ExportImportTest extends OperatorTest {
 	public void testBaseFeature(){
 		String path=AbstractDataBase.root;
 		
-		MoneyKeeper mk=(MoneyKeeper) Operator.data.getData("money");
-		DebtKeeper dk=(DebtKeeper) Operator.data.getData("debt");
-		ReasonKeeper rk=(ReasonKeeper) Operator.data.getData("reason");
+		MoneyOperator mk=(MoneyOperator) Operator.data.getData("money");
+		DebtOperator dk=(DebtOperator) Operator.data.getData("debt");
+		ReasonOperator rk=(ReasonOperator) Operator.data.getData("reason");
 		
 		Operator.addMoneyType("type one");
 		Operator.addReason("reason one");

@@ -2,7 +2,7 @@ package database.operator;
 
 import type.Type;
 
-public interface DataKeeper {
+public interface DataOperator {
 	public boolean isThisKeeper(String keeper);
 	public String getKeeperName();
 	public void add(Type type);

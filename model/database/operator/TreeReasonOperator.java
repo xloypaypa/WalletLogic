@@ -4,7 +4,7 @@ import type.ReasonTreeNodeType;
 import type.Type;
 import database.password.DataBase;
 
-public class TreeReasonKeeper extends ReasonKeeper {
+public class TreeReasonOperator extends ReasonOperator {
 	
 	@Override
 	public void loadData() {

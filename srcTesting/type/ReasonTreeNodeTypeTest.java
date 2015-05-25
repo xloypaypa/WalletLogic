@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import tool.String2Vector;
+import tool.String2Element;
 
 public class ReasonTreeNodeTypeTest {
 
@@ -13,8 +13,8 @@ public class ReasonTreeNodeTypeTest {
 		ReasonTreeNodeType r=new ReasonTreeNodeType();
 		r.setFatherName("name");
 		ReasonType r2=new ReasonTreeNodeType();
-		r2.solveTypeMessage(String2Vector.toVector(r.format()));
-		assertEquals(r.getAllMessage(), r2.getAllMessage());
+		r2.solveTypeMessage(String2Element.toElement(r.format()));
+		assertEquals(r2.getExpenditure(), r.getExpenditure(), 1e-3);
 	}
 
 }
