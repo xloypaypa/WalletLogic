@@ -9,6 +9,7 @@
 	<classpathentry kind="lib" path="/home/xlo/Documents/tools/JAVA/jexcelapi/jxl.jar"/>
 	<classpathentry kind="lib" path="/home/xlo/Documents/workspace/encryption.jar"/>
 	<classpathentry kind="lib" path="/home/xlo/Documents/public workspace/FileSharing.jar"/>
+	<classpathentry kind="lib" path="/home/xlo/Documents/tools/JAVA/mongo-java-driver-2.13.0.jar"/>
 	<classpathentry kind="src" path="srcTesting"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -10,7 +10,7 @@ public abstract class AbstractDataBase {
 	protected String aimPath;
 	
 	public void setAimFile(String file){
-		this.aimPath=AbstractDataBase.root+"/"+file;
+		this.aimPath=file;
 	}
 	
 	public String getAimFile(){
@@ -18,7 +18,7 @@ public abstract class AbstractDataBase {
 	}
 	
 	public void clean(){
-		HHD.cleanFile(aimPath);
+		MongoManager.clean(aimPath);
 	}
 	
 	public abstract void addItem(Type type);

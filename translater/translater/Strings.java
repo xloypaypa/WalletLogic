@@ -63,8 +63,4 @@ public class Strings {
 			e.printStackTrace();
 		}
 	}
-	
-	public static void just_test_for_branch() {
-		
-	}
 }
