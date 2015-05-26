@@ -8,10 +8,8 @@ import java.util.Vector;
 import jxl.write.WritableCellFormat;
 import jxl.write.WritableFont;
 import type.DetailType;
-import type.Type;
 import database.ExcelWriter;
-import database.noPassword.NoPasswordDataBase;
-import database.password.DetailDataBase;
+import database.usernameDB.DetailDB;
 
 public class DetailOperator extends TypeOperator implements DataOperator {
 	
@@ -27,14 +25,7 @@ public class DetailOperator extends TypeOperator implements DataOperator {
 
 	@Override
 	protected void loadDataBase() {
-		DetailDataBase ans=new DetailDataBase() {
-			@Override
-			public Type getNewType() {
-				return new DetailType();
-			}
-		};
-		ans.setAimFile("/"+username+"/"+keeperName+".txt");
-		ans.setPassword(password);
+		DetailDB ans = new DetailDB(username);
 		this.db=ans;
 	}
 	
@@ -48,7 +39,7 @@ public class DetailOperator extends TypeOperator implements DataOperator {
 		if (allType.size()==0) return ;
 		
 		allType.removeElementAt(allType.size()-1);
-		((DetailDataBase) this.db).removeLastItem();
+		((DetailDB) this.db).remvoeLastDetail();
 	}
 	
 	public Vector <DetailType> getRangeDetail(Date from,Date to){
@@ -80,20 +71,21 @@ public class DetailOperator extends TypeOperator implements DataOperator {
 	}
 	
 	public void export(String path){
-		NoPasswordDataBase db=new NoPasswordDataBase() {
-			@Override
-			public Type getNewType() {return null;}
-			
-			@Override
-			public void addItem(Type type) {
-				aimPath=path;
-				super.addItem(type);
-			}
-		};
-		
-		for (int i=0;i<allType.size();i++){
-			db.addItem(allType.get(i));
-		}
+		//	TODO exprot user detail;
+//		NoPasswordDataBase db=new NoPasswordDataBase() {
+//			@Override
+//			public Type getNewType() {return null;}
+//			
+//			@Override
+//			public void addItem(Type type) {
+//				aimPath=path;
+//				super.addItem(type);
+//			}
+//		};
+//		
+//		for (int i=0;i<allType.size();i++){
+//			db.addItem(allType.get(i));
+//		}
 	}
 	
 	public void exportExcel(String path){
@@ -134,21 +126,22 @@ public class DetailOperator extends TypeOperator implements DataOperator {
 	}
 	
 	public void load(String path){
-		this.releaseData();
-		NoPasswordDataBase db=new NoPasswordDataBase() {
-			
-			@Override
-			public Type getNewType() {
-				return new DetailType();
-			}
-			
-			@Override
-			public Vector<Type> load() {
-				aimPath=path;
-				return super.load();
-			}
-		};
-		allType=db.load();
+		//	TODO load detail file
+//		this.releaseData();
+//		NoPasswordDataBase db=new NoPasswordDataBase() {
+//			
+//			@Override
+//			public Type getNewType() {
+//				return new DetailType();
+//			}
+//			
+//			@Override
+//			public Vector<Type> load() {
+//				aimPath=path;
+//				return super.load();
+//			}
+//		};
+//		allType=db.load();
 	}
 
 }

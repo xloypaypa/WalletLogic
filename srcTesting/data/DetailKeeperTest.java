@@ -22,7 +22,7 @@ public class DetailKeeperTest extends TypeTest {
 		dk.add(dt);
 		
 		dk.loadData();
-		assertEquals(dt.format(), dk.getLastDetail().format());
+		assertEquals(dt.getEvent(), dk.getLastDetail().getEvent());
 		
 		dt=new DetailType();
 		dt.setTime(TimeGeter.getTime(1000, 1, 1));

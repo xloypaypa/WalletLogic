@@ -23,27 +23,11 @@ public class Type2DB {
 		return solveTypeMessage(element, extra, message, number);
 	}
 	
-	public static DBObject getIDbDBObject(Type type, String id) {
-		Element element = type.getRoot();
-		Element extra=null;
-		String message = new String("{'_id':'"+id+"'");
-		int number = 1;
-		return solveTypeMessage(element, extra, message, number);
-	}
-	
 	public static DBObject getNameDBObject(Type type, String username) {
 		Element element = type.getRoot();
 		Element extra=null;
 		String message = new String("{'username':'"+username+"'");
 		int number = 1;
-		return solveTypeMessage(element, extra, message, number);
-	}
-	
-	public static DBObject getIDNameDBObject(Type type, String id, String username) {
-		Element element = type.getRoot();
-		Element extra=null;
-		String message = new String("{'_id':'"+id+"','username':'"+username+"'");
-		int number = 2;
 		return solveTypeMessage(element, extra, message, number);
 	}
 
@@ -60,7 +44,6 @@ public class Type2DB {
 			}
 		}
 		if (extra!=null) {
-			number = 0;
 			for (int i=0;i<extra.elements().size();i++) {
 				Element now = (Element) extra.elements().get(i);
 				if (number != 0) message += ","; 
@@ -79,7 +62,7 @@ public class Type2DB {
 		Vector<String> extras = new Vector<String>();
 		while (it.hasNext()) {
 			String key = it.next();
-			if (key=="_id") {
+			if (key.equals("_id")) {
 				continue;
 			} else if (key.indexOf("extra_") == 0){
 				extras.add(key.substring("extra_".length()));
@@ -108,7 +91,7 @@ public class Type2DB {
 			String key = it.next();
 			if (ingore.contains(key)) {
 				continue;
-			} else if (key=="_id") {
+			} else if (key.equals("_id")) {
 				continue;
 			} else if (key.indexOf("extra_") == 0){
 				extras.add(key.substring("extra_".length()));

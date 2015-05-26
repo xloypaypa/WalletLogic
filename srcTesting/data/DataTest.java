@@ -4,19 +4,23 @@ import org.junit.After;
 import org.junit.Before;
 
 import database.AbstractDataBase;
-import database.HHD;
+import database.MongoManager;
 
 public class DataTest {
 
 	@Before
 	public void setDB(){
-		HHD.createFolder(HHD.getAppPath(), "testing space");
-		AbstractDataBase.root=HHD.getAppPath()+"/testing space";
+		AbstractDataBase.root="testc";
+		MongoManager.loadDB("testc");
 	}
 	
 	@After
 	public void removeDB(){
-		HHD.deleteFolder(HHD.getAppPath()+"/testing space");
+		MongoManager.clean("user");
+		MongoManager.clean("debt");
+		MongoManager.clean("detail");
+		MongoManager.clean("reason");
+		MongoManager.clean("money");
 	}
 
 }

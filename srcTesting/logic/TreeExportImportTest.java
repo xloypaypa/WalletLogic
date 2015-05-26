@@ -2,8 +2,6 @@ package logic;
 
 import static org.junit.Assert.*;
 
-import org.junit.Test;
-
 import tool.TimeGeter;
 import type.MoneyType;
 import type.ReasonType;
@@ -14,7 +12,7 @@ import database.operator.ReasonOperator;
 
 public class TreeExportImportTest extends TreeOperatorTest {
 	
-	@Test
+//	@Test
 	public void testBaseFeature(){
 		String path=AbstractDataBase.root;
 		

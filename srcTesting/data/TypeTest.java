@@ -8,8 +8,6 @@ import org.junit.Test;
 
 import type.MoneyType;
 import type.UserMessage;
-import database.AbstractDataBase;
-import database.HHD;
 import database.operator.MoneyOperator;
 import database.operator.UserPublicData;
 import encryptionAlgorithm.MD5;
@@ -18,8 +16,7 @@ public class TypeTest extends DataTest {
 
 	@Override @Before
 	public void setDB(){
-		HHD.createFolder(HHD.getAppPath(), "testing space");
-		AbstractDataBase.root=HHD.getAppPath()+"/testing space";
+		super.setDB();
 		UserPublicData.addUser(new UserMessage("name", MD5.encode("pass"), "normal"));
 		UserPublicData.login("name", "pass");
 	}

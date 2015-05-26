@@ -2,7 +2,7 @@ package database.operator;
 
 import type.ReasonType;
 import type.Type;
-import database.password.DataBase;
+import database.usernameDB.NormalDB;
 
 public class ReasonOperator extends IDTypeOperator {
 
@@ -11,14 +11,13 @@ public class ReasonOperator extends IDTypeOperator {
 	}
 
 	protected void loadDataBase() {
-		DataBase ans=new DataBase() {
+		NormalDB ans = new NormalDB(username, "reason") {
+			
 			@Override
 			public Type getNewType() {
-				return new ReasonType();
+				return new ReasonType(); 
 			}
 		};
-		ans.setAimFile("/"+username+"/"+keeperName+".txt");
-		ans.setPassword(password);
 		this.db=ans;
 	}
 

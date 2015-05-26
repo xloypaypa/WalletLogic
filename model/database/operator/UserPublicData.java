@@ -3,7 +3,7 @@ package database.operator;
 import java.util.Vector;
 
 import database.AbstractDataBase;
-import database.noPassword.PublicDataBase;
+import database.publicDB.PublicDB;
 import encryptionAlgorithm.MD5;
 import type.Type;
 import type.UserMessage;
@@ -12,7 +12,7 @@ public class UserPublicData {
 	protected static String username,password,userType;
 	
 	protected static Vector <UserMessage> allUser=new Vector<UserMessage>();
-	protected static AbstractDataBase db=new PublicDataBase();
+	protected static AbstractDataBase db=new PublicDB();
 	
 	public static void loadUser(){
 		Vector <Type> ans=db.load();

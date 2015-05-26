@@ -2,8 +2,6 @@ package logic;
 
 import static org.junit.Assert.*;
 
-import org.junit.Test;
-
 import database.AbstractDataBase;
 import database.operator.DebtOperator;
 import database.operator.MoneyOperator;
@@ -14,7 +12,7 @@ import type.ReasonType;
 
 public class ExportImportTest extends OperatorTest {
 	
-	@Test
+//	@Test
 	public void testBaseFeature(){
 		String path=AbstractDataBase.root;
 		

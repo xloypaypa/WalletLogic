@@ -2,7 +2,7 @@ package database.operator;
 
 import type.MoneyType;
 import type.Type;
-import database.password.DataBase;
+import database.usernameDB.NormalDB;
 
 public class MoneyOperator extends IDTypeOperator {
 	
@@ -11,14 +11,13 @@ public class MoneyOperator extends IDTypeOperator {
 	}
 
 	protected void loadDataBase() {
-		DataBase ans=new DataBase() {
+		NormalDB ans = new NormalDB(username, "money") {
+			
 			@Override
 			public Type getNewType() {
-				return new MoneyType();
+				return new MoneyType(); 
 			}
 		};
-		ans.setAimFile("/"+username+"/"+keeperName+".txt");
-		ans.setPassword(password);
 		this.db=ans;
 	}
 

@@ -2,7 +2,7 @@ package database.operator;
 
 import type.ReasonTreeNodeType;
 import type.Type;
-import database.password.DataBase;
+import database.usernameDB.NormalDB;
 
 public class TreeReasonOperator extends ReasonOperator {
 	
@@ -33,14 +33,13 @@ public class TreeReasonOperator extends ReasonOperator {
 	}
 	
 	protected void loadDataBase() {
-		DataBase ans=new DataBase() {
+		NormalDB ans = new NormalDB(username, "reason") {
+			
 			@Override
 			public Type getNewType() {
 				return new ReasonTreeNodeType();
 			}
 		};
-		ans.setAimFile("/"+username+"/"+keeperName+".txt");
-		ans.setPassword(password);
 		this.db=ans;
 	}
 	

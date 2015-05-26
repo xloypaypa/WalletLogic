@@ -12,10 +12,14 @@ import database.MongoManager;
 import database.Type2DB;
 
 public class PublicDB extends AbstractDataBase implements IDDataBase {
+	
+	public PublicDB() {
+		aimPath = "user";
+	}
 
 	@Override
 	public void addItem(Type type) {
-		MongoManager.addMessage(aimPath, Type2DB.getIDbDBObject(type, type.getTypeID()));
+		MongoManager.addMessage(aimPath, Type2DB.getDBObject(type));
 	}
 
 	@Override
@@ -38,12 +42,12 @@ public class PublicDB extends AbstractDataBase implements IDDataBase {
 
 	@Override
 	public void removeItem(String id) {
-		MongoManager.removeMessage(aimPath, id);
+		MongoManager.removeMessage(aimPath, "id", id);
 	}
 
 	@Override
 	public void updateItem(String id, Type type) {
-		MongoManager.updateMessage(aimPath, id, Type2DB.getIDbDBObject(type, type.getTypeID()));
+		MongoManager.updateMessage(aimPath, "id", id, Type2DB.getDBObject(type));
 	}
 
 }

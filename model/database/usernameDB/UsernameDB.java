@@ -9,10 +9,13 @@ public abstract class UsernameDB extends AbstractDataBase {
 
 	protected String username;
 	
-	protected Set<String> ingore = new HashSet<String>();
+	protected Set<String> ingore;
 	
-	public UsernameDB() {
+	public UsernameDB(String username, String aimPath) {
+		ingore = new HashSet<String>();
 		ingore.add("username");
+		this.aimPath = aimPath;
+		this.username = username;
 	}
 	
 	public void setUsername(String username) {

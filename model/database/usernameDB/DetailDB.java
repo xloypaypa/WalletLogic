@@ -11,6 +11,10 @@ import database.Type2DB;
 
 public class DetailDB extends UsernameDB {
 
+	public DetailDB(String username) {
+		super(username, "detail");
+	}
+
 	@Override
 	public void addItem(Type type) {
 		MongoManager.addMessage(aimPath, Type2DB.getNameDBObject(type, username));

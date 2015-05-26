@@ -11,19 +11,23 @@ import database.Type2DB;
 
 public abstract class NormalDB extends UsernameDB implements IDDataBase {
 
+	public NormalDB(String username, String aimPath) {
+		super(username, aimPath);
+	}
+
 	@Override
 	public void removeItem(String id) {
-		MongoManager.removeMessage(aimPath, username+"_"+id);
+		MongoManager.removeMessage(aimPath, "id", id);
 	}
 
 	@Override
 	public void updateItem(String id, Type type) {
-		MongoManager.updateMessage(aimPath, username+"_"+id, Type2DB.getIDNameDBObject(type, username+"_"+type.getTypeID(), username));
+		MongoManager.updateMessage(aimPath, "id", id, Type2DB.getNameDBObject(type, username));
 	}
 
 	@Override
 	public void addItem(Type type) {
-		MongoManager.addMessage(aimPath, Type2DB.getIDNameDBObject(type, username+"_"+type.getTypeID(), username));
+		MongoManager.addMessage(aimPath, Type2DB.getNameDBObject(type, username));
 	}
 
 	@Override
