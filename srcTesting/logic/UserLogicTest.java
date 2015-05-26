@@ -48,11 +48,11 @@ public class UserLogicTest extends LogicTest {
 		UserLogic.register("temp", "pass", "pass", "tree");
 		assertEquals("This user is a system used.", UserLogic.message.getMessage());
 		
-		UserLogic.register("[name]", "pass", "pass", "tree");
-		assertEquals("Please don't use '['!", UserLogic.message.getMessage());
+		UserLogic.register("<name>", "pass", "pass", "tree");
+		assertEquals("ok.", UserLogic.message.getMessage());
 		
-		UserLogic.register("name", "pa[ss", "pa[ss", "tree");
-		assertEquals("Please don't use '['!", UserLogic.message.getMessage());
+		UserLogic.register("name", "pa<ss", "pa<ss", "tree");
+		assertEquals("ok.", UserLogic.message.getMessage());
 	}
 
 }

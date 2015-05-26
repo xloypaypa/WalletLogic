@@ -23,8 +23,8 @@ public class TypeTest extends OperatorTest {
 	
 	@Test
 	public void testError(){
-		Operator.addMoneyType("[type]");
-		assertEquals("Please don't use '['!", ListenerManager.message.getMessage());
+		Operator.addMoneyType("<type>");
+		assertEquals("ok.", ListenerManager.message.getMessage());
 		Operator.addMoneyType("");
 		assertEquals("Please input type name.", ListenerManager.message.getMessage());
 		Operator.addMoneyType("type one");
