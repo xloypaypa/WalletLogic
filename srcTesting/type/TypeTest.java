@@ -19,7 +19,7 @@ public class TypeTest {
 		assertEquals("extra message", mt.getExtraMessage("extra1 ds"));
 		
 		String now=mt.format();
-		String ans="<type><id>type1</id><extra><extra1_ds>extra message</extra1_ds></extra><type>type1</type><value>100.00</value></type>\r\n";
+		String ans="<type><extra><extra1_ds>extra message</extra1_ds></extra><id>type1</id><type>type1</type><value>100.00</value></type>\r\n";
 		assertEquals(now, ans);
 	}
 	
@@ -42,7 +42,7 @@ public class TypeTest {
 	
 	@Test
 	public void test3(){
-		Type tp=new Type();
+		IDType tp=new IDType();
 		tp.addExtra("abc", "efg");
 		assertTrue(tp.extraExist("abc"));
 		assertEquals("efg", tp.getExtraMessage("abc"));

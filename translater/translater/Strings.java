@@ -6,7 +6,7 @@ import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 
-import type.Type;
+import type.IDType;
 
 public class Strings {
 	public static Vector <Word> words=new Vector<Word>();
@@ -37,7 +37,7 @@ public class Strings {
 		String ans=new String();
 		for (int i=0;i<words.size();i++){
 			Word now=words.get(i);
-			Type t=new Type();
+			IDType t=new IDType();
 			t.addExtra(now.getWord(), now.getAns());
 			ans+=t.format()+"\r\n";
 		}

@@ -3,7 +3,7 @@ package type;
 import java.text.DecimalFormat;
 import java.util.*;
 
-public class MoneyHistoryType extends Type {
+public class MoneyHistoryType extends IDType {
 	String name; double value;
 	Vector <DetailType> history; 
 	public MoneyHistoryType(String name){
