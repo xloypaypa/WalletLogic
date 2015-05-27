@@ -51,15 +51,13 @@ public class MongoManager {
 		collection.insert(item);
 	}
 	
-	public static void removeMessage(String collectionName, String key, String value) {
+	public static void removeMessage(String collectionName, DBObject item) {
 		DBCollection collection = db.getCollection(collectionName);
-		DBObject item = (BasicDBObject) JSON.parse("{'"+key+"':'"+value+"'}");
 		collection.remove(item);
 	}
 	
-	public static void updateMessage(String collectionName, String key, String value, DBObject item) {
+	public static void updateMessage(String collectionName, DBObject now, DBObject item) {
 		DBCollection collection = db.getCollection(collectionName);
-		DBObject now = (BasicDBObject) JSON.parse("{'"+key+"':'"+value+"'}");
 		collection.update(now, item);
 	}
 	

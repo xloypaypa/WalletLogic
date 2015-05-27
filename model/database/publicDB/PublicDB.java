@@ -2,7 +2,9 @@ package database.publicDB;
 
 import java.util.Vector;
 
+import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
+import com.mongodb.util.JSON;
 
 import type.Type;
 import type.UserMessage;
@@ -42,12 +44,12 @@ public class PublicDB extends AbstractDataBase implements IDDataBase {
 
 	@Override
 	public void removeItem(String id) {
-		MongoManager.removeMessage(aimPath, "id", id);
+		MongoManager.removeMessage(aimPath, (BasicDBObject) JSON.parse("{'id':'"+id+"'}"));
 	}
 
 	@Override
 	public void updateItem(String id, Type type) {
-		MongoManager.updateMessage(aimPath, "id", id, Type2DB.getDBObject(type));
+		MongoManager.updateMessage(aimPath, (BasicDBObject) JSON.parse("{'id':'"+id+"'}"), Type2DB.getDBObject(type));
 	}
 
 }

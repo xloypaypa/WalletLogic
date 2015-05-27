@@ -2,7 +2,9 @@ package database.usernameDB;
 
 import java.util.Vector;
 
+import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
+import com.mongodb.util.JSON;
 
 import type.Type;
 import database.IDDataBase;
@@ -17,12 +19,12 @@ public abstract class NormalDB extends UsernameDB implements IDDataBase {
 
 	@Override
 	public void removeItem(String id) {
-		MongoManager.removeMessage(aimPath, "id", id);
+		MongoManager.removeMessage(aimPath, (BasicDBObject) JSON.parse("{'id':'"+id+"','username':'"+username+"'}"));
 	}
 
 	@Override
 	public void updateItem(String id, Type type) {
-		MongoManager.updateMessage(aimPath, "id", id, Type2DB.getNameDBObject(type, username));
+		MongoManager.updateMessage(aimPath, (BasicDBObject) JSON.parse("{'id':'"+id+"','username':'"+username+"'}"), Type2DB.getNameDBObject(type, username));
 	}
 
 	@Override
