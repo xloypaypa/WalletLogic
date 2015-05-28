@@ -60,10 +60,8 @@ public class Web extends UserPublicData {
 		DataViewer data=new DataViewer(); data.loadData("detail");
 		Vector<Type> allDetail=data.getAllItem();
 		
-		getPath();
-		
+		loadMyPath(username);
 		if (allDetail.size()==0){
-			loadMyPath(username);
 			copyTempFile();
 		}else if (phone.size()==0) {
 			upload();
