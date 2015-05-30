@@ -55,7 +55,7 @@ public class Web extends UserPublicData {
 		getPath();
 		download();
 		
-		DetailOperator detail=new DetailOperator(); detail.load(AbstractDataBase.root+"/"+"temp"+"/detail.txt");
+		DetailOperator detail=new DetailOperator(); detail.load(AbstractDataBase.root+"/"+"temp"+"/detail.txt", password);
 		Vector<Type> phone=detail.getAllItem();
 		DataViewer data=new DataViewer(); data.loadData("detail");
 		Vector<Type> allDetail=data.getAllItem();
