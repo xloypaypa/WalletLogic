@@ -7,6 +7,8 @@ import java.util.Date;
 
 import org.junit.Test;
 
+import tool.TimeGeter;
+
 public class MoneyHistoryTypeTest {
 
 	@Test
@@ -41,33 +43,44 @@ public class MoneyHistoryTypeTest {
 	public void testFeature(){
 		MoneyHistoryType m=new MoneyHistoryType("abc",100);
 		DetailType detail=new DetailType();
-		Calendar c=Calendar.getInstance();
-		c.set(2000, 1, 1);
-		detail.setTime(c.getTime());
-		
+		detail.setTime(TimeGeter.getTime(2000, 1, 1));
 		detail.setEvent("add money type");
 		detail.setValue(1);
 		m.addHistory(detail);
+		
+		detail=new DetailType();
+		detail.setTime(TimeGeter.getTime(2000, 1, 1));
 		detail.setEvent("income");
 		detail.setValue(1);
 		m.addHistory(detail);
+		
+		detail=new DetailType();
+		detail.setTime(TimeGeter.getTime(2000, 1, 1));
 		detail.setEvent("expenditure");
 		detail.setValue(2);
 		m.addHistory(detail);
 		
+		detail=new DetailType();
+		detail.setTime(TimeGeter.getTime(2000, 1, 1));
 		detail.setEvent("transfer in");
 		detail.setValue(3);
 		m.addHistory(detail);
 		
+		detail=new DetailType();
+		detail.setTime(TimeGeter.getTime(2000, 1, 1));
 		detail.setEvent("transfer out");
 		detail.setValue(1);
 		m.addHistory(detail);
 		
-		detail.setEvent("add debt");
+		detail=new DetailType();
+		detail.setTime(TimeGeter.getTime(2000, 1, 1));
+		detail.setEvent("add borrowing");
 		detail.setValue(3);
 		m.addHistory(detail);
 		
-		detail.setEvent("repay debt");
+		detail=new DetailType();
+		detail.setTime(TimeGeter.getTime(2000, 1, 1));
+		detail.setEvent("repay borrowing");
 		detail.setValue(1);
 		m.addHistory(detail);
 		
