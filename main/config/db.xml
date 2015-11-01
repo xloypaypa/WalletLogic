@@ -1,0 +1,8 @@
+<dbs>
+    <connection>model.db.virtual.BlogVirtualConnection</connection>
+    <db name="blog" type="default">
+        <collection type="model.db.WalletCollection">user</collection>
+    </db>
+    <db name="image" type="file">
+    </db>
+</dbs>
