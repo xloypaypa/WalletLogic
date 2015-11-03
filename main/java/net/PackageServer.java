@@ -12,10 +12,12 @@ import net.tool.packageSolver.packageReader.HttpPackageReader;
 import net.tool.packageSolver.packageReader.PackageReader;
 import net.tool.packageSolver.packageWriter.HttpPackageWriter;
 import net.tool.packageSolver.packageWriter.PackageWriter;
+import net.tool.packageSolver.packageWriter.packageWriterFactory.HttpRequestPackageWriterFactory;
 
 import java.io.IOException;
 import java.net.URL;
 import java.nio.channels.SelectionKey;
+import java.nio.channels.SocketChannel;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -121,7 +123,13 @@ public class PackageServer extends AbstractServer {
     }
 
     public void addMessage(byte[] message) {
-        this.message.add(message);
+        this.message.add(HttpRequestPackageWriterFactory.getHttpReplyPackageWriterFactory()
+        .setCommand("GET")
+        .setHost("client")
+        .setUrl("/reply")
+        .setVersion("HTTP/1.1")
+        .setBody(message).getHttpPackageBytes());
+        this.getConnectionMessage().getSelectionKey().interestOps(SelectionKey.OP_WRITE);
         this.packageWriter.addPackage(message, 0);
     }
 
