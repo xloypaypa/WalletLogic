@@ -1,4 +1,5 @@
 <model.config>
     <!--<type path="/clojure.xml">model.config.ClojureConfig</type>-->
     <type path="/db.xml">model.config.WalletDBConfig</type>
+    <type path="/command.xml">model.config.CommandConfig</type>
 </model.config>

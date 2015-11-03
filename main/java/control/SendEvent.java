@@ -1,5 +1,6 @@
 package control;
 
+import javafx.util.Pair;
 import model.db.event.Event;
 import net.PackageServer;
 import net.tool.connectionManager.ConnectionManager;
@@ -15,7 +16,7 @@ import java.util.Set;
 public abstract class SendEvent extends Event {
     protected SocketChannel socketChannel;
     protected PackageServer packageServer;
-    protected Set<byte[]> successMessage, failedMessage, commitMessage;
+    protected Set<Pair<String, byte[]>> successMessage, failedMessage, commitMessage;
 
     public SendEvent(SocketChannel socketChannel) {
         this.socketChannel = socketChannel;
@@ -25,39 +26,39 @@ public abstract class SendEvent extends Event {
         this.packageServer = (PackageServer) ConnectionManager.getSolverManager().getSolver(this.socketChannel.socket());
     }
 
-    public void sendWhileCommit(byte[] message) {
-        this.commitMessage.add(message);
+    public void sendWhileCommit(String url, byte[] message) {
+        this.commitMessage.add(new Pair<>(url, message));
     }
 
-    public void sendWhileSuccess(byte[] message) {
-        this.successMessage.add(message);
+    public void sendWhileSuccess(String url, byte[] message) {
+        this.successMessage.add(new Pair<>(url, message));
     }
 
-    public void sendWhileFailed(byte[] message) {
-        this.failedMessage.add(message);
+    public void sendWhileFailed(String url, byte[] message) {
+        this.failedMessage.add(new Pair<>(url, message));
     }
 
     @Override
     protected void whenCommit() {
         super.whenCommit();
-        for (byte[] now : this.commitMessage) {
-            this.packageServer.addMessage(now);
+        for (Pair<String, byte[]> now : this.commitMessage) {
+            this.packageServer.addMessage(now.getKey(), now.getValue());
         }
     }
 
     @Override
     protected void whenFailed() {
         super.whenFailed();
-        for (byte[] now : this.failedMessage) {
-            this.packageServer.addMessage(now);
+        for (Pair<String, byte[]> now : this.failedMessage) {
+            this.packageServer.addMessage(now.getKey(), now.getValue());
         }
     }
 
     @Override
     protected void whenSucceed() {
         super.whenSucceed();
-        for (byte[] now : this.successMessage) {
-            this.packageServer.addMessage(now);
+        for (Pair<String, byte[]> now : this.successMessage) {
+            this.packageServer.addMessage(now.getKey(), now.getValue());
         }
     }
 }

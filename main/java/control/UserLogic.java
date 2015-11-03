@@ -18,10 +18,15 @@ public class UserLogic extends LogicManager {
             @Override
             public boolean run() throws Exception {
                 UserCollection userCollection = new UserCollection();
-                userCollection.addUser(username, password);
-                return true;
+                if (userCollection.getUserData(username)==null) {
+                    userCollection.addUser(username, password);
+                    return true;
+                } else {
+                    return false;
+                }
             }
         };
+        this.setDefaultMessage(event, "/register");
         event.submit();
     }
 }

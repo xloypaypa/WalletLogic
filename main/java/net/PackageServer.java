@@ -1,6 +1,6 @@
 package net;
 
-import control.UserLogic;
+import model.config.CommandConfig;
 import net.server.AbstractServer;
 import net.sf.json.JSONObject;
 import net.tool.connectionManager.ConnectionManager;
@@ -15,6 +15,9 @@ import net.tool.packageSolver.packageWriter.PackageWriter;
 import net.tool.packageSolver.packageWriter.packageWriterFactory.HttpRequestPackageWriterFactory;
 
 import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.URL;
 import java.nio.channels.SelectionKey;
 import java.util.LinkedList;
@@ -52,7 +55,11 @@ public class PackageServer extends AbstractServer {
             PackageStatus packageStatus = packageReader.read();
             if (packageStatus.equals(PackageStatus.END)) {
                 HttpRequestHeadSolver httpRequestHeadSolver = (HttpRequestHeadSolver) this.packageReader.getHeadPart();
-                sendEvent(httpRequestHeadSolver.getUrl(), this.packageReader.getBody());
+                try {
+                    sendEvent(httpRequestHeadSolver.getUrl(), this.packageReader.getBody());
+                } catch (Exception e) {
+                    return ConnectionStatus.ERROR;
+                }
                 return getNextStatusWhenPackageEnd();
             } else if (packageStatus.equals(PackageStatus.WAITING)) {
                 return ConnectionStatus.WAITING;
@@ -122,11 +129,11 @@ public class PackageServer extends AbstractServer {
         }
     }
 
-    public void addMessage(byte[] message) {
+    public void addMessage(String url, byte[] message) {
         byte[] httpPackageBytes = HttpRequestPackageWriterFactory.getHttpReplyPackageWriterFactory()
                 .setCommand("GET")
                 .setHost("client")
-                .setUrl("/reply")
+                .setUrl(url)
                 .setVersion("HTTP/1.1")
                 .addMessage("Content-Length", message.length + "")
                 .setBody(message).getHttpPackageBytes();
@@ -136,10 +143,38 @@ public class PackageServer extends AbstractServer {
         this.packageWriter.addPackage(httpPackageBytes, 0);
     }
 
-    protected void sendEvent(URL url, byte[] message) {
-        System.out.println(url.toString() + " " + new String(message));
+    protected void sendEvent(URL url, byte[] message) throws NoSuchMethodException, ClassNotFoundException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        CommandConfig config = CommandConfig.getConfig();
+        CommandConfig.PostInfo postInfo = config.findPostInfo(url.toString());
         JSONObject jsonObject = JSONObject.fromObject(new String(message));
-        UserLogic userLogic = new UserLogic(this.getConnectionMessage().getSocket());
-        userLogic.register(jsonObject.getString("username"), jsonObject.getString("password"));
+
+        Object manager = buildManager(config, postInfo);
+        Method method = getMethod(config, postInfo);
+        String[] data = getData(postInfo, jsonObject);
+        method.invoke(manager, data);
+    }
+
+    private String[] getData(CommandConfig.PostInfo postInfo, JSONObject jsonObject) {
+        String[] data = new String[postInfo.getMethodData().size()];
+        for (int i = 0; i < data.length; i++) {
+            String title = postInfo.getMethodData().get(i);
+            data[i] = jsonObject.getString(title);
+
+        }
+        return data;
+    }
+
+    private Method getMethod(CommandConfig config, CommandConfig.PostInfo postInfo) throws ClassNotFoundException, NoSuchMethodException {
+        Class[] param = new Class[postInfo.getMethodData().size()];
+        for (int i = 0; i < param.length; i++) {
+            param[i] = String.class;
+
+        }
+        return config.getMethod(postInfo.getManager(), postInfo.getMethod(), param);
+    }
+
+    private Object buildManager(CommandConfig config, CommandConfig.PostInfo postInfo) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+        Constructor<?> constructor = config.getManagerConstructor(postInfo.getManager());
+        return constructor.newInstance(this.getConnectionMessage().getSocket());
     }
 }
