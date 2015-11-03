@@ -1,6 +1,7 @@
 package main;
 
-import model.config.ConfigManager;
+import net.PackageServer;
+import net.server.Server;
 
 /**
  * Created by xlo on 15-11-1.
@@ -8,6 +9,8 @@ import model.config.ConfigManager;
  */
 public class Main {
     public static void main(String[] args) {
-        ConfigManager.getConfigManager();
+        Server server = Server.getNewServer("server", PackageServer::new);
+        server.getInstance(8080, 1);
+        server.accept();
     }
 }

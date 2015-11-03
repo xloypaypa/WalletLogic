@@ -31,7 +31,6 @@ public class WalletDBConfig implements ConfigInterface, DBConfig {
     @SuppressWarnings("unchecked")
     @Override
     public void init() throws Exception {
-        System.out.println("init");
         Element root = ConfigInterface.getRootElement(ConfigManager.configPathConfig.getConfigFilePath(this.getClass()));
         for (Object now : root.elements()) {
             Element element = (Element) now;
