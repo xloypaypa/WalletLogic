@@ -2,7 +2,7 @@ package model.db;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Created by xlo on 2015/11/3.

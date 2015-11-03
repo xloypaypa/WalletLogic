@@ -17,7 +17,6 @@ import net.tool.packageSolver.packageWriter.packageWriterFactory.HttpRequestPack
 import java.io.IOException;
 import java.net.URL;
 import java.nio.channels.SelectionKey;
-import java.nio.channels.SocketChannel;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -50,7 +49,9 @@ public class PackageServer extends AbstractServer {
     @Override
     public ConnectionStatus whenReading() {
         try {
+            System.out.println("in");
             PackageStatus packageStatus = packageReader.read();
+            System.out.println(packageStatus);
             if (packageStatus.equals(PackageStatus.END)) {
                 HttpRequestHeadSolver httpRequestHeadSolver = (HttpRequestHeadSolver) this.packageReader.getHeadPart();
                 sendEvent(httpRequestHeadSolver.getUrl(), this.packageReader.getBody());
@@ -75,6 +76,7 @@ public class PackageServer extends AbstractServer {
         try {
             PackageStatus packageStatus = this.packageWriter.write();
             if (packageStatus.equals(PackageStatus.END)) {
+                this.message.remove(0);
                 return getNextStatusWhenPackageEnd();
             } else if (packageStatus.equals(PackageStatus.WAITING)) {
                 return ConnectionStatus.WAITING;
@@ -123,14 +125,17 @@ public class PackageServer extends AbstractServer {
     }
 
     public void addMessage(byte[] message) {
-        this.message.add(HttpRequestPackageWriterFactory.getHttpReplyPackageWriterFactory()
-        .setCommand("GET")
-        .setHost("client")
-        .setUrl("/reply")
-        .setVersion("HTTP/1.1")
-        .setBody(message).getHttpPackageBytes());
+        byte[] httpPackageBytes = HttpRequestPackageWriterFactory.getHttpReplyPackageWriterFactory()
+                .setCommand("GET")
+                .setHost("client")
+                .setUrl("/reply")
+                .setVersion("HTTP/1.1")
+                .addMessage("Content-Length", message.length + "")
+                .setBody(message).getHttpPackageBytes();
+        this.message.add(httpPackageBytes);
         this.getConnectionMessage().getSelectionKey().interestOps(SelectionKey.OP_WRITE);
-        this.packageWriter.addPackage(message, 0);
+        this.getConnectionMessage().getSelectionKey().selector().wakeup();
+        this.packageWriter.addPackage(httpPackageBytes, 0);
     }
 
     protected void sendEvent(URL url, byte[] message) {
