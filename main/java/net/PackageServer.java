@@ -49,9 +49,7 @@ public class PackageServer extends AbstractServer {
     @Override
     public ConnectionStatus whenReading() {
         try {
-            System.out.println("in");
             PackageStatus packageStatus = packageReader.read();
-            System.out.println(packageStatus);
             if (packageStatus.equals(PackageStatus.END)) {
                 HttpRequestHeadSolver httpRequestHeadSolver = (HttpRequestHeadSolver) this.packageReader.getHeadPart();
                 sendEvent(httpRequestHeadSolver.getUrl(), this.packageReader.getBody());
