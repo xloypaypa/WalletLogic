@@ -1,6 +1,7 @@
 package control;
 
 import net.PackageServer;
+import net.sf.json.JSONObject;
 import net.tool.connectionManager.ConnectionManager;
 
 import java.nio.channels.SocketChannel;
@@ -25,18 +26,26 @@ public abstract class LogicManager {
     }
 
     public void setFailedMessage(SendEvent event, String url) {
-        event.sendWhileFailed(url, "fail".getBytes());
+        setFailedMessage(event, url, "fail");
     }
 
     public void setSuccessMessage(SendEvent event, String url) {
-        event.sendWhileSuccess(url, "ok".getBytes());
+        setSuccessMessage(event, url, "ok");
     }
 
     public void setSuccessMessage(SendEvent event, String url, String message) {
-        event.sendWhileSuccess(url, message.getBytes());
+        byte[] bytes = buildDefaultResult(message);
+        event.sendWhileSuccess(url, bytes);
     }
 
     public void setFailedMessage(SendEvent event, String url, String message) {
-        event.sendWhileFailed(url, message.getBytes());
+        byte[] bytes = buildDefaultResult(message);
+        event.sendWhileFailed(url, bytes);
+    }
+
+    protected byte[] buildDefaultResult(String message) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("result", message);
+        return jsonObject.toString().getBytes();
     }
 }

@@ -1,12 +1,14 @@
 <command>
     <solver name="login" url="/login" manager="control.UserLogic" access="true">
-        <method name="login">
-        </method>
+        <method name="login"/>
     </solver>
     <solver name="register" url="/register" manager="control.UserLogic" access="false">
         <method name="register">
             <data>username</data>
             <data>password</data>
         </method>
+    </solver>
+    <solver name="session" url="/session" manager="control.SessionLogic" access="false">
+        <method name="getSessionID"/>
     </solver>
 </command>

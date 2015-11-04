@@ -148,7 +148,7 @@ public class PackageServer extends AbstractServer {
 
     protected void sendEvent(URL url, byte[] message) throws NoSuchMethodException, ClassNotFoundException, IllegalAccessException, InvocationTargetException, InstantiationException {
         CommandConfig config = CommandConfig.getConfig();
-        CommandConfig.PostInfo postInfo = config.findPostInfo(url.toString());
+        CommandConfig.PostInfo postInfo = config.findPostInfo(url.getPath());
         JSONObject jsonObject = JSONObject.fromObject(new String(message));
 
         Object manager = buildManager(config, postInfo);
