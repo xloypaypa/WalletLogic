@@ -39,6 +39,8 @@ public class MainPage {
     }
 
     private void createUIComponents() {
+        this.panel = new JPanel();
+
         this.startButton = new JButton();
         this.startButton.addActionListener((actionEvent) -> new Thread() {
             @Override
