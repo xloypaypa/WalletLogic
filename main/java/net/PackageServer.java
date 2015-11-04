@@ -155,7 +155,6 @@ public class PackageServer extends AbstractServer {
         for (int i = 0; i < data.length; i++) {
             String title = postInfo.getMethodData().get(i);
             data[i] = jsonObject.getString(title);
-
         }
         return data;
     }

@@ -8,7 +8,7 @@ import java.util.Map;
  * Created by xlo on 15-11-1.
  * it's the wallet collection
  */
-public class WalletCollection extends DBTable {
+public abstract class WalletCollection extends DBTable {
     @Override
     protected void updateUsing() {
         using.stream().filter(now -> !now.object.equals(now.past)).forEach(now

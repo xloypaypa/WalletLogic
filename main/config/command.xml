@@ -14,4 +14,12 @@
     <solver name="session" url="/session" manager="control.SessionLogic">
         <method name="getSessionID"/>
     </solver>
+    <solver name="create money" url="/createMoney" manager="control.MoneyLogic">
+        <method name="createMoney">
+            <data>username</data>
+            <data>password</data>
+            <data>typename</data>
+            <data>value</data>
+        </method>
+    </solver>
 </command>

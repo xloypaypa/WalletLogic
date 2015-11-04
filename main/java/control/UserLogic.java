@@ -1,5 +1,6 @@
 package control;
 
+import model.config.UserAccessConfig;
 import model.db.DBTable;
 import model.db.UserCollection;
 import model.session.SessionManager;
@@ -20,16 +21,7 @@ public class UserLogic extends LogicManager {
         SendEvent event = new SendEvent(socketChannel) {
             @Override
             public boolean run() throws Exception {
-                if (username == null || password == null) {
-                    return false;
-                }
-                UserCollection userCollection = new UserCollection();
-                DBTable.DBData user = userCollection.getUserData(username);
-                if (user == null) {
-                    return false;
-                }
-                String ans = PasswordEncoder.encode(user.object.get("password").toString() + SessionManager.getSessionManager().getSessionID(socketChannel.socket()));
-                return password.equals(ans);
+                return UserAccessConfig.getConfig().checkUser(username, password, socketChannel);
             }
         };
         this.setDefaultMessage(event, "/login");
@@ -40,7 +32,7 @@ public class UserLogic extends LogicManager {
         SendEvent event = new SendEvent(socketChannel) {
             @Override
             public boolean run() throws Exception {
-                if (username == null || password == null) {
+                if (username == null || username.length() == 0 || password == null) {
                     return false;
                 }
                 UserCollection userCollection = new UserCollection();

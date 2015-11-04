@@ -2,6 +2,7 @@
     <connection>model.db.virtual.BlogVirtualConnection</connection>
     <db name="blog" type="default">
         <collection type="model.db.UserCollection">user</collection>
+        <collection type="model.db.MoneyCollection">money</collection>
     </db>
     <db name="image" type="file">
     </db>
