@@ -50,7 +50,6 @@ public class CommandConfig implements ConfigInterface {
                 post.method = data.attributeValue("name");
                 for (Object methodKid : data.elements()) {
                     Element methodData = (Element) methodKid;
-                    String defaultValue = methodData.attributeValue("default");
                     post.methodData.add(methodData.getText());
                 }
             }

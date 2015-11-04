@@ -20,7 +20,23 @@ public abstract class LogicManager {
     }
 
     public void setDefaultMessage(SendEvent event, String url) {
-        event.sendWhileSuccess(url, "ok".getBytes());
+        setSuccessMessage(event, url);
+        setFailedMessage(event, url);
+    }
+
+    public void setFailedMessage(SendEvent event, String url) {
         event.sendWhileFailed(url, "fail".getBytes());
+    }
+
+    public void setSuccessMessage(SendEvent event, String url) {
+        event.sendWhileSuccess(url, "ok".getBytes());
+    }
+
+    public void setSuccessMessage(SendEvent event, String url, String message) {
+        event.sendWhileSuccess(url, message.getBytes());
+    }
+
+    public void setFailedMessage(SendEvent event, String url, String message) {
+        event.sendWhileFailed(url, message.getBytes());
     }
 }

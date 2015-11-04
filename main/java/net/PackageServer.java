@@ -1,6 +1,7 @@
 package net;
 
 import model.config.CommandConfig;
+import model.session.SessionManager;
 import net.server.AbstractServer;
 import net.sf.json.JSONObject;
 import net.tool.connectionManager.ConnectionManager;
@@ -41,6 +42,7 @@ public class PackageServer extends AbstractServer {
         this.packageReader = new HttpPackageReader(this.getConnectionMessage().getSocket());
         this.packageWriter = new HttpPackageWriter(this.getConnectionMessage().getSocket());
         this.message = new LinkedList<>();
+        SessionManager.getSessionManager().registerSession(this.getConnectionMessage().getSocket().socket());
         return ConnectionStatus.READING;
     }
 
@@ -109,6 +111,7 @@ public class PackageServer extends AbstractServer {
     @Override
     public ConnectionStatus whenClosing() {
         if (this.getConnectionMessage() != null) {
+            SessionManager.getSessionManager().removeSession(this.getConnectionMessage().getSocket().socket());
             ConnectionManager.getSolverManager().removeConnection(this.getConnectionMessage().getSocket().socket());
             this.getConnectionMessage().closeSocket();
         }
@@ -150,7 +153,7 @@ public class PackageServer extends AbstractServer {
 
         Object manager = buildManager(config, postInfo);
         Method method = getMethod(config, postInfo);
-        String[] data = getData(postInfo, jsonObject);
+        Object[] data = getData(postInfo, jsonObject);
         method.invoke(manager, data);
     }
 
