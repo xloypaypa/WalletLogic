@@ -24,6 +24,7 @@ public class MainPage {
         frame.setContentPane(mainPage.panel);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.pack();
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
         mainPage.update();
@@ -39,18 +40,16 @@ public class MainPage {
 
     private void createUIComponents() {
         this.startButton = new JButton();
-        this.startButton.addActionListener((actionEvent) -> {
-            Server server = Server.getNewServer("server", PackageServer::new);
-            server.getInstance(Integer.valueOf(this.serverPort.getText()), Integer.valueOf(this.num.getText()));
-            new Thread() {
-                @Override
-                public void run() {
-                    startButton.setEnabled(false);
-                    serverPort.setEnabled(false);
-                    num.setEnabled(false);
-                    server.accept();
-                }
-            }.start();
-        });
+        this.startButton.addActionListener((actionEvent) -> new Thread() {
+            @Override
+            public void run() {
+                startButton.setEnabled(false);
+                serverPort.setEnabled(false);
+                num.setEnabled(false);
+                Server server = Server.getNewServer("server", PackageServer::new);
+                server.getInstance(Integer.valueOf(serverPort.getText()), Integer.valueOf(num.getText()));
+                server.accept();
+            }
+        }.start());
     }
 }

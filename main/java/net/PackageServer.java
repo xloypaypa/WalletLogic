@@ -21,17 +21,14 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.nio.channels.SelectionKey;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Created by xlo on 15-11-2.
  * it's the server read page
  */
 public class PackageServer extends AbstractServer {
-    protected PackageReader packageReader;
-    protected PackageWriter packageWriter;
-    protected List<byte[]> message;
+    protected volatile PackageReader packageReader;
+    protected volatile PackageWriter packageWriter;
 
     public PackageServer() {
         super(new ConnectionMessageImpl());
@@ -41,7 +38,6 @@ public class PackageServer extends AbstractServer {
     public ConnectionStatus whenInit() {
         this.packageReader = new HttpPackageReader(this.getConnectionMessage().getSocket());
         this.packageWriter = new HttpPackageWriter(this.getConnectionMessage().getSocket());
-        this.message = new LinkedList<>();
         SessionManager.getSessionManager().registerSession(this.getConnectionMessage().getSocket().socket());
         return ConnectionStatus.READING;
     }
@@ -75,7 +71,6 @@ public class PackageServer extends AbstractServer {
         } catch (IOException e) {
             return ConnectionStatus.ERROR;
         }
-
     }
 
     @Override
@@ -83,7 +78,6 @@ public class PackageServer extends AbstractServer {
         try {
             PackageStatus packageStatus = this.packageWriter.write();
             if (packageStatus.equals(PackageStatus.END)) {
-                this.message.remove(0);
                 return getNextStatusWhenPackageEnd();
             } else if (packageStatus.equals(PackageStatus.WAITING)) {
                 return ConnectionStatus.WAITING;
@@ -100,7 +94,7 @@ public class PackageServer extends AbstractServer {
     }
 
     protected ConnectionStatus getNextStatusWhenPackageEnd() {
-        if (this.message.isEmpty()) {
+        if (this.packageWriter.getPackageQueueSize() == 0) {
             this.getConnectionMessage().getSelectionKey().interestOps(SelectionKey.OP_READ);
         } else {
             this.getConnectionMessage().getSelectionKey().interestOps(SelectionKey.OP_WRITE);
@@ -125,7 +119,7 @@ public class PackageServer extends AbstractServer {
 
     @Override
     public ConnectionStatus whenWaiting() {
-        if (this.message.isEmpty()) {
+        if (this.packageWriter.getPackageQueueSize() == 0) {
             return ConnectionStatus.READING;
         } else {
             return ConnectionStatus.WRITING;
@@ -140,10 +134,9 @@ public class PackageServer extends AbstractServer {
                 .setVersion("HTTP/1.1")
                 .addMessage("Content-Length", message.length + "")
                 .setBody(message).getHttpPackageBytes();
-        this.message.add(httpPackageBytes);
+        this.packageWriter.addPackage(httpPackageBytes, 0);
         this.getConnectionMessage().getSelectionKey().interestOps(SelectionKey.OP_WRITE);
         this.getConnectionMessage().getSelectionKey().selector().wakeup();
-        this.packageWriter.addPackage(httpPackageBytes, 0);
     }
 
     protected void sendEvent(URL url, byte[] message) throws NoSuchMethodException, ClassNotFoundException, IllegalAccessException, InvocationTargetException, InstantiationException {

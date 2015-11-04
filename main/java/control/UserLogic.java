@@ -32,6 +32,7 @@ public class UserLogic extends LogicManager {
                 return password.equals(ans);
             }
         };
+        this.setDefaultMessage(event, "/login");
         event.submit();
     }
 

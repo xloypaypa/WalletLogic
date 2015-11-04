@@ -44,7 +44,6 @@ public class CommandConfig implements ConfigInterface {
             post.name = element.attributeValue("name");
             post.url = element.attributeValue("url");
             post.manager = element.attributeValue("manager");
-            post.access = element.attributeValue("access").equals("true");
             for (Object kid : element.elements()) {
                 Element data = (Element) kid;
                 post.method = data.attributeValue("name");
@@ -108,7 +107,6 @@ public class CommandConfig implements ConfigInterface {
         private String name;
         private String url;
         private String manager;
-        private boolean access;
         private String method;
         private List<String> methodData;
 
@@ -122,10 +120,6 @@ public class CommandConfig implements ConfigInterface {
 
         public String getManager() {
             return manager;
-        }
-
-        public boolean needAccess() {
-            return access;
         }
 
         public String getMethod() {

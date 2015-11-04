@@ -30,7 +30,7 @@ public class SessionManager {
     }
 
     public void registerSession(Socket socket) {
-        this.sessionID.put(socket, new Random().nextLong());
+        this.sessionID.put(socket, Math.abs(new Random().nextLong()));
     }
 
     public long getSessionID(Socket socket) {
