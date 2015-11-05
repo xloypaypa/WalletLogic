@@ -1,5 +1,8 @@
 package model.session;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,12 +13,12 @@ import java.util.Random;
  * it's the session manager
  */
 public class SessionManager {
-    protected Map<Socket, Long> sessionID;
+    protected Map<Socket, SessionMessage> sessionMessage;
 
     private static SessionManager sessionManager;
 
     protected SessionManager() {
-        this.sessionID = new HashMap<>();
+        this.sessionMessage = new HashMap<>();
     }
 
     public static SessionManager getSessionManager() {
@@ -30,14 +33,35 @@ public class SessionManager {
     }
 
     public void registerSession(Socket socket) {
-        this.sessionID.put(socket, Math.abs(new Random().nextLong()));
+        this.sessionMessage.put(socket, new SessionMessage());
+        this.sessionMessage.get(socket).setSessionID(Math.abs(new Random().nextLong()));
     }
 
-    public long getSessionID(Socket socket) {
-        return this.sessionID.get(socket);
+    public SessionMessage getSessionMessage(Socket socket) {
+        return this.sessionMessage.get(socket);
     }
 
     public void removeSession(Socket socket) {
-        this.sessionID.remove(socket);
+        this.sessionMessage.remove(socket);
+    }
+
+    public void loginSession(Socket socket, String username) {
+        this.sessionMessage.get(socket).setUsername(username);
+    }
+
+    public boolean isLogin(Socket socket) {
+        return this.sessionMessage.get(socket).getUsername() != null;
+    }
+
+    public String getUsername(Socket socket) {
+        return this.sessionMessage.get(socket).getUsername();
+    }
+
+    @Setter
+    @Getter
+    public class SessionMessage {
+        protected long sessionID;
+        protected String username;
+
     }
 }

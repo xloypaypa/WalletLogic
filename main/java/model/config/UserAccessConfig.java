@@ -36,7 +36,7 @@ public class UserAccessConfig implements ConfigInterface {
         if (user == null) {
             return false;
         }
-        String ans = PasswordEncoder.encode(user.object.get("password").toString() + SessionManager.getSessionManager().getSessionID(socketChannel.socket()));
+        String ans = PasswordEncoder.encode(user.object.get("password").toString() + SessionManager.getSessionManager().getSessionMessage(socketChannel.socket()));
         return password.equals(ans);
     }
 }

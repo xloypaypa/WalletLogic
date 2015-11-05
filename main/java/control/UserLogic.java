@@ -21,7 +21,11 @@ public class UserLogic extends LogicManager {
         SendEvent event = new SendEvent(socketChannel) {
             @Override
             public boolean run() throws Exception {
-                return UserAccessConfig.getConfig().checkUser(username, password, socketChannel);
+                boolean result = UserAccessConfig.getConfig().checkUser(username, password, socketChannel);
+                if (result) {
+                    SessionManager.getSessionManager().loginSession(socketChannel.socket(), username);
+                }
+                return result;
             }
         };
         this.setDefaultMessage(event, "/login");

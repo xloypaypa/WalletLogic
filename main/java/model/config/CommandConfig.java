@@ -1,5 +1,6 @@
 package model.config;
 
+import lombok.Getter;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 
@@ -47,6 +48,7 @@ public class CommandConfig implements ConfigInterface {
             for (Object kid : element.elements()) {
                 Element data = (Element) kid;
                 post.method = data.attributeValue("name");
+                post.array = data.attributeValue("type", "object").equals("array");
                 for (Object methodKid : data.elements()) {
                     Element methodData = (Element) methodKid;
                     post.methodData.add(methodData.getText());
@@ -103,28 +105,14 @@ public class CommandConfig implements ConfigInterface {
         return methodMap.get(methodParamType);
     }
 
+    @Getter
     public class PostInfo {
         private String name;
         private String url;
         private String manager;
         private String method;
+        private boolean array;
         private List<String> methodData;
-
-        public String getName() {
-            return name;
-        }
-
-        public String getUrl() {
-            return url;
-        }
-
-        public String getManager() {
-            return manager;
-        }
-
-        public String getMethod() {
-            return method;
-        }
 
         public List<String> getMethodData() {
             return new ArrayList<>(methodData);

@@ -2,6 +2,7 @@ package model.db;
 
 import org.bson.Document;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -46,6 +47,17 @@ public class MoneyCollection extends WalletCollection {
         document.append("username", username)
                 .append("typename", typename);
         this.remove(document);
+    }
+
+    public List<DBData> getMoneyListData(String username) {
+        this.lockCollection();
+        List<Map<String, Object>> iterator = this.collection.find(new Document().append("username", username));
+        List<DBData> ans = new LinkedList<>();
+        for (Map<String, Object> now : iterator) {
+            ans.add(this.getDocumentNotUsing(now));
+        }
+        this.unlockCollection();
+        return ans;
     }
 
 }

@@ -18,10 +18,10 @@ public class MainPage {
     private JLabel serverMessage;
     private JTextField num;
 
-    public static void main(String[] args) {
+    public void show() {
         JFrame frame = new JFrame("MainPage");
         MainPage mainPage = new MainPage();
-        frame.setContentPane(mainPage.panel);
+        frame.setContentPane(this.panel);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.pack();
         frame.setLocationRelativeTo(null);

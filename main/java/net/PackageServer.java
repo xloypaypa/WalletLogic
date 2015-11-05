@@ -21,6 +21,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.nio.channels.SelectionKey;
+import java.nio.channels.SocketChannel;
 
 /**
  * Created by xlo on 15-11-2.
@@ -54,7 +55,7 @@ public class PackageServer extends AbstractServer {
             if (packageStatus.equals(PackageStatus.END)) {
                 HttpRequestHeadSolver httpRequestHeadSolver = (HttpRequestHeadSolver) this.packageReader.getHeadPart();
                 try {
-                    sendEvent(httpRequestHeadSolver.getUrl(), this.packageReader.getBody());
+                    NetMessageSolver.sendEvent(httpRequestHeadSolver.getUrl(), this.packageReader.getBody(), this.getConnectionMessage().getSocket());
                 } catch (Exception e) {
                     return ConnectionStatus.ERROR;
                 }
@@ -139,12 +140,12 @@ public class PackageServer extends AbstractServer {
         this.getConnectionMessage().getSelectionKey().selector().wakeup();
     }
 
-    protected void sendEvent(URL url, byte[] message) throws NoSuchMethodException, ClassNotFoundException, IllegalAccessException, InvocationTargetException, InstantiationException {
+    protected void sendEvent(URL url, byte[] message, SocketChannel socketChannel) throws NoSuchMethodException, ClassNotFoundException, IllegalAccessException, InvocationTargetException, InstantiationException {
         CommandConfig config = CommandConfig.getConfig();
         CommandConfig.PostInfo postInfo = config.findPostInfo(url.getPath());
         JSONObject jsonObject = JSONObject.fromObject(new String(message));
 
-        Object manager = buildManager(config, postInfo);
+        Object manager = buildManager(config, postInfo, socketChannel);
         Method method = getMethod(config, postInfo);
         Object[] data = getData(postInfo, jsonObject);
         method.invoke(manager, data);
@@ -168,8 +169,8 @@ public class PackageServer extends AbstractServer {
         return config.getMethod(postInfo.getManager(), postInfo.getMethod(), param);
     }
 
-    private Object buildManager(CommandConfig config, CommandConfig.PostInfo postInfo) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+    private Object buildManager(CommandConfig config, CommandConfig.PostInfo postInfo, SocketChannel socketChannel) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
         Constructor<?> constructor = config.getManagerConstructor(postInfo.getManager());
-        return constructor.newInstance(this.getConnectionMessage().getSocket());
+        return constructor.newInstance(socketChannel);
     }
 }
