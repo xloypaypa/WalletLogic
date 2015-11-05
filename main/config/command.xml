@@ -28,4 +28,11 @@
             <data>typename</data>
         </method>
     </solver>
+    <solver name="transfer money" url="/transferMoney" manager="control.MoneyLogic">
+        <method name="transferMoney">
+            <data>from</data>
+            <data>to</data>
+            <data>value</data>
+        </method>
+    </solver>
 </command>

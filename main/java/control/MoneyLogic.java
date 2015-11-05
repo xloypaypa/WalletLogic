@@ -1,5 +1,6 @@
 package control;
 
+import model.db.DBTable;
 import model.db.MoneyCollection;
 import model.session.SessionManager;
 
@@ -68,6 +69,35 @@ public class MoneyLogic extends LogicManager {
             }
         };
         this.setDefaultMessage(event, "/removeMoney");
+        event.submit();
+    }
+
+    public void transferMoney(String from, String to, String value) {
+        SendEvent event = new SendEvent(socketChannel) {
+            @Override
+            public boolean run() throws Exception {
+                String username = SessionManager.getSessionManager().getUsername(socketChannel.socket());
+                if (username == null) {
+                    return false;
+                }
+                MoneyCollection moneyCollection = new MoneyCollection();
+                DBTable.DBData fromType = moneyCollection.getMoney(username, from);
+                DBTable.DBData aimType = moneyCollection.getMoney(username, to);
+                if (fromType == null || aimType == null) {
+                    return false;
+                }
+                double fromValue = (double) fromType.object.get("value");
+                double aimValue = (double) aimType.object.get("value");
+                Double need = Double.valueOf(value);
+                if (fromValue < need) {
+                    return false;
+                }
+                fromType.object.put("value", fromValue - need);
+                aimType.object.put("value", aimValue + need);
+                return true;
+            }
+        };
+        this.setDefaultMessage(event, "/transferMoney");
         event.submit();
     }
 }
