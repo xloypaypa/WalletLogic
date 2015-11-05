@@ -1,9 +1,7 @@
 package net;
 
-import model.config.CommandConfig;
 import model.session.SessionManager;
 import net.server.AbstractServer;
-import net.sf.json.JSONObject;
 import net.tool.connectionManager.ConnectionManager;
 import net.tool.connectionSolver.ConnectionMessageImpl;
 import net.tool.connectionSolver.ConnectionStatus;
@@ -16,12 +14,7 @@ import net.tool.packageSolver.packageWriter.PackageWriter;
 import net.tool.packageSolver.packageWriter.packageWriterFactory.HttpRequestPackageWriterFactory;
 
 import java.io.IOException;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.net.URL;
 import java.nio.channels.SelectionKey;
-import java.nio.channels.SocketChannel;
 
 /**
  * Created by xlo on 15-11-2.
@@ -59,9 +52,9 @@ public class PackageServer extends AbstractServer {
                 } catch (Exception e) {
                     return ConnectionStatus.ERROR;
                 }
-                return getNextStatusWhenPackageEnd();
+                return ConnectionStatus.READING;
             } else if (packageStatus.equals(PackageStatus.WAITING)) {
-                return ConnectionStatus.WAITING;
+                return getNextStatusWhenPackageEnd();
             } else if (packageStatus.equals(PackageStatus.ERROR)) {
                 return ConnectionStatus.ERROR;
             } else if (packageStatus.equals(PackageStatus.CLOSED)) {
@@ -138,39 +131,5 @@ public class PackageServer extends AbstractServer {
         this.packageWriter.addPackage(httpPackageBytes, 0);
         this.getConnectionMessage().getSelectionKey().interestOps(SelectionKey.OP_WRITE);
         this.getConnectionMessage().getSelectionKey().selector().wakeup();
-    }
-
-    protected void sendEvent(URL url, byte[] message, SocketChannel socketChannel) throws NoSuchMethodException, ClassNotFoundException, IllegalAccessException, InvocationTargetException, InstantiationException {
-        CommandConfig config = CommandConfig.getConfig();
-        CommandConfig.PostInfo postInfo = config.findPostInfo(url.getPath());
-        JSONObject jsonObject = JSONObject.fromObject(new String(message));
-
-        Object manager = buildManager(config, postInfo, socketChannel);
-        Method method = getMethod(config, postInfo);
-        Object[] data = getData(postInfo, jsonObject);
-        method.invoke(manager, data);
-    }
-
-    private String[] getData(CommandConfig.PostInfo postInfo, JSONObject jsonObject) {
-        String[] data = new String[postInfo.getMethodData().size()];
-        for (int i = 0; i < data.length; i++) {
-            String title = postInfo.getMethodData().get(i);
-            data[i] = jsonObject.getString(title);
-        }
-        return data;
-    }
-
-    private Method getMethod(CommandConfig config, CommandConfig.PostInfo postInfo) throws ClassNotFoundException, NoSuchMethodException {
-        Class[] param = new Class[postInfo.getMethodData().size()];
-        for (int i = 0; i < param.length; i++) {
-            param[i] = String.class;
-
-        }
-        return config.getMethod(postInfo.getManager(), postInfo.getMethod(), param);
-    }
-
-    private Object buildManager(CommandConfig config, CommandConfig.PostInfo postInfo, SocketChannel socketChannel) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
-        Constructor<?> constructor = config.getManagerConstructor(postInfo.getManager());
-        return constructor.newInstance(socketChannel);
     }
 }

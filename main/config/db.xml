@@ -3,6 +3,7 @@
     <db name="blog" type="default">
         <collection type="model.db.UserCollection">user</collection>
         <collection type="model.db.MoneyCollection">money</collection>
+        <collection type="model.db.BudgetCollection">budget</collection>
     </db>
     <db name="image" type="file">
     </db>

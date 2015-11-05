@@ -14,6 +14,7 @@
     <solver name="session" url="/session" manager="control.SessionLogic">
         <method name="getSessionID"/>
     </solver>
+
     <solver name="get money" url="/getMoney" manager="control.MoneyLogic">
         <method name="getMoney"/>
     </solver>
@@ -28,11 +29,41 @@
             <data>typename</data>
         </method>
     </solver>
+    <solver name="rename money" url="/renameMoney" manager="control.MoneyLogic">
+        <method name="renameMoney">
+            <data>typename</data>
+            <data>newName</data>
+        </method>
+    </solver>
     <solver name="transfer money" url="/transferMoney" manager="control.MoneyLogic">
         <method name="transferMoney">
             <data>from</data>
             <data>to</data>
             <data>value</data>
+        </method>
+    </solver>
+
+    <solver name="get budget" url="/getBudget" manager="control.BudgetLogic">
+        <method name="getBudget"/>
+    </solver>
+    <solver name="create budget" url="/createBudget" manager="control.BudgetLogic">
+        <method name="createBudget">
+            <data>typename</data>
+            <data>income</data>
+            <data>expenditure</data>
+        </method>
+    </solver>
+    <solver name="remove budget" url="/removeBudget" manager="control.BudgetLogic">
+        <method name="removeBudget">
+            <data>typename</data>
+        </method>
+    </solver>
+    <solver name="change budge" url="/changeBudget" manager="control.BudgetLogic">
+        <method name="changeBudget">
+            <data>typename</data>
+            <data>newName</data>
+            <data>income</data>
+            <data>expenditure</data>
         </method>
     </solver>
 </command>

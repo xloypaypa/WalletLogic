@@ -100,4 +100,25 @@ public class MoneyLogic extends LogicManager {
         this.setDefaultMessage(event, "/transferMoney");
         event.submit();
     }
+
+    public void renameMoney(String typename, String newName) {
+        SendEvent event = new SendEvent(socketChannel) {
+            @Override
+            public boolean run() throws Exception {
+                String username = SessionManager.getSessionManager().getUsername(socketChannel.socket());
+                if (username == null) {
+                    return false;
+                }
+                MoneyCollection moneyCollection = new MoneyCollection();
+                DBTable.DBData money = moneyCollection.getMoney(username, typename);
+                if (money == null) {
+                    return false;
+                }
+                money.object.put("typename", newName);
+                return true;
+            }
+        };
+        this.setDefaultMessage(event, "/renameMoney");
+        event.submit();
+    }
 }
