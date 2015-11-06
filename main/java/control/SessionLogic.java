@@ -20,7 +20,7 @@ public class SessionLogic extends LogicManager {
                 return true;
             }
         };
-        String message = SessionManager.getSessionManager().getSessionMessage(socketChannel.socket()) + "";
+        String message = SessionManager.getSessionManager().getSessionMessage(socketChannel.socket()).getSessionID() + "";
         SessionLogic.this.setSuccessMessage(event, "/session", message);
         this.setFailedMessage(event, "/session");
         event.submit();
