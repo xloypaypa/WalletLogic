@@ -1,6 +1,5 @@
 package model.config;
 
-import lombok.Getter;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 
@@ -105,7 +104,6 @@ public class CommandConfig implements ConfigInterface {
         return methodMap.get(methodParamType);
     }
 
-    @Getter
     public class PostInfo {
         private String name;
         private String url;
@@ -113,6 +111,26 @@ public class CommandConfig implements ConfigInterface {
         private String method;
         private boolean array;
         private List<String> methodData;
+
+        public String getName() {
+            return name;
+        }
+
+        public String getUrl() {
+            return url;
+        }
+
+        public String getManager() {
+            return manager;
+        }
+
+        public String getMethod() {
+            return method;
+        }
+
+        public boolean isArray() {
+            return array;
+        }
 
         public List<String> getMethodData() {
             return new ArrayList<>(methodData);

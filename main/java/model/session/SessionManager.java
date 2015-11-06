@@ -1,8 +1,5 @@
 package model.session;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
@@ -57,11 +54,24 @@ public class SessionManager {
         return this.sessionMessage.get(socket).getUsername();
     }
 
-    @Setter
-    @Getter
     public class SessionMessage {
         protected long sessionID;
         protected String username;
 
+        public void setSessionID(long sessionID) {
+            this.sessionID = sessionID;
+        }
+
+        public void setUsername(String username) {
+            this.username = username;
+        }
+
+        public long getSessionID() {
+            return sessionID;
+        }
+
+        public String getUsername() {
+            return username;
+        }
     }
 }

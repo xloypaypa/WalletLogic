@@ -66,4 +66,31 @@
             <data>expenditure</data>
         </method>
     </solver>
+
+    <solver name="add edge" url="/addEdge" manager="control.EdgeLogic">
+        <method name="addEdge">
+            <data>fromType</data>
+            <data>toType</data>
+            <data>script</data>
+        </method>
+    </solver>
+    <solver name="remove edge" url="/removeEdge" manager="control.EdgeLogic">
+        <method name="removeEdge">
+            <data>fromType</data>
+            <data>toType</data>
+        </method>
+    </solver>
+    <solver name="get edge" url="/getEdge" manager="control.EdgeLogic">
+        <method name="getEdge">
+            <data>fromType</data>
+            <data>toType</data>
+        </method>
+    </solver>
+    <solver name="update edge" url="/updateEdge" manager="control.EdgeLogic">
+        <method name="updateEdge">
+            <data>fromType</data>
+            <data>toType</data>
+            <data>script</data>
+        </method>
+    </solver>
 </command>
