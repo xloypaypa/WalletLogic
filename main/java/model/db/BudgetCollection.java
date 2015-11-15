@@ -5,6 +5,7 @@ import org.bson.Document;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Created by xlo on 2015/11/5.
@@ -18,7 +19,9 @@ public class BudgetCollection extends WalletCollection {
         document.append("username", username)
                 .append("typename", typename)
                 .append("income", income)
-                .append("expenditure", expenditure);
+                .append("expenditure", expenditure)
+                .append("now income", (double) 0)
+                .append("now expenditure", (double) 0);
         this.insert(document);
     }
 
@@ -53,10 +56,7 @@ public class BudgetCollection extends WalletCollection {
     public List<DBData> getBudgetListData(String username) {
         this.lockCollection();
         List<Map<String, Object>> iterator = this.collection.find(new Document().append("username", username));
-        List<DBData> ans = new LinkedList<>();
-        for (Map<String, Object> now : iterator) {
-            ans.add(this.getDocumentNotUsing(now));
-        }
+        List<DBData> ans = iterator.stream().map(this::getDocumentNotUsing).collect(Collectors.toCollection(LinkedList::new));
         this.unlockCollection();
         return ans;
     }

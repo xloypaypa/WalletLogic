@@ -93,4 +93,14 @@
             <data>script</data>
         </method>
     </solver>
+    <solver name="get super edge list" url="/getSuperEdgeList" manager="control.EdgeLogic">
+        <method name="getSuperEdgeList">
+            <data>typename</data>
+        </method>
+    </solver>
+    <solver name="get extend edge list" url="/getExtendEdgeList" manager="control.EdgeLogic">
+        <method name="getExtendEdgeList">
+            <data>typename</data>
+        </method>
+    </solver>
 </command>

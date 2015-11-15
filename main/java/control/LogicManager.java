@@ -8,6 +8,7 @@ import net.tool.connectionManager.ConnectionManager;
 
 import java.nio.channels.SocketChannel;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by xlo on 2015/11/3.
@@ -30,6 +31,12 @@ public abstract class LogicManager {
 
     public void setSuccessMessage(SendEvent event, String url) {
         setSuccessMessage(event, url, "ok");
+    }
+
+    public void setSuccessMessage(SendEvent event, String url, Map<String, Object> map) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.putAll(map);
+        event.sendWhileSuccess(url, jsonObject.toString().getBytes());
     }
 
     public void setSuccessMessage(SendEvent event, String url, String message) {
