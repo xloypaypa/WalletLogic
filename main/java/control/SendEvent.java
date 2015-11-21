@@ -44,33 +44,31 @@ public final class SendEvent extends Event {
     @Override
     protected void whenCommit() {
         super.whenCommit();
-        PackageServer packageServer = SessionManager.getSessionManager().getPackageServer(socketChannel.socket());
-        for (Pair<String, byte[]> now : this.commitMessage) {
-            packageServer.addMessage(now.getKey(), now.getValue());
-        }
+        sendMessage(this.commitMessage);
     }
 
     @Override
     protected void whenFailed() {
         super.whenFailed();
-        PackageServer packageServer = SessionManager.getSessionManager().getPackageServer(socketChannel.socket());
-        for (Pair<String, byte[]> now : this.failedMessage) {
-            packageServer.addMessage(now.getKey(), now.getValue());
-        }
+        sendMessage(this.failedMessage);
     }
 
     @Override
     protected void whenSucceed() {
         super.whenSucceed();
-        PackageServer packageServer = SessionManager.getSessionManager().getPackageServer(socketChannel.socket());
-        for (Pair<String, byte[]> now : this.successMessage) {
-            packageServer.addMessage(now.getKey(), now.getValue());
-        }
+        sendMessage(this.successMessage);
     }
 
     @Override
     public boolean run() throws Exception {
         return eventAction.action();
+    }
+
+    protected void sendMessage(List<Pair<String, byte[]>> message) {
+        PackageServer packageServer = SessionManager.getSessionManager().getPackageServer(socketChannel.socket());
+        for (Pair<String, byte[]> now : message) {
+            packageServer.addMessage(now.getKey(), now.getValue());
+        }
     }
 
     @FunctionalInterface

@@ -16,7 +16,6 @@ public class MoneyLogic extends LogicManager {
     }
 
     public void getMoney() {
-        SendEvent event = new SendEvent(socketChannel);
         event.setEventAction(() -> {
             String username = SessionManager.getSessionManager().getUsername(socketChannel.socket());
             if (username == null) {
@@ -31,7 +30,6 @@ public class MoneyLogic extends LogicManager {
     }
 
     public void createMoney(String typename, String value) {
-        SendEvent event = new SendEvent(socketChannel);
         event.setEventAction(() -> {
             String username = SessionManager.getSessionManager().getUsername(socketChannel.socket());
             if (username == null) {
@@ -49,7 +47,6 @@ public class MoneyLogic extends LogicManager {
     }
 
     public void removeMoney(String typename) {
-        SendEvent event = new SendEvent(socketChannel);
         event.setEventAction(() -> {
             String username = SessionManager.getSessionManager().getUsername(socketChannel.socket());
             if (username == null) {
@@ -67,7 +64,6 @@ public class MoneyLogic extends LogicManager {
     }
 
     public void transferMoney(String from, String to, String value) {
-        SendEvent event = new SendEvent(socketChannel);
         event.setEventAction(() -> {
             String username = SessionManager.getSessionManager().getUsername(socketChannel.socket());
             if (username == null) {
@@ -94,7 +90,6 @@ public class MoneyLogic extends LogicManager {
     }
 
     public void renameMoney(String typename, String newName) {
-        SendEvent event = new SendEvent(socketChannel);
         event.setEventAction(() -> {
             String username = SessionManager.getSessionManager().getUsername(socketChannel.socket());
             if (username == null) {

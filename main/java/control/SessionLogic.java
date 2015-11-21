@@ -14,7 +14,6 @@ public class SessionLogic extends LogicManager {
     }
 
     public void getSessionID() {
-        SendEvent event = new SendEvent(socketChannel);
         event.setEventAction(() -> true);
         String message = SessionManager.getSessionManager().getSessionMessage(socketChannel.socket()).getSessionID() + "";
         SessionLogic.this.setSuccessMessage(event, "/session", message);

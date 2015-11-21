@@ -11,12 +11,12 @@ import java.nio.channels.SocketChannel;
  * it's the budget logic
  */
 public class BudgetLogic extends LogicManager {
+
     public BudgetLogic(SocketChannel socketChannel) {
         super(socketChannel);
     }
 
     public void getBudget() {
-        SendEvent event = new SendEvent(socketChannel);
         event.setEventAction(() -> {
             String username = SessionManager.getSessionManager().getUsername(socketChannel.socket());
             if (username == null) {
@@ -31,7 +31,6 @@ public class BudgetLogic extends LogicManager {
     }
 
     public void createBudget(String typename, String income, String expenditure) {
-        SendEvent event = new SendEvent(socketChannel);
         event.setEventAction(() -> {
             String username = SessionManager.getSessionManager().getUsername(socketChannel.socket());
             if (username == null) {
@@ -49,7 +48,6 @@ public class BudgetLogic extends LogicManager {
     }
 
     public void removeBudget(String typename) {
-        SendEvent event = new SendEvent(socketChannel);
         event.setEventAction(() -> {
             String username = SessionManager.getSessionManager().getUsername(socketChannel.socket());
             if (username == null) {
@@ -67,7 +65,6 @@ public class BudgetLogic extends LogicManager {
     }
 
     public void changeBudget(String typename, String newName, String income, String expenditure) {
-        SendEvent event = new SendEvent(socketChannel);
         event.setEventAction(() -> {
             String username = SessionManager.getSessionManager().getUsername(socketChannel.socket());
             if (username == null) {

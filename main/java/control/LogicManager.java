@@ -17,10 +17,16 @@ import java.util.Map;
 public abstract class LogicManager {
     protected SocketChannel socketChannel;
     protected PackageServer packageServer;
+    protected SendEvent event;
 
     public LogicManager(SocketChannel socketChannel) {
         this.socketChannel = socketChannel;
         this.packageServer = SessionManager.getSessionManager().getPackageServer(socketChannel.socket());
+        this.event = buildSendEvent(socketChannel);
+    }
+
+    protected SendEvent buildSendEvent(SocketChannel socketChannel) {
+        return new SendEvent(socketChannel);
     }
 
     public void setDefaultMessage(SendEvent event, String url) {

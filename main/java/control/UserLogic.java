@@ -16,7 +16,6 @@ public class UserLogic extends LogicManager {
     }
 
     public void login(String username, String password) {
-        SendEvent event = new SendEvent(socketChannel);
         event.setEventAction(() -> {
             long sessionID = SessionManager.getSessionManager().getSessionMessage(socketChannel.socket()).getSessionID();
             boolean result = UserAccessConfig.getConfig().checkUser(username, password, sessionID);
@@ -30,7 +29,6 @@ public class UserLogic extends LogicManager {
     }
 
     public void register(String username, String password) {
-        SendEvent event = new SendEvent(socketChannel);
         event.setEventAction(() -> {
             if (username == null || username.length() == 0 || password == null) {
                 return false;

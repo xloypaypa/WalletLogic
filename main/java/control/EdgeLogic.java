@@ -19,7 +19,6 @@ public class EdgeLogic extends LogicManager {
     }
 
     public void addEdge(String fromType, String toType, String script) {
-        SendEvent event = new SendEvent(socketChannel);
         event.setEventAction(() -> {
             String username = SessionManager.getSessionManager().getUsername(socketChannel.socket());
             if (username == null) {
@@ -45,7 +44,6 @@ public class EdgeLogic extends LogicManager {
     }
 
     public void getEdge(String fromType, String toType) {
-        SendEvent event = new SendEvent(socketChannel);
         event.setEventAction(() -> {
             String username = SessionManager.getSessionManager().getUsername(socketChannel.socket());
             if (username == null) {
@@ -74,7 +72,6 @@ public class EdgeLogic extends LogicManager {
     }
 
     public void removeEdge(String fromType, String toType, String script) {
-        SendEvent event = new SendEvent(socketChannel);
         event.setEventAction(() -> {
             String username = SessionManager.getSessionManager().getUsername(socketChannel.socket());
             if (username == null) {
@@ -100,7 +97,6 @@ public class EdgeLogic extends LogicManager {
     }
 
     public void updateEdge(String fromType, String toType, String script) {
-        SendEvent event = new SendEvent(socketChannel);
         event.setEventAction(() -> {
             String username = SessionManager.getSessionManager().getUsername(socketChannel.socket());
             if (username == null) {
@@ -127,7 +123,6 @@ public class EdgeLogic extends LogicManager {
     }
 
     public void getSuperEdgeList(String typename) {
-        SendEvent event = new SendEvent(socketChannel);
         event.setEventAction(() -> {
             String username = SessionManager.getSessionManager().getUsername(socketChannel.socket());
             if (username == null) {
@@ -143,7 +138,6 @@ public class EdgeLogic extends LogicManager {
     }
 
     public void getExtendEdgeList(String typename) {
-        SendEvent event = new SendEvent(socketChannel);
         event.setEventAction(() -> {
             String username = SessionManager.getSessionManager().getUsername(socketChannel.socket());
             if (username == null) {
