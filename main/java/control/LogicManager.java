@@ -1,10 +1,10 @@
 package control;
 
 import model.db.DBTable;
+import model.session.SessionManager;
 import net.PackageServer;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-import net.tool.connectionManager.ConnectionManager;
 
 import java.nio.channels.SocketChannel;
 import java.util.List;
@@ -20,8 +20,7 @@ public abstract class LogicManager {
 
     public LogicManager(SocketChannel socketChannel) {
         this.socketChannel = socketChannel;
-        this.packageServer = (PackageServer) ConnectionManager.getSolverManager()
-                .getSolver(socketChannel.socket());
+        this.packageServer = SessionManager.getSessionManager().getPackageServer(socketChannel.socket());
     }
 
     public void setDefaultMessage(SendEvent event, String url) {

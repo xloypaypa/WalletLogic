@@ -1,5 +1,8 @@
 package model.session;
 
+import net.PackageServer;
+import net.tool.connectionManager.ConnectionManager;
+
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,7 +34,9 @@ public class SessionManager {
 
     public void registerSession(Socket socket) {
         this.sessionMessage.put(socket, new SessionMessage());
-        this.sessionMessage.get(socket).setSessionID(Math.abs(new Random().nextLong()));
+        SessionMessage sessionMessage = this.sessionMessage.get(socket);
+        sessionMessage.setSessionID(Math.abs(new Random().nextLong()));
+        sessionMessage.setPackageServer((PackageServer) ConnectionManager.getSolverManager().getSolver(socket));
     }
 
     public SessionMessage getSessionMessage(Socket socket) {
@@ -54,9 +59,14 @@ public class SessionManager {
         return this.sessionMessage.get(socket).getUsername();
     }
 
+    public PackageServer getPackageServer(Socket socket) {
+        return this.sessionMessage.get(socket).getPackageServer();
+    }
+
     public class SessionMessage {
         protected long sessionID;
         protected String username;
+        protected PackageServer packageServer;
 
         public void setSessionID(long sessionID) {
             this.sessionID = sessionID;
@@ -72,6 +82,14 @@ public class SessionManager {
 
         public String getUsername() {
             return username;
+        }
+
+        public void setPackageServer(PackageServer packageServer) {
+            this.packageServer = packageServer;
+        }
+
+        public PackageServer getPackageServer() {
+            return packageServer;
         }
     }
 }
