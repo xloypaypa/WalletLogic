@@ -30,15 +30,7 @@ public class NetMessageSolver {
     }
 
     private static Object[] getData(CommandConfig.PostInfo postInfo, byte[] message) {
-        if (!postInfo.isArray()) {
-            JSONObject jsonObject = JSONObject.fromObject(new String(message));
-            String[] data = new String[postInfo.getMethodData().size()];
-            for (int i = 0; i < data.length; i++) {
-                String title = postInfo.getMethodData().get(i);
-                data[i] = jsonObject.getString(title);
-            }
-            return data;
-        } else {
+        if (postInfo.isArray()) {
             JSONArray jsonArray = JSONArray.fromObject(new String(message));
             List<Map<String, String>> list = new LinkedList<>();
             for (Object now : jsonArray) {
@@ -52,24 +44,39 @@ public class NetMessageSolver {
             Object[] result = new Object[1];
             result[0] = list;
             return result;
+        } else if (postInfo.isData()) {
+            Object[] result = new Object[1];
+            result[0] = message;
+            return result;
+        } else {
+            JSONObject jsonObject = JSONObject.fromObject(new String(message));
+            String[] data = new String[postInfo.getMethodData().size()];
+            for (int i = 0; i < data.length; i++) {
+                String title = postInfo.getMethodData().get(i);
+                data[i] = jsonObject.getString(title);
+            }
+            return data;
         }
     }
 
     private static Method getMethod(CommandConfig config, CommandConfig.PostInfo postInfo) throws ClassNotFoundException, NoSuchMethodException {
-        if (!postInfo.isArray()) {
+        if (postInfo.isArray()) {
+            Class[] param = {List.class};
+            return config.getMethod(postInfo.getManager(), postInfo.getMethod(), param);
+        } else if (postInfo.isData()) {
+            Class[] param = {byte[].class};
+            return config.getMethod(postInfo.getManager(), postInfo.getMethod(), param);
+        } else {
             Class[] param = new Class[postInfo.getMethodData().size()];
             for (int i = 0; i < param.length; i++) {
                 param[i] = String.class;
             }
-            return config.getMethod(postInfo.getManager(), postInfo.getMethod(), param);
-        } else {
-            Class[] param = {List.class};
             return config.getMethod(postInfo.getManager(), postInfo.getMethod(), param);
         }
     }
 
     private static Object buildManager(CommandConfig config, CommandConfig.PostInfo postInfo, SocketChannel socketChannel) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
         Constructor<?> constructor = config.getManagerConstructor(postInfo.getManager());
-        return constructor.newInstance(socketChannel);
+        return constructor.newInstance(socketChannel.socket());
     }
 }

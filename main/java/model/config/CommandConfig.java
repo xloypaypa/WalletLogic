@@ -5,6 +5,7 @@ import org.dom4j.Element;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
+import java.net.Socket;
 import java.nio.channels.SocketChannel;
 import java.util.*;
 import java.util.concurrent.locks.ReadWriteLock;
@@ -48,6 +49,7 @@ public class CommandConfig implements ConfigInterface {
                 Element data = (Element) kid;
                 post.method = data.attributeValue("name");
                 post.array = data.attributeValue("type", "object").equals("array");
+                post.data = data.attributeValue("type", "object").equals("data");
                 for (Object methodKid : data.elements()) {
                     Element methodData = (Element) methodKid;
                     post.methodData.add(methodData.getText());
@@ -83,7 +85,7 @@ public class CommandConfig implements ConfigInterface {
 
     public Constructor<?> getManagerConstructor(String className) throws ClassNotFoundException, NoSuchMethodException {
         if (!this.manager.containsKey(className)) {
-            Class[] paramTypes = {SocketChannel.class};
+            Class[] paramTypes = {Socket.class};
             this.manager.put(className, Class.forName(className).getConstructor(paramTypes));
         }
         return this.manager.get(className);
@@ -109,7 +111,7 @@ public class CommandConfig implements ConfigInterface {
         private String url;
         private String manager;
         private String method;
-        private boolean array;
+        private boolean array, data;
         private List<String> methodData;
 
         public String getName() {
@@ -130,6 +132,10 @@ public class CommandConfig implements ConfigInterface {
 
         public boolean isArray() {
             return array;
+        }
+
+        public boolean isData() {
+            return data;
         }
 
         public List<String> getMethodData() {

@@ -23,6 +23,24 @@ public class UserLogicTest extends LogicTesting {
     }
 
     @Test
+    public void registerShouldSendUrlToRegister() throws Exception {
+        UserLogicNoSend userLogic = new UserLogicNoSend(this.socket);
+        userLogic.register("username", "password");
+        userLogic.waitEventEnd();
+
+        assertEquals("/register", userLogic.getEvent().getMessage().get(0).getKey());
+    }
+
+    @Test
+    public void loginShouldSendUrlToLogin() throws Exception {
+        UserLogicNoSend userLogic = new UserLogicNoSend(this.socket);
+        userLogic.login("username", "password");
+        userLogic.waitEventEnd();
+
+        assertEquals("/login", userLogic.getEvent().getMessage().get(0).getKey());
+    }
+
+    @Test
     public void shouldOkWhenRegisterNewUser() throws Exception {
         UserLogicNoSend userLogic = new UserLogicNoSend(this.socket);
         userLogic.register("username", "password");

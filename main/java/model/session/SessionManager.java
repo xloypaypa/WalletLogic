@@ -4,6 +4,7 @@ import net.PackageServer;
 import net.tool.connectionManager.ConnectionManager;
 
 import java.net.Socket;
+import java.security.PublicKey;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -67,6 +68,7 @@ public class SessionManager {
         protected long sessionID;
         protected String username;
         protected PackageServer packageServer;
+        protected PublicKey publicKey;
 
         public void setSessionID(long sessionID) {
             this.sessionID = sessionID;
@@ -82,6 +84,14 @@ public class SessionManager {
 
         public String getUsername() {
             return username;
+        }
+
+        public void setPublicKey(PublicKey publicKey) {
+            this.publicKey = publicKey;
+        }
+
+        public PublicKey getPublicKey() {
+            return publicKey;
         }
 
         public void setPackageServer(PackageServer packageServer) {
