@@ -27,6 +27,7 @@ public class SessionLogic extends LogicManager {
     public void clientKey(byte[] data) {
         event.setEventAction(() -> {
             SessionManager.getSessionManager().getSessionMessage(socket).setPublicKey(RSA.bytes2PublicKey(data));
+            SessionManager.getSessionManager().getSessionMessage(socket).setClientEncryption(true);
             return true;
         });
         this.setDefaultMessage(event, "/clientKey");
@@ -34,9 +35,12 @@ public class SessionLogic extends LogicManager {
     }
 
     public void serverKey() {
-        event.setEventAction(() -> true);
+        event.setEventAction(() -> {
+            SessionManager.getSessionManager().getSessionMessage(socket).setServerEncryption(true);
+            return true;
+        });
         event.sendWhileSuccess("/serverKey", RSA.publicKey2Bytes(EncryptionConfig.getConfig().getKeyPair().getPublic()));
-        this.setFailedMessage(event, "/session");
+        this.setFailedMessage(event, "/serverKey");
         event.submit();
     }
 }

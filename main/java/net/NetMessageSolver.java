@@ -1,6 +1,9 @@
 package net;
 
 import model.config.CommandConfig;
+import model.config.EncryptionConfig;
+import model.session.SessionManager;
+import model.tool.RSA;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -19,7 +22,11 @@ import java.util.Map;
  * it's the solver for net message
  */
 public class NetMessageSolver {
-    public static void sendEvent(URL url, byte[] message, SocketChannel socketChannel) throws NoSuchMethodException, ClassNotFoundException, IllegalAccessException, InvocationTargetException, InstantiationException {
+    public static void sendEvent(URL url, byte[] message, SocketChannel socketChannel) throws Exception {
+        if (SessionManager.getSessionManager().getSessionMessage(socketChannel.socket()).isServerEncryption()) {
+            message = RSA.decrypt(EncryptionConfig.getConfig().getKeyPair().getPrivate(), message);
+        }
+
         CommandConfig config = CommandConfig.getConfig();
         CommandConfig.PostInfo postInfo = config.findPostInfo(url.getPath());
 

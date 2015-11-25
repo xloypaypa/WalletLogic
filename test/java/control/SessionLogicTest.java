@@ -1,11 +1,17 @@
 package control;
 
 import control.tool.SessionLogicNoSend;
+import model.config.EncryptionConfig;
+import model.session.SessionManager;
+import model.tool.RSA;
 import net.sf.json.JSONObject;
 import org.junit.Test;
 
+import java.security.PublicKey;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by xlo on 2015/11/25.
@@ -37,6 +43,30 @@ public class SessionLogicTest extends LogicTesting {
         JSONObject jsonObject = JSONObject.fromObject(new String(this.sessionLogic.getEvent().getMessage().get(0).getValue()));
 
         assertNotNull(jsonObject.getLong("result"));
+    }
+
+    @Test
+    public void sendServerKey() throws Exception {
+        this.sessionLogic.serverKey();
+        this.sessionLogic.waitEventEnd();
+
+        assertEquals("/serverKey", this.sessionLogic.getEvent().getMessage().get(0).getKey());
+    }
+
+    @Test
+    public void shouldOpenServerEncryption() throws Exception {
+        this.sessionLogic.serverKey();
+        this.sessionLogic.waitEventEnd();
+        assertTrue(SessionManager.getSessionManager().getSessionMessage(this.socket).isServerEncryption());
+    }
+
+    @Test
+    public void shouldSendServerKey() throws Exception {
+        this.sessionLogic.serverKey();
+        this.sessionLogic.waitEventEnd();
+
+        PublicKey publicKey = RSA.bytes2PublicKey(this.sessionLogic.getEvent().getMessage().get(0).getValue());
+        assertEquals(EncryptionConfig.getConfig().getKeyPair().getPublic(), publicKey);
     }
 
 }

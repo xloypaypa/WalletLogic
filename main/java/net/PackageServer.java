@@ -1,6 +1,7 @@
 package net;
 
 import model.session.SessionManager;
+import model.tool.RSA;
 import net.server.AbstractServer;
 import net.tool.connectionManager.ConnectionManager;
 import net.tool.connectionSolver.ConnectionMessageImpl;
@@ -121,6 +122,15 @@ public class PackageServer extends AbstractServer {
     }
 
     public void addMessage(String url, byte[] message) {
+        if (SessionManager.getSessionManager().getSessionMessage(this.getConnectionMessage().getSocket().socket()).isClientEncryption()) {
+            try {
+                message = RSA.encrypt(SessionManager.getSessionManager().getSessionMessage(this.getConnectionMessage().getSocket().socket()).getPublicKey(), message);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return ;
+            }
+        }
+
         byte[] httpPackageBytes = HttpRequestPackageWriterFactory.getHttpReplyPackageWriterFactory()
                 .setCommand("GET")
                 .setHost("client")
