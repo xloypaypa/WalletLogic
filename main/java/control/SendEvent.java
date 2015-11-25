@@ -5,7 +5,7 @@ import model.db.event.Event;
 import model.session.SessionManager;
 import net.PackageServer;
 
-import java.nio.channels.SocketChannel;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,13 +13,13 @@ import java.util.List;
  * Created by xlo on 15-11-2.
  * it's the event
  */
-public final class SendEvent extends Event {
-    protected SocketChannel socketChannel;
+public class SendEvent extends Event {
+    protected Socket socket;
     protected List<Pair<String, byte[]>> successMessage, failedMessage, commitMessage;
     protected EventAction eventAction;
 
-    public SendEvent(SocketChannel socketChannel) {
-        this.socketChannel = socketChannel;
+    public SendEvent(Socket socket) {
+        this.socket = socket;
         this.successMessage = new ArrayList<>();
         this.failedMessage = new ArrayList<>();
         this.commitMessage = new ArrayList<>();
@@ -65,7 +65,7 @@ public final class SendEvent extends Event {
     }
 
     protected void sendMessage(List<Pair<String, byte[]>> message) {
-        PackageServer packageServer = SessionManager.getSessionManager().getPackageServer(socketChannel.socket());
+        PackageServer packageServer = SessionManager.getSessionManager().getPackageServer(this.socket);
         for (Pair<String, byte[]> now : message) {
             packageServer.addMessage(now.getKey(), now.getValue());
         }

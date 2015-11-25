@@ -4,7 +4,7 @@ import model.db.BudgetCollection;
 import model.db.DBTable;
 import model.session.SessionManager;
 
-import java.nio.channels.SocketChannel;
+import java.net.Socket;
 
 /**
  * Created by xlo on 2015/11/5.
@@ -12,13 +12,13 @@ import java.nio.channels.SocketChannel;
  */
 public class BudgetLogic extends LogicManager {
 
-    public BudgetLogic(SocketChannel socketChannel) {
-        super(socketChannel);
+    public BudgetLogic(Socket socket) {
+        super(socket);
     }
 
     public void getBudget() {
         event.setEventAction(() -> {
-            String username = SessionManager.getSessionManager().getUsername(socketChannel.socket());
+            String username = SessionManager.getSessionManager().getUsername(socket);
             if (username == null) {
                 return false;
             }
@@ -32,7 +32,7 @@ public class BudgetLogic extends LogicManager {
 
     public void createBudget(String typename, String income, String expenditure) {
         event.setEventAction(() -> {
-            String username = SessionManager.getSessionManager().getUsername(socketChannel.socket());
+            String username = SessionManager.getSessionManager().getUsername(socket);
             if (username == null) {
                 return false;
             }
@@ -49,7 +49,7 @@ public class BudgetLogic extends LogicManager {
 
     public void removeBudget(String typename) {
         event.setEventAction(() -> {
-            String username = SessionManager.getSessionManager().getUsername(socketChannel.socket());
+            String username = SessionManager.getSessionManager().getUsername(socket);
             if (username == null) {
                 return false;
             }
@@ -66,7 +66,7 @@ public class BudgetLogic extends LogicManager {
 
     public void changeBudget(String typename, String newName, String income, String expenditure) {
         event.setEventAction(() -> {
-            String username = SessionManager.getSessionManager().getUsername(socketChannel.socket());
+            String username = SessionManager.getSessionManager().getUsername(socket);
             if (username == null) {
                 return false;
             }

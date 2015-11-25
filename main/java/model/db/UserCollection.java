@@ -38,4 +38,12 @@ public class UserCollection extends WalletCollection {
         return this.getDocumentNotUsing(iterator.get(0));
     }
 
+    public void removeUserData(String username) {
+        this.lockCollection();
+        List<Map<String, Object>> iterator = this.collection.find(new Document().append("username", username));
+        if (iterator.size() != 0) {
+            this.collection.deleteOne(iterator.get(0));
+        }
+    }
+
 }

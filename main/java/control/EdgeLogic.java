@@ -6,7 +6,7 @@ import model.db.DBTable;
 import model.session.SessionManager;
 import org.bson.Document;
 
-import java.nio.channels.SocketChannel;
+import java.net.Socket;
 import java.util.Map;
 
 /**
@@ -14,13 +14,14 @@ import java.util.Map;
  * it's the edge logic
  */
 public class EdgeLogic extends LogicManager {
-    public EdgeLogic(SocketChannel socketChannel) {
-        super(socketChannel);
+
+    public EdgeLogic(Socket socket) {
+        super(socket);
     }
 
     public void addEdge(String fromType, String toType, String script) {
         event.setEventAction(() -> {
-            String username = SessionManager.getSessionManager().getUsername(socketChannel.socket());
+            String username = SessionManager.getSessionManager().getUsername(socket);
             if (username == null) {
                 return false;
             }
@@ -45,7 +46,7 @@ public class EdgeLogic extends LogicManager {
 
     public void getEdge(String fromType, String toType) {
         event.setEventAction(() -> {
-            String username = SessionManager.getSessionManager().getUsername(socketChannel.socket());
+            String username = SessionManager.getSessionManager().getUsername(socket);
             if (username == null) {
                 return false;
             }
@@ -73,7 +74,7 @@ public class EdgeLogic extends LogicManager {
 
     public void removeEdge(String fromType, String toType, String script) {
         event.setEventAction(() -> {
-            String username = SessionManager.getSessionManager().getUsername(socketChannel.socket());
+            String username = SessionManager.getSessionManager().getUsername(socket);
             if (username == null) {
                 return false;
             }
@@ -98,7 +99,7 @@ public class EdgeLogic extends LogicManager {
 
     public void updateEdge(String fromType, String toType, String script) {
         event.setEventAction(() -> {
-            String username = SessionManager.getSessionManager().getUsername(socketChannel.socket());
+            String username = SessionManager.getSessionManager().getUsername(socket);
             if (username == null) {
                 return false;
             }
@@ -124,7 +125,7 @@ public class EdgeLogic extends LogicManager {
 
     public void getSuperEdgeList(String typename) {
         event.setEventAction(() -> {
-            String username = SessionManager.getSessionManager().getUsername(socketChannel.socket());
+            String username = SessionManager.getSessionManager().getUsername(socket);
             if (username == null) {
                 return false;
             }
@@ -139,7 +140,7 @@ public class EdgeLogic extends LogicManager {
 
     public void getExtendEdgeList(String typename) {
         event.setEventAction(() -> {
-            String username = SessionManager.getSessionManager().getUsername(socketChannel.socket());
+            String username = SessionManager.getSessionManager().getUsername(socket);
             if (username == null) {
                 return false;
             }

@@ -2,6 +2,7 @@ package model.db;
 
 import org.bson.Document;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -24,5 +25,9 @@ public abstract class WalletCollection extends DBTable {
     @Override
     protected String getIdObjectKey() {
         return "_id";
+    }
+
+    public void clearDB() {
+        this.collection.find().forEach(this.collection::deleteOne);
     }
 }

@@ -4,20 +4,21 @@ import model.db.DBTable;
 import model.db.MoneyCollection;
 import model.session.SessionManager;
 
-import java.nio.channels.SocketChannel;
+import java.net.Socket;
 
 /**
  * Created by xlo on 2015/11/4.
  * it's the logic of money
  */
 public class MoneyLogic extends LogicManager {
-    public MoneyLogic(SocketChannel socketChannel) {
-        super(socketChannel);
+
+    public MoneyLogic(Socket socket) {
+        super(socket);
     }
 
     public void getMoney() {
         event.setEventAction(() -> {
-            String username = SessionManager.getSessionManager().getUsername(socketChannel.socket());
+            String username = SessionManager.getSessionManager().getUsername(socket);
             if (username == null) {
                 return false;
             }
@@ -31,7 +32,7 @@ public class MoneyLogic extends LogicManager {
 
     public void createMoney(String typename, String value) {
         event.setEventAction(() -> {
-            String username = SessionManager.getSessionManager().getUsername(socketChannel.socket());
+            String username = SessionManager.getSessionManager().getUsername(socket);
             if (username == null) {
                 return false;
             }
@@ -48,7 +49,7 @@ public class MoneyLogic extends LogicManager {
 
     public void removeMoney(String typename) {
         event.setEventAction(() -> {
-            String username = SessionManager.getSessionManager().getUsername(socketChannel.socket());
+            String username = SessionManager.getSessionManager().getUsername(socket);
             if (username == null) {
                 return false;
             }
@@ -65,7 +66,7 @@ public class MoneyLogic extends LogicManager {
 
     public void transferMoney(String from, String to, String value) {
         event.setEventAction(() -> {
-            String username = SessionManager.getSessionManager().getUsername(socketChannel.socket());
+            String username = SessionManager.getSessionManager().getUsername(socket);
             if (username == null) {
                 return false;
             }
@@ -91,7 +92,7 @@ public class MoneyLogic extends LogicManager {
 
     public void renameMoney(String typename, String newName) {
         event.setEventAction(() -> {
-            String username = SessionManager.getSessionManager().getUsername(socketChannel.socket());
+            String username = SessionManager.getSessionManager().getUsername(socket);
             if (username == null) {
                 return false;
             }

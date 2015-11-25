@@ -6,7 +6,7 @@ import net.PackageServer;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-import java.nio.channels.SocketChannel;
+import java.net.Socket;
 import java.util.List;
 import java.util.Map;
 
@@ -15,18 +15,18 @@ import java.util.Map;
  * it's the logic manager
  */
 public abstract class LogicManager {
-    protected SocketChannel socketChannel;
+    protected Socket socket;
     protected PackageServer packageServer;
     protected SendEvent event;
 
-    public LogicManager(SocketChannel socketChannel) {
-        this.socketChannel = socketChannel;
-        this.packageServer = SessionManager.getSessionManager().getPackageServer(socketChannel.socket());
-        this.event = buildSendEvent(socketChannel);
+    public LogicManager(Socket socket) {
+        this.socket = socket;
+        this.packageServer = SessionManager.getSessionManager().getPackageServer(this.socket);
+        this.event = buildSendEvent(this.socket);
     }
 
-    protected SendEvent buildSendEvent(SocketChannel socketChannel) {
-        return new SendEvent(socketChannel);
+    protected SendEvent buildSendEvent(Socket socket) {
+        return new SendEvent(socket);
     }
 
     public void setDefaultMessage(SendEvent event, String url) {

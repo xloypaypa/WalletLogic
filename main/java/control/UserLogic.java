@@ -4,23 +4,24 @@ import model.config.UserAccessConfig;
 import model.db.UserCollection;
 import model.session.SessionManager;
 
-import java.nio.channels.SocketChannel;
+import java.net.Socket;
 
 /**
  * Created by xlo on 2015/11/3.
  * it's the user logic
  */
 public class UserLogic extends LogicManager {
-    public UserLogic(SocketChannel socketChannel) {
-        super(socketChannel);
+
+    public UserLogic(Socket socket) {
+        super(socket);
     }
 
     public void login(String username, String password) {
         event.setEventAction(() -> {
-            long sessionID = SessionManager.getSessionManager().getSessionMessage(socketChannel.socket()).getSessionID();
+            long sessionID = SessionManager.getSessionManager().getSessionMessage(socket).getSessionID();
             boolean result = UserAccessConfig.getConfig().checkUser(username, password, sessionID);
             if (result) {
-                SessionManager.getSessionManager().loginSession(socketChannel.socket(), username);
+                SessionManager.getSessionManager().loginSession(socket, username);
             }
             return result;
         });
