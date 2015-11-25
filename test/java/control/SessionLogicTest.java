@@ -47,22 +47,22 @@ public class SessionLogicTest extends LogicTesting {
 
     @Test
     public void sendServerKey() throws Exception {
-        this.sessionLogic.serverKey();
+        this.sessionLogic.key(RSA.publicKey2Bytes(RSA.buildKeyPair().getPublic()));
         this.sessionLogic.waitEventEnd();
 
-        assertEquals("/serverKey", this.sessionLogic.getEvent().getMessage().get(0).getKey());
+        assertEquals("/key", this.sessionLogic.getEvent().getMessage().get(0).getKey());
     }
 
     @Test
     public void shouldOpenServerEncryption() throws Exception {
-        this.sessionLogic.serverKey();
+        this.sessionLogic.key(RSA.publicKey2Bytes(RSA.buildKeyPair().getPublic()));
         this.sessionLogic.waitEventEnd();
-        assertTrue(SessionManager.getSessionManager().getSessionMessage(this.socket).isServerEncryption());
+        assertTrue(SessionManager.getSessionManager().getSessionMessage(this.socket).isEncryption());
     }
 
     @Test
     public void shouldSendServerKey() throws Exception {
-        this.sessionLogic.serverKey();
+        this.sessionLogic.key(RSA.publicKey2Bytes(RSA.buildKeyPair().getPublic()));
         this.sessionLogic.waitEventEnd();
 
         PublicKey publicKey = RSA.bytes2PublicKey(this.sessionLogic.getEvent().getMessage().get(0).getValue());

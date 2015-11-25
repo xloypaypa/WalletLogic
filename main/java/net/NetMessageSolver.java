@@ -23,7 +23,7 @@ import java.util.Map;
  */
 public class NetMessageSolver {
     public static void sendEvent(URL url, byte[] message, SocketChannel socketChannel) throws Exception {
-        if (SessionManager.getSessionManager().getSessionMessage(socketChannel.socket()).isServerEncryption()) {
+        if (SessionManager.getSessionManager().getSessionMessage(socketChannel.socket()).isEncryption()) {
             message = RSA.decrypt(EncryptionConfig.getConfig().getKeyPair().getPrivate(), message);
         }
 

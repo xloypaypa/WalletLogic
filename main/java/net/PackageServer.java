@@ -122,7 +122,7 @@ public class PackageServer extends AbstractServer {
     }
 
     public void addMessage(String url, byte[] message) {
-        if (SessionManager.getSessionManager().getSessionMessage(this.getConnectionMessage().getSocket().socket()).isClientEncryption()) {
+        if (SessionManager.getSessionManager().getSessionMessage(this.getConnectionMessage().getSocket().socket()).isEncryption()) {
             try {
                 message = RSA.encrypt(SessionManager.getSessionManager().getSessionMessage(this.getConnectionMessage().getSocket().socket()).getPublicKey(), message);
             } catch (Exception e) {

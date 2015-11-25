@@ -14,11 +14,8 @@
     <solver name="session" url="/session" manager="control.SessionLogic">
         <method name="getSessionID"/>
     </solver>
-    <solver name="server key" url="/serverKey" manager="control.SessionLogic">
-        <method name="serverKey"/>
-    </solver>
-    <solver name="client key" url="/clientKey" manager="control.SessionLogic">
-        <method name="clientKey" type="data"/>
+    <solver name="key" url="/key" manager="control.SessionLogic">
+        <method name="key" type="data"/>
     </solver>
 
     <solver name="get money" url="/getMoney" manager="control.MoneyLogic">

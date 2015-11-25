@@ -69,22 +69,14 @@ public class SessionManager {
         protected String username;
         protected PackageServer packageServer;
         protected PublicKey publicKey;
-        protected boolean clientEncryption, serverEncryption;
+        protected boolean encryption;
 
-        public void setClientEncryption(boolean clientEncryption) {
-            this.clientEncryption = clientEncryption;
+        public void setEncryption(boolean encryption) {
+            this.encryption = encryption;
         }
 
-        public boolean isClientEncryption() {
-            return clientEncryption;
-        }
-
-        public void setServerEncryption(boolean serverEncryption) {
-            this.serverEncryption = serverEncryption;
-        }
-
-        public boolean isServerEncryption() {
-            return serverEncryption;
+        public boolean isEncryption() {
+            return encryption;
         }
 
         public void setSessionID(long sessionID) {
