@@ -1,19 +1,19 @@
 package control.tool;
 
-import control.MoneyLogic;
+import control.EdgeLogic;
 import control.SendEvent;
 
 import java.net.Socket;
 
 /**
- * Created by xlo on 2015/11/25.
- * it's the money logic use event who not send message
+ * Created by xlo on 2015/11/26.
+ * it's the edge logic use event not send message
  */
-public class MoneyLogicNoSend extends MoneyLogic {
+public class EdgeLogicNoSend extends EdgeLogic {
 
     protected EventCounter eventCounter;
 
-    public MoneyLogicNoSend(Socket socket) {
+    public EdgeLogicNoSend(Socket socket) {
         super(socket);
     }
 
@@ -36,4 +36,5 @@ public class MoneyLogicNoSend extends MoneyLogic {
         this.eventCounter = new EventCounter();
         return new NoSendEvent(socket, eventCounter);
     }
+
 }
