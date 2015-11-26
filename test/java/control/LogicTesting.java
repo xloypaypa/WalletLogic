@@ -1,21 +1,17 @@
 package control;
 
-import com.mongodb.DBCollection;
-import model.config.WalletDBConfig;
-import model.db.UserCollection;
-import model.db.WalletCollection;
+import model.db.NeedClearDBTesting;
 import model.session.SessionManager;
 import org.junit.After;
 import org.junit.Before;
 
 import java.net.Socket;
-import java.util.Map;
 
 /**
  * Created by xlo on 2015/11/25.
  * it's the class for init testing
  */
-public class LogicTesting {
+public abstract class LogicTesting implements NeedClearDBTesting {
 
     protected Socket socket;
 
@@ -27,10 +23,7 @@ public class LogicTesting {
 
     @After
     public void tearDown() throws Exception {
-        for (Map.Entry<String, String> name : WalletDBConfig.getConfig().getTables().entrySet()) {
-            WalletCollection walletCollection = (WalletCollection) Class.forName(name.getKey()).newInstance();
-            walletCollection.clearDB();
-        }
+        clearDB();
     }
 
 }
