@@ -13,8 +13,6 @@ idea {
     }
 }
 
-resource
-
 sourceSets {
     main {
         java {
