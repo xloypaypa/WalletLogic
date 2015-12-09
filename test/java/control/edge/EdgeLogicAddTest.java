@@ -87,4 +87,20 @@ public class EdgeLogicAddTest extends LogicTesting {
         assertEquals(1, budgetEdgeCollection.findEdgeList(new Document()).size());
     }
 
+    @Test
+    public void shouldFailWhenThereAreCircle() throws Exception {
+        registerUser(this.socket, "username", "password");
+        loginUser(this.socket, "username", "password");
+
+        createNewBudget(this.socket, "a", "1", "2");
+        createNewBudget(this.socket, "b", "2", "3");
+
+        addEdge(this.socket, "b", "a", "c");
+        EdgeLogicNoSend edgeLogic = addEdge(this.socket, "a", "b", "c");
+
+        JSONObject jsonObject = JSONObject.fromObject(new String(edgeLogic.getEvent().getMessage().get(0).getValue()));
+
+        assertEquals("fail", jsonObject.getString("result"));
+    }
+
 }

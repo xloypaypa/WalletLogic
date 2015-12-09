@@ -1,5 +1,6 @@
 package control;
 
+import control.logic.UserEdge;
 import model.db.BudgetCollection;
 import model.db.BudgetEdgeCollection;
 import model.db.DBTable;
@@ -35,6 +36,10 @@ public class EdgeLogic extends LogicManager {
 
             BudgetEdgeCollection budgetEdgeCollection = new BudgetEdgeCollection();
             if (budgetEdgeCollection.getEdgeData(username, fromType, toType) != null) {
+                return false;
+            }
+            UserEdge userEdge = new UserEdge(username);
+            if (!userEdge.checkCouldAddEdge(fromType, toType)) {
                 return false;
             }
             budgetEdgeCollection.addEdge(username, fromType, toType, script);
