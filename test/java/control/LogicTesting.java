@@ -1,6 +1,7 @@
 package control;
 
 import control.tool.BudgetLogicNoSend;
+import control.tool.EdgeLogicNoSend;
 import control.tool.MoneyLogicNoSend;
 import control.tool.UserLogicNoSend;
 import model.db.NeedClearDBTesting;
@@ -92,6 +93,48 @@ public abstract class LogicTesting implements NeedClearDBTesting {
         budgetLogic.getBudget();
         budgetLogic.waitEventEnd();
         return budgetLogic;
+    }
+
+    public static EdgeLogicNoSend addEdge(Socket socket, String from, String to, String script) {
+        EdgeLogicNoSend edgeLogic = new EdgeLogicNoSend(socket);
+        edgeLogic.addEdge(from, to, script);
+        edgeLogic.waitEventEnd();
+        return edgeLogic;
+    }
+
+    public static EdgeLogicNoSend getEdge(Socket socket, String from, String to) {
+        EdgeLogicNoSend edgeLogic = new EdgeLogicNoSend(socket);
+        edgeLogic.getEdge(from, to);
+        edgeLogic.waitEventEnd();
+        return edgeLogic;
+    }
+
+    public static EdgeLogicNoSend removeEdge(Socket socket, String from, String to) {
+        EdgeLogicNoSend edgeLogic = new EdgeLogicNoSend(socket);
+        edgeLogic.removeEdge(from, to);
+        edgeLogic.waitEventEnd();
+        return edgeLogic;
+    }
+
+    public static EdgeLogicNoSend updateEdge(Socket socket, String from, String to, String script) {
+        EdgeLogicNoSend edgeLogic = new EdgeLogicNoSend(socket);
+        edgeLogic.updateEdge(from, to, script);
+        edgeLogic.waitEventEnd();
+        return edgeLogic;
+    }
+
+    public static EdgeLogicNoSend getEdgeSuper(Socket socket, String type) {
+        EdgeLogicNoSend edgeLogic = new EdgeLogicNoSend(socket);
+        edgeLogic.getSuperEdgeList(type);
+        edgeLogic.waitEventEnd();
+        return edgeLogic;
+    }
+
+    public static EdgeLogicNoSend getEdgeExtend(Socket socket, String type) {
+        EdgeLogicNoSend edgeLogic = new EdgeLogicNoSend(socket);
+        edgeLogic.getExtendEdgeList(type);
+        edgeLogic.waitEventEnd();
+        return edgeLogic;
     }
 
 }

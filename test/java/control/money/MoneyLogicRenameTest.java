@@ -26,7 +26,7 @@ public class MoneyLogicRenameTest extends LogicTesting {
     }
 
     @Test
-    public void shouldFailWhenRemoveInvalidMoney() throws Exception {
+    public void shouldFailWhenRenameInvalidMoney() throws Exception {
         registerUser(this.socket, "username", "password");
         loginUser(this.socket, "username", "password");
         createNewMoney(this.socket, "type", 100);

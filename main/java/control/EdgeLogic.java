@@ -72,7 +72,7 @@ public class EdgeLogic extends LogicManager {
         event.submit();
     }
 
-    public void removeEdge(String fromType, String toType, String script) {
+    public void removeEdge(String fromType, String toType) {
         event.setEventAction(() -> {
             String username = SessionManager.getSessionManager().getUsername(socket);
             if (username == null) {
