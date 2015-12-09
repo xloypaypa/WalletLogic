@@ -2,7 +2,6 @@ package model.db;
 
 import org.bson.Document;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -12,9 +11,8 @@ import java.util.Map;
 public abstract class WalletCollection extends DBTable {
     @Override
     protected void updateUsing() {
-        using.stream().filter(now -> !now.object.equals(now.past)).forEach(now
-                -> collection.updateOne(new Document("_id", now.id),
-                new Document("$set", now.object)));
+        using.values().stream().filter(now -> !now.object.equals(now.past))
+                .forEach(now -> collection.updateOne(new Document("_id", now.id), new Document("$set", now.object)));
     }
 
     @Override
