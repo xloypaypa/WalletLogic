@@ -1,14 +1,12 @@
 package control.money;
 
 import control.LogicTesting;
-import control.user.UserLogicLoginTest;
 import control.tool.MoneyLogicNoSend;
-import model.session.SessionManager;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by xlo on 2015/11/26.
@@ -37,8 +35,8 @@ public class MoneyLogicGetTest extends LogicTesting {
 
     @Test
     public void shouldSendDataWhenGetData() throws Exception {
-        UserLogicLoginTest.registerUser(this.socket, "username", "password");
-        UserLogicLoginTest.loginUser(this.socket, "username", "password");
+        registerUser(this.socket, "username", "password");
+        loginUser(this.socket, "username", "password");
 
         MoneyLogicNoSend moneyLogic = new MoneyLogicNoSend(this.socket);
         moneyLogic.createMoney("type", "100");

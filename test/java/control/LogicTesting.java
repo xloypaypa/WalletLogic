@@ -1,5 +1,6 @@
 package control;
 
+import control.tool.BudgetLogicNoSend;
 import control.tool.MoneyLogicNoSend;
 import control.tool.UserLogicNoSend;
 import model.db.NeedClearDBTesting;
@@ -77,6 +78,20 @@ public abstract class LogicTesting implements NeedClearDBTesting {
         moneyLogic.transferMoney(from, to, value + "");
         moneyLogic.waitEventEnd();
         return moneyLogic;
+    }
+
+    public static BudgetLogicNoSend createNewBudget(Socket socket, String type, String income, String expenditure) {
+        BudgetLogicNoSend budgetLogic = new BudgetLogicNoSend(socket);
+        budgetLogic.createBudget(type, income, expenditure);
+        budgetLogic.waitEventEnd();
+        return budgetLogic;
+    }
+
+    public static BudgetLogicNoSend getBudget(Socket socket) {
+        BudgetLogicNoSend budgetLogic = new BudgetLogicNoSend(socket);
+        budgetLogic.getBudget();
+        budgetLogic.waitEventEnd();
+        return budgetLogic;
     }
 
 }

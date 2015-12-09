@@ -9,7 +9,7 @@ import java.net.Socket;
  * Created by xlo on 2015/11/25.
  * it's the session logic use event who not send message
  */
-public class SessionLogicNoSend extends SessionLogic {
+public class SessionLogicNoSend extends SessionLogic implements NeedWaitEvent {
 
     protected EventCounter eventCounter;
 
@@ -23,11 +23,7 @@ public class SessionLogicNoSend extends SessionLogic {
 
     public void waitEventEnd() {
         while (!this.eventCounter.isEnd()) {
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            waitEvent();
         }
     }
 

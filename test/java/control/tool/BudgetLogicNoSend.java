@@ -9,7 +9,7 @@ import java.net.Socket;
  * Created by xlo on 2015/11/26.
  * it's the budget logic use event who not send message
  */
-public class BudgetLogicNoSend extends BudgetLogic {
+public class BudgetLogicNoSend extends BudgetLogic implements NeedWaitEvent {
 
     protected EventCounter eventCounter;
 
@@ -23,11 +23,7 @@ public class BudgetLogicNoSend extends BudgetLogic {
 
     public void waitEventEnd() {
         while (!this.eventCounter.isEnd()) {
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            waitEvent();
         }
     }
 

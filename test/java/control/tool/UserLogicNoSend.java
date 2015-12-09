@@ -9,7 +9,7 @@ import java.net.Socket;
  * Created by xlo on 2015/11/25.
  * it's the user logic use event who not send message
  */
-public class UserLogicNoSend extends UserLogic {
+public class UserLogicNoSend extends UserLogic implements NeedWaitEvent {
 
     protected EventCounter eventCounter;
 
@@ -23,11 +23,7 @@ public class UserLogicNoSend extends UserLogic {
 
     public void waitEventEnd() {
         while (!this.eventCounter.isEnd()) {
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            waitEvent();
         }
     }
 
