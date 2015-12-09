@@ -95,6 +95,20 @@ public abstract class LogicTesting implements NeedClearDBTesting {
         return budgetLogic;
     }
 
+    public static BudgetLogicNoSend removeBudget(Socket socket, String type) {
+        BudgetLogicNoSend budgetLogic = new BudgetLogicNoSend(socket);
+        budgetLogic.removeBudget(type);
+        budgetLogic.waitEventEnd();
+        return budgetLogic;
+    }
+
+    public static BudgetLogicNoSend changeBudget(Socket socket, String type, String name, String income, String expenditure) {
+        BudgetLogicNoSend budgetLogic = new BudgetLogicNoSend(socket);
+        budgetLogic.changeBudget(type, name, income, expenditure);
+        budgetLogic.waitEventEnd();
+        return budgetLogic;
+    }
+
     public static EdgeLogicNoSend addEdge(Socket socket, String from, String to, String script) {
         EdgeLogicNoSend edgeLogic = new EdgeLogicNoSend(socket);
         edgeLogic.addEdge(from, to, script);

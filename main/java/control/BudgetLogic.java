@@ -1,10 +1,13 @@
 package control;
 
 import model.db.BudgetCollection;
+import model.db.BudgetEdgeCollection;
 import model.db.DBTable;
 import model.session.SessionManager;
+import org.bson.Document;
 
 import java.net.Socket;
+import java.util.List;
 
 /**
  * Created by xlo on 2015/11/5.
@@ -58,6 +61,19 @@ public class BudgetLogic extends LogicManager {
                 return false;
             }
             budgetCollection.removeBudget(username, typename);
+
+            BudgetEdgeCollection edgeCollection = new BudgetEdgeCollection();
+            List<DBTable.DBData> relativeEdge;
+            relativeEdge = edgeCollection.findEdgeList(new Document("username", username).append("from", typename));
+            for (DBTable.DBData now : relativeEdge) {
+                edgeCollection.remove(username, (String) now.object.get("from"), (String) now.object.get("to"));
+            }
+
+            relativeEdge = edgeCollection.findEdgeList(new Document("username", username).append("to", typename));
+            for (DBTable.DBData now : relativeEdge) {
+                edgeCollection.remove(username, (String) now.object.get("from"), (String) now.object.get("to"));
+            }
+
             return true;
         });
         this.setDefaultMessage(event, "/removeBudget");
@@ -78,6 +94,19 @@ public class BudgetLogic extends LogicManager {
             budget.object.put("typename", newName);
             budget.object.put("income", Double.valueOf(income));
             budget.object.put("expenditure", Double.valueOf(expenditure));
+
+            BudgetEdgeCollection edgeCollection = new BudgetEdgeCollection();
+            List<DBTable.DBData> relativeEdge;
+            relativeEdge = edgeCollection.findEdgeListInUsing(new Document("username", username).append("from", typename));
+            for (DBTable.DBData now : relativeEdge) {
+                now.object.put("from", newName);
+            }
+
+            relativeEdge = edgeCollection.findEdgeListInUsing(new Document("username", username).append("to", typename));
+            for (DBTable.DBData now : relativeEdge) {
+                now.object.put("to", newName);
+            }
+
             return true;
         });
         this.setDefaultMessage(event, "/changeBudget");

@@ -58,4 +58,12 @@ public class BudgetEdgeCollection extends WalletCollection {
         this.unlockCollection();
         return ans;
     }
+
+    public List<DBData> findEdgeListInUsing(Document document) {
+        this.lockCollection();
+        List<Map<String, Object>> list = this.collection.find(document);
+        List<DBData> ans = list.stream().map(this::addDocumentToUsing).collect(Collectors.toCollection(LinkedList::new));
+        this.unlockCollection();
+        return ans;
+    }
 }
