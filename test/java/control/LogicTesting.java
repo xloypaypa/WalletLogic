@@ -113,9 +113,9 @@ public abstract class LogicTesting implements NeedClearDBTesting {
         return edgeLogic;
     }
 
-    public static EdgeLogicNoSend getEdge(Socket socket, String from, String to) {
+    public static EdgeLogicNoSend getEdgeList(Socket socket) {
         EdgeLogicNoSend edgeLogic = new EdgeLogicNoSend(socket);
-        edgeLogic.getEdge(from, to);
+        edgeLogic.getEdgeList();
         edgeLogic.waitEventEnd();
         return edgeLogic;
     }
@@ -130,20 +130,6 @@ public abstract class LogicTesting implements NeedClearDBTesting {
     public static EdgeLogicNoSend updateEdge(Socket socket, String from, String to, String script) {
         EdgeLogicNoSend edgeLogic = new EdgeLogicNoSend(socket);
         edgeLogic.updateEdge(from, to, script);
-        edgeLogic.waitEventEnd();
-        return edgeLogic;
-    }
-
-    public static EdgeLogicNoSend getEdgeSuper(Socket socket, String type) {
-        EdgeLogicNoSend edgeLogic = new EdgeLogicNoSend(socket);
-        edgeLogic.getSuperEdgeList(type);
-        edgeLogic.waitEventEnd();
-        return edgeLogic;
-    }
-
-    public static EdgeLogicNoSend getEdgeExtend(Socket socket, String type) {
-        EdgeLogicNoSend edgeLogic = new EdgeLogicNoSend(socket);
-        edgeLogic.getExtendEdgeList(type);
         edgeLogic.waitEventEnd();
         return edgeLogic;
     }

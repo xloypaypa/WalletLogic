@@ -2,6 +2,7 @@ package control.edge;
 
 import control.LogicTesting;
 import control.tool.EdgeLogicNoSend;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.junit.Test;
 
@@ -20,14 +21,14 @@ public class EdgeLogicGetTest extends LogicTesting {
         createNewBudget(this.socket, "a", "1", "2");
         createNewBudget(this.socket, "b", "1", "2");
         addEdge(this.socket, "a", "b", "c");
-        EdgeLogicNoSend edgeLogic = getEdge(this.socket, "a", "b");
+        EdgeLogicNoSend edgeLogic = getEdgeList(this.socket);
 
-        assertEquals("/getEdge", edgeLogic.getEvent().getMessage().get(0).getKey());
+        assertEquals("/getEdgeList", edgeLogic.getEvent().getMessage().get(0).getKey());
     }
 
     @Test
     public void shouldFailWhenNotLogin() throws Exception {
-        EdgeLogicNoSend edgeLogic = getEdge(this.socket, "a", "b");
+        EdgeLogicNoSend edgeLogic = getEdgeList(this.socket);
 
         JSONObject jsonObject = JSONObject.fromObject(new String(edgeLogic.getEvent().getMessage().get(0).getValue()));
 
@@ -41,11 +42,11 @@ public class EdgeLogicGetTest extends LogicTesting {
         createNewBudget(this.socket, "a", "1", "2");
         createNewBudget(this.socket, "b", "1", "2");
         addEdge(this.socket, "a", "b", "c");
-        EdgeLogicNoSend edgeLogic = getEdge(this.socket, "a", "b");
+        EdgeLogicNoSend edgeLogic = getEdgeList(this.socket);
 
-        JSONObject jsonObject = JSONObject.fromObject(new String(edgeLogic.getEvent().getMessage().get(0).getValue()));
+        JSONArray jsonArray = JSONArray.fromObject(new String(edgeLogic.getEvent().getMessage().get(0).getValue()));
 
-        assertEquals("c", jsonObject.getString("script"));
+        assertEquals(1, jsonArray.size());
     }
 
 }

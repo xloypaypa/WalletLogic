@@ -83,12 +83,6 @@
             <data>toType</data>
         </method>
     </solver>
-    <solver name="get edge" url="/getEdge" manager="control.EdgeLogic">
-        <method name="getEdge">
-            <data>fromType</data>
-            <data>toType</data>
-        </method>
-    </solver>
     <solver name="update edge" url="/updateEdge" manager="control.EdgeLogic">
         <method name="updateEdge">
             <data>fromType</data>
@@ -96,15 +90,8 @@
             <data>script</data>
         </method>
     </solver>
-    <solver name="get super edge list" url="/getSuperEdgeList" manager="control.EdgeLogic">
-        <method name="getSuperEdgeList">
-            <data>typename</data>
-        </method>
-    </solver>
-    <solver name="get extend edge list" url="/getExtendEdgeList" manager="control.EdgeLogic">
-        <method name="getExtendEdgeList">
-            <data>typename</data>
-        </method>
+    <solver name="get edge list" url="/getEdgeList" manager="control.EdgeLogic">
+        <method name="getEdgeList"/>
     </solver>
 
     <solver name="income" url="/income" manager="control.UseMoneyLogic">
