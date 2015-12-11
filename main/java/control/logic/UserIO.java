@@ -32,6 +32,14 @@ public class UserIO {
         return map.values();
     }
 
+    public UserBudget getUserBudget() {
+        return userBudget;
+    }
+
+    public UserEdge getUserEdge() {
+        return userEdge;
+    }
+
     /**
      * calculate io
      *

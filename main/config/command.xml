@@ -109,13 +109,15 @@
 
     <solver name="income" url="/income" manager="control.UseMoneyLogic">
         <method name="income">
-            <data>typename</data>
+            <data>moneyName</data>
+            <data>budgetName</data>
             <data>value</data>
         </method>
     </solver>
     <solver name="expenditure" url="/expenditure" manager="control.UseMoneyLogic">
         <method name="expenditure">
-            <data>typename</data>
+            <data>moneyName</data>
+            <data>budgetName</data>
             <data>value</data>
         </method>
     </solver>

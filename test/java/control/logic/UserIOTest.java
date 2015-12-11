@@ -52,32 +52,23 @@ public class UserIOTest extends LogicTesting {
     public void should_value_equal_10_when_income_in_b_10_except_f_and_e() throws ReflectiveOperationException {
         UserIO userIO = new UserIO("username");
         Collection<BudgetNode> budgetNodes = userIO.ifIncome("b", 10);
-        for (BudgetNode now : budgetNodes) {
-            if (!now.getName().equals("f") && !now.getName().equals("e")) {
-                assertEquals(10, now.getNowIncome(), 1e-3);
-            }
-        }
+        budgetNodes.stream().filter(now -> !now.getName().equals("f") && !now.getName().equals("e"))
+                .forEach(now -> assertEquals(10, now.getNowIncome(), 1e-3));
     }
 
     @Test
     public void should_e_value_equal_20_when_income_in_b_10() throws ReflectiveOperationException {
         UserIO userIO = new UserIO("username");
         Collection<BudgetNode> budgetNodes = userIO.ifIncome("b", 10);
-        for (BudgetNode now : budgetNodes) {
-            if (now.getName().equals("e")) {
-                assertEquals(20, now.getNowIncome(), 1e-3);
-            }
-        }
+        budgetNodes.stream().filter(now -> now.getName().equals("e"))
+                .forEach(now -> assertEquals(20, now.getNowIncome(), 1e-3));
     }
 
     @Test
-    public void should_f_value_equal_8_when_income_in_b_10() throws ReflectiveOperationException {
+    public void should_f_value_equal_8_when_expenditure_in_b_10() throws ReflectiveOperationException {
         UserIO userIO = new UserIO("username");
         Collection<BudgetNode> budgetNodes = userIO.ifExpenditure("b", 10);
-        for (BudgetNode now : budgetNodes) {
-            if (now.getName().equals("f")) {
-                assertEquals(8, now.getNowExpenditure(), 1e-3);
-            }
-        }
+        budgetNodes.stream().filter(now -> now.getName().equals("f"))
+                .forEach(now -> assertEquals(8, now.getNowExpenditure(), 1e-3));
     }
 }

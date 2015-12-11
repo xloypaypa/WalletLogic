@@ -33,4 +33,8 @@ public class UserBudget {
         return new BudgetNode(nodes.get(typename));
     }
 
+    public boolean nodeExist(String typename) {
+        return this.nodes.containsKey(typename);
+    }
+
 }

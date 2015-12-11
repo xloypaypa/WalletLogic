@@ -1,9 +1,6 @@
 package control;
 
-import control.tool.BudgetLogicNoSend;
-import control.tool.EdgeLogicNoSend;
-import control.tool.MoneyLogicNoSend;
-import control.tool.UserLogicNoSend;
+import control.tool.*;
 import model.db.NeedClearDBTesting;
 import model.session.SessionManager;
 import model.tool.PasswordEncoder;
@@ -149,6 +146,20 @@ public abstract class LogicTesting implements NeedClearDBTesting {
         edgeLogic.getExtendEdgeList(type);
         edgeLogic.waitEventEnd();
         return edgeLogic;
+    }
+
+    public static UseMoneyLogicNoSend income(Socket socket, String money, String budget, String value) {
+        UseMoneyLogicNoSend useMoneyLogicNoSend = new UseMoneyLogicNoSend(socket);
+        useMoneyLogicNoSend.income(money, budget, value);
+        useMoneyLogicNoSend.waitEventEnd();
+        return useMoneyLogicNoSend;
+    }
+
+    public static UseMoneyLogicNoSend expenditure(Socket socket, String money, String budget, String value) {
+        UseMoneyLogicNoSend useMoneyLogicNoSend = new UseMoneyLogicNoSend(socket);
+        useMoneyLogicNoSend.expenditure(money, budget, value);
+        useMoneyLogicNoSend.waitEventEnd();
+        return useMoneyLogicNoSend;
     }
 
 }
