@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * Created by xlo on 2015/12/9.
@@ -40,6 +39,9 @@ public class UserEdge {
     }
 
     public List<Pair<String, String>> getFather(String typename) {
+        if (!nodes.containsKey(typename)) {
+            return new ArrayList<>();
+        }
         return new ArrayList<>(nodes.get(typename).next);
     }
 
