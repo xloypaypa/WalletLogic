@@ -37,6 +37,13 @@ public class NoSendEvent extends SendEvent {
     }
 
     @Override
+    protected void whenSucceed() {
+        super.whenSucceed();
+        this.eventCounter.addOk();
+        System.out.println("ok");
+    }
+
+    @Override
     public void submit() {
         this.eventCounter.addEvent();
         super.submit();
