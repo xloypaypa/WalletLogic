@@ -79,7 +79,28 @@ public class BlogVirtualTable implements VirtualDataTable {
             Document now = nowEntry.getValue();
             boolean flag = true;
             for (Map.Entry<String, Object> entry : filter.entrySet()) {
-                if (!now.containsKey(entry.getKey()) || !now.get(entry.getKey()).equals(entry.getValue())) {
+                if (!now.containsKey(entry.getKey())) {
+                    flag = false;
+                    break;
+                }
+                Object value = now.get(entry.getKey());
+                if (entry.getValue().getClass().equals(Document.class)) {
+                    Document document = (Document) entry.getValue();
+                    if (document.containsKey("$lt")) {
+                        long number = (long) value;
+                        if (number > (long) document.get("$lt")) {
+                            flag = false;
+                            break;
+                        }
+                    }
+                    if (document.containsKey("$gt")) {
+                        long number = (long) value;
+                        if (number < (long) document.get("$gt")) {
+                            flag = false;
+                            break;
+                        }
+                    }
+                } else if (!value.equals(entry.getValue())) {
                     flag = false;
                     break;
                 }
