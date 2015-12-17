@@ -16,33 +16,32 @@ public class DetailCollectionTest extends DBTesting {
     @Test
     public void should_have_1_data_after_add() throws Exception {
         DetailCollection detailCollection = new DetailCollection();
-        detailCollection.addDetail("username", new Date(100), new Document());
+        detailCollection.addDetail("username", new Date(100), "event", new Document());
         detailCollection.submit();
 
-        assertEquals(1, detailCollection.getDetails("username", new Date(99), new Date(101)).size());
+        assertEquals(1, detailCollection.findDetails("username", new Date(99), new Date(101)).size());
     }
 
     @Test
     public void should_have_2_data_after_add() throws Exception {
         DetailCollection detailCollection = new DetailCollection();
-        detailCollection.addDetail("username", new Date(100), new Document());
-        detailCollection.addDetail("username", new Date(101), new Document());
-        detailCollection.addDetail("username", new Date(161), new Document());
+        detailCollection.addDetail("username", new Date(100), "event", new Document());
+        detailCollection.addDetail("username", new Date(101), "event", new Document());
+        detailCollection.addDetail("username", new Date(161), "event", new Document());
         detailCollection.submit();
 
-        assertEquals(2, detailCollection.getDetails("username", new Date(50), new Date(150)).size());
+        assertEquals(2, detailCollection.findDetails("username", new Date(50), new Date(150)).size());
     }
 
     @Test
     public void should_have_data_data_after_add() throws Exception {
         DetailCollection detailCollection = new DetailCollection();
-        detailCollection.addDetail("username", new Date(100), new Document());
-        detailCollection.addDetail("username", new Date(101), new Document());
-        detailCollection.addDetail("username", new Date(161), new Document("username", "abc"));
+        detailCollection.addDetail("username", new Date(100), "event", new Document());
+        detailCollection.addDetail("username", new Date(101), "event", new Document());
+        detailCollection.addDetail("username", new Date(161), "event", new Document("message", "abc"));
         detailCollection.submit();
 
-        Document document = (Document) detailCollection.getDetails("username", new Date(150), new Date(200)).get(0).object.get("message");
-        assertEquals("abc", document.get("username"));
+        assertEquals("abc", detailCollection.findDetails("username", new Date(150), new Date(200)).get(0).object.get("message"));
     }
 
 }
