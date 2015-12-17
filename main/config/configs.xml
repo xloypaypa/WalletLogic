@@ -3,5 +3,5 @@
     <type path="/db.xml">model.config.WalletDBConfig</type>
     <type path="/command.xml">model.config.CommandConfig</type>
     <type path="/userAccess.xml">model.config.UserAccessConfig</type>
-    <type path="/RSA.XML">model.config.EncryptionConfig</type>
+    <type path="/RSA.xml">model.config.EncryptionConfig</type>
 </model.config>
