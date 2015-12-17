@@ -16,22 +16,14 @@ import java.util.Map;
  */
 public class UserEdge {
 
-    private Map<String, Node> nodes;
+    private Map<String, EdgeNode> nodes;
 
     public UserEdge(String username) {
         BudgetEdgeCollection edgeCollection = new BudgetEdgeCollection();
         List<DBTable.DBData> userEdge = edgeCollection.findEdgeList(new Document("username", username));
         this.nodes = new HashMap<>();
-        userEdge.stream().filter(now -> !nodes.containsKey(now.object.get("from").toString()))
-                .forEach(now -> nodes.put(now.object.get("from").toString(), new Node()));
-        userEdge.stream().filter(now -> !nodes.containsKey(now.object.get("to").toString()))
-                .forEach(now -> nodes.put(now.object.get("to").toString(), new Node()));
-        for (DBTable.DBData now : userEdge) {
-            nodes.get(now.object.get("from").toString())
-                    .next.add(new Pair<>(now.object.get("to").toString(), now.object.get("script").toString()));
-            nodes.get(now.object.get("to").toString())
-                    .pre.add(new Pair<>(now.object.get("from").toString(), now.object.get("script").toString()));
-        }
+        initKeyByType(userEdge);
+        loadEdge(userEdge);
     }
 
     public boolean checkCouldAddEdge(String from, String to) {
@@ -42,25 +34,36 @@ public class UserEdge {
         if (!nodes.containsKey(typename)) {
             return new ArrayList<>();
         }
-        return new ArrayList<>(nodes.get(typename).next);
+        return new ArrayList<>(nodes.get(typename).getNext());
+    }
+
+    private void initKeyByType(List<DBTable.DBData> userEdge) {
+        userEdge.stream().filter(now -> !nodes.containsKey(now.object.get("from").toString()))
+                .forEach(now -> nodes.put(now.object.get("from").toString(), new EdgeNode()));
+        userEdge.stream().filter(now -> !nodes.containsKey(now.object.get("to").toString()))
+                .forEach(now -> nodes.put(now.object.get("to").toString(), new EdgeNode()));
+    }
+
+    private void loadEdge(List<DBTable.DBData> userEdge) {
+        for (DBTable.DBData now : userEdge) {
+            nodes.get(now.object.get("from").toString())
+                    .addNext(new Pair<>(now.object.get("to").toString(), now.object.get("script").toString()));
+            nodes.get(now.object.get("to").toString())
+                    .addPre(new Pair<>(now.object.get("from").toString(), now.object.get("script").toString()));
+        }
     }
 
     private boolean haveNext(String now, String aim) {
         if (now.equals(aim)) {
             return true;
         }
-        Node node = nodes.get(now);
-        for (Pair<String, String> next : node.next) {
+        EdgeNode node = nodes.get(now);
+        for (Pair<String, String> next : node.getNext()) {
             if (haveNext(next.getKey(), aim)) {
                 return true;
             }
         }
         return false;
-    }
-
-    private class Node {
-        private List<Pair<String, String>> next = new ArrayList<>(), pre = new ArrayList<>();
-
     }
 
 }
