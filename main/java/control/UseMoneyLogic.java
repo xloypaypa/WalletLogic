@@ -2,7 +2,9 @@ package control;
 
 import control.logic.BudgetNode;
 import control.logic.UserIO;
+import model.config.WalletDBConfig;
 import model.db.BudgetCollection;
+import model.db.BudgetEdgeCollection;
 import model.db.DBTable;
 import model.db.MoneyCollection;
 import model.session.SessionManager;
@@ -21,6 +23,9 @@ public class UseMoneyLogic extends LogicManager {
 
     public void income(String moneyName, String budgetName, String value) {
         event.setEventAction(() -> {
+            event.lock(WalletDBConfig.getConfig().getDBLockName(BudgetCollection.class),
+                    WalletDBConfig.getConfig().getDBLockName(MoneyCollection.class),
+                    WalletDBConfig.getConfig().getDBLockName(BudgetEdgeCollection.class));
             String username = SessionManager.getSessionManager().getUsername(socket);
             if (username == null) {
                 return false;
@@ -50,6 +55,9 @@ public class UseMoneyLogic extends LogicManager {
 
     public void expenditure(String moneyName, String budgetName, String value) {
         event.setEventAction(() -> {
+            event.lock(WalletDBConfig.getConfig().getDBLockName(BudgetCollection.class),
+                    WalletDBConfig.getConfig().getDBLockName(MoneyCollection.class),
+                    WalletDBConfig.getConfig().getDBLockName(BudgetEdgeCollection.class));
             String username = SessionManager.getSessionManager().getUsername(socket);
             if (username == null) {
                 return false;

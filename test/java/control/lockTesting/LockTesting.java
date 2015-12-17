@@ -7,6 +7,8 @@ import model.db.MoneyCollection;
 import model.db.UserCollection;
 import org.junit.Test;
 
+import static junit.framework.Assert.assertEquals;
+
 /**
  * Created by xlo on 15/12/16.
  * it's the lock testing
@@ -53,7 +55,7 @@ public class LockTesting extends LogicTesting {
             Thread.sleep(500);
         }
 
-        System.out.println(eventCounter.getOk());
+        assertEquals(20, eventCounter.getOk());
     }
 
 }

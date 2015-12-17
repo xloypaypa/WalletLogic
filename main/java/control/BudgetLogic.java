@@ -1,5 +1,6 @@
 package control;
 
+import model.config.WalletDBConfig;
 import model.db.BudgetCollection;
 import model.db.BudgetEdgeCollection;
 import model.db.DBTable;
@@ -52,6 +53,8 @@ public class BudgetLogic extends LogicManager {
 
     public void removeBudget(String typename) {
         event.setEventAction(() -> {
+            event.lock(WalletDBConfig.getConfig().getDBLockName(BudgetCollection.class),
+                    WalletDBConfig.getConfig().getDBLockName(BudgetEdgeCollection.class));
             String username = SessionManager.getSessionManager().getUsername(socket);
             if (username == null) {
                 return false;
@@ -82,6 +85,8 @@ public class BudgetLogic extends LogicManager {
 
     public void changeBudget(String typename, String newName, String income, String expenditure) {
         event.setEventAction(() -> {
+            event.lock(WalletDBConfig.getConfig().getDBLockName(BudgetCollection.class),
+                    WalletDBConfig.getConfig().getDBLockName(BudgetEdgeCollection.class));
             String username = SessionManager.getSessionManager().getUsername(socket);
             if (username == null) {
                 return false;

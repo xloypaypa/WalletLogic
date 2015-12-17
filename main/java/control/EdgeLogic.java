@@ -1,6 +1,7 @@
 package control;
 
 import control.logic.UserEdge;
+import model.config.WalletDBConfig;
 import model.db.BudgetCollection;
 import model.db.BudgetEdgeCollection;
 import model.db.DBTable;
@@ -36,6 +37,8 @@ public class EdgeLogic extends LogicManager {
 
     public void addEdge(String fromType, String toType, String script) {
         event.setEventAction(() -> {
+            event.lock(WalletDBConfig.getConfig().getDBLockName(BudgetCollection.class),
+                    WalletDBConfig.getConfig().getDBLockName(BudgetEdgeCollection.class));
             String username = SessionManager.getSessionManager().getUsername(socket);
             if (username == null) {
                 return false;
@@ -70,13 +73,6 @@ public class EdgeLogic extends LogicManager {
                 return false;
             }
 
-            BudgetCollection budgetCollection = new BudgetCollection();
-            DBTable.DBData from = budgetCollection.getBudgetData(username, fromType);
-            DBTable.DBData to = budgetCollection.getBudgetData(username, toType);
-            if (from == null || to == null) {
-                return false;
-            }
-
             BudgetEdgeCollection budgetEdgeCollection = new BudgetEdgeCollection();
             if (budgetEdgeCollection.getEdgeData(username, fromType, toType) == null) {
                 return false;
@@ -92,13 +88,6 @@ public class EdgeLogic extends LogicManager {
         event.setEventAction(() -> {
             String username = SessionManager.getSessionManager().getUsername(socket);
             if (username == null) {
-                return false;
-            }
-
-            BudgetCollection budgetCollection = new BudgetCollection();
-            DBTable.DBData from = budgetCollection.getBudgetData(username, fromType);
-            DBTable.DBData to = budgetCollection.getBudgetData(username, toType);
-            if (from == null || to == null) {
                 return false;
             }
 
