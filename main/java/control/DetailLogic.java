@@ -2,6 +2,7 @@ package control;
 
 import model.db.DBTable;
 import model.db.DetailCollection;
+import model.db.event.Event;
 import model.session.SessionManager;
 import org.bson.BsonArray;
 import org.bson.BsonDocument;
@@ -67,7 +68,7 @@ public class DetailLogic extends LogicManager {
             }
             return true;
         });
-        this.setDefaultMessage(event, "/getDetail");
+        this.setDefaultMessage(event, "/rollBack");
         event.submit();
     }
 
@@ -81,6 +82,12 @@ public class DetailLogic extends LogicManager {
         }
         Method method = type.getMethod(methodName, paramType);
         Object manager = type.getConstructor(String.class).newInstance(username);
-        method.invoke(manager, value);
+        new Event() {
+            @Override
+            public boolean run() throws Exception {
+                method.invoke(manager, value);
+                return true;
+            }
+        }.call();
     }
 }

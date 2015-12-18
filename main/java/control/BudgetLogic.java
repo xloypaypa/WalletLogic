@@ -4,9 +4,11 @@ import control.logic.manager.BudgetManager;
 import model.config.WalletDBConfig;
 import model.db.BudgetCollection;
 import model.db.BudgetEdgeCollection;
+import model.db.DetailCollection;
 import model.session.SessionManager;
 
 import java.net.Socket;
+import java.util.Date;
 
 /**
  * Created by xlo on 2015/11/5.
@@ -35,7 +37,13 @@ public class BudgetLogic extends LogicManager {
     public void createBudget(String typename, String income, String expenditure) {
         event.setEventAction(() -> {
             String username = SessionManager.getSessionManager().getUsername(socket);
-            return username != null && new BudgetManager(username).createBudget(typename, income, expenditure, "0", "0");
+            BudgetManager budgetManager = new BudgetManager(username);
+            if (username != null && budgetManager.createBudget(typename, income, expenditure, "0", "0")) {
+                new DetailCollection().addDetail(username, new Date(), "createBudget", budgetManager.getUserRollBackMessage());
+                return true;
+            } else {
+                return false;
+            }
         });
         this.setDefaultMessage(event, "/createBudget");
         event.submit();
@@ -46,7 +54,13 @@ public class BudgetLogic extends LogicManager {
             event.lock(WalletDBConfig.getConfig().getDBLockName(BudgetCollection.class),
                     WalletDBConfig.getConfig().getDBLockName(BudgetEdgeCollection.class));
             String username = SessionManager.getSessionManager().getUsername(socket);
-            return username != null && new BudgetManager(username).removeBudget(typename);
+            BudgetManager budgetManager = new BudgetManager(username);
+            if (username != null && budgetManager.removeBudget(typename)) {
+                new DetailCollection().addDetail(username, new Date(), "removeBudget", budgetManager.getUserRollBackMessage());
+                return true;
+            } else {
+                return false;
+            }
         });
         this.setDefaultMessage(event, "/removeBudget");
         event.submit();
@@ -57,7 +71,13 @@ public class BudgetLogic extends LogicManager {
             event.lock(WalletDBConfig.getConfig().getDBLockName(BudgetCollection.class),
                     WalletDBConfig.getConfig().getDBLockName(BudgetEdgeCollection.class));
             String username = SessionManager.getSessionManager().getUsername(socket);
-            return username != null && new BudgetManager(username).changeBudget(typename, newName, income, expenditure);
+            BudgetManager budgetManager = new BudgetManager(username);
+            if (username != null && budgetManager.changeBudget(typename, newName, income, expenditure)) {
+                new DetailCollection().addDetail(username, new Date(), "changeBudget", budgetManager.getUserRollBackMessage());
+                return true;
+            } else {
+                return false;
+            }
         });
         this.setDefaultMessage(event, "/changeBudget");
         event.submit();

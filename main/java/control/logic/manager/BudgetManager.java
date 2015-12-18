@@ -1,5 +1,6 @@
 package control.logic.manager;
 
+import control.logic.userDataBuilder.UserRollBackBuilder;
 import model.db.BudgetCollection;
 import model.db.BudgetEdgeCollection;
 import model.db.DBTable;
@@ -23,28 +24,44 @@ public class BudgetManager extends Manager {
             return false;
         }
         budgetCollection.addBudgetType(username, typename, Double.valueOf(income), Double.valueOf(expenditure), Double.valueOf(nowIncome), Double.valueOf(nowExpenditure));
+
+        UserRollBackBuilder userRollBackBuilder = new UserRollBackBuilder();
+        userRollBackBuilder.createBudget(typename);
+        document.append("BudgetType", typename)
+                .append("income", income)
+                .append("expenditure", expenditure)
+                .append("roll back call", userRollBackBuilder.getRollBackArray());
         return true;
     }
 
     public boolean removeBudget(String typename) {
         BudgetCollection budgetCollection = new BudgetCollection();
-        if (budgetCollection.getBudgetData(username, typename) == null) {
+        DBTable.DBData budgetData = budgetCollection.getBudgetData(username, typename);
+        if (budgetData == null) {
             return false;
         }
+        UserRollBackBuilder userRollBackBuilder = new UserRollBackBuilder();
         budgetCollection.removeBudget(username, typename);
+        userRollBackBuilder.removeBudget(typename, budgetData.object.get("income").toString(), budgetData.object.get("expenditure").toString(),
+                budgetData.object.get("now income").toString(), budgetData.object.get("now expenditure").toString());
 
         BudgetEdgeCollection edgeCollection = new BudgetEdgeCollection();
         List<DBTable.DBData> relativeEdge;
         relativeEdge = edgeCollection.getAllDataListData(new Document("username", username).append("from", typename));
-        for (DBTable.DBData now : relativeEdge) {
-            new EdgeManager(username).removeEdge((String) now.object.get("from"), (String) now.object.get("to"));
-        }
+        removeRelativeEdge(userRollBackBuilder, relativeEdge);
         relativeEdge = edgeCollection.getAllDataListData(new Document("username", username).append("to", typename));
+        removeRelativeEdge(userRollBackBuilder, relativeEdge);
+
+        document.append("BudgetType", typename)
+                .append("roll back call", userRollBackBuilder.getRollBackArray());
+        return true;
+    }
+
+    private void removeRelativeEdge(UserRollBackBuilder userRollBackBuilder, List<DBTable.DBData> relativeEdge) {
         for (DBTable.DBData now : relativeEdge) {
             new EdgeManager(username).removeEdge((String) now.object.get("from"), (String) now.object.get("to"));
+            userRollBackBuilder.removeEdge((String) now.object.get("from"), (String) now.object.get("to"), now.object.get("script").toString());
         }
-
-        return true;
     }
 
     public boolean changeBudget(String typename, String newName, String income, String expenditure) {
@@ -53,6 +70,8 @@ public class BudgetManager extends Manager {
         if (budget == null) {
             return false;
         }
+        UserRollBackBuilder userRollBackBuilder = new UserRollBackBuilder();
+        userRollBackBuilder.changeBudget(typename, budget.object.get("income").toString(), budget.object.get("expenditure").toString(), newName);
         budget.object.put("typename", newName);
         budget.object.put("income", Double.valueOf(income));
         budget.object.put("expenditure", Double.valueOf(expenditure));
@@ -61,14 +80,23 @@ public class BudgetManager extends Manager {
         List<DBTable.DBData> relativeEdge;
         relativeEdge = edgeCollection.getAllDataList(new Document("username", username).append("from", typename));
         for (DBTable.DBData now : relativeEdge) {
+            userRollBackBuilder.updateEdge(now.object.get("from").toString(), now.object.get("to").toString(),
+                    newName, now.object.get("to").toString(), now.object.get("script").toString());
             now.object.put("from", newName);
         }
 
         relativeEdge = edgeCollection.getAllDataList(new Document("username", username).append("to", typename));
         for (DBTable.DBData now : relativeEdge) {
+            userRollBackBuilder.updateEdge(now.object.get("from").toString(), now.object.get("to").toString(),
+                    now.object.get("from").toString(), newName, now.object.get("script").toString());
             now.object.put("to", newName);
         }
 
+        document.append("BudgetType", typename)
+                .append("newName", newName)
+                .append("income", income)
+                .append("expenditure", expenditure)
+                .append("roll back call", userRollBackBuilder.getRollBackArray());
         return true;
     }
 

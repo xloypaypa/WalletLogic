@@ -72,7 +72,7 @@ public class EdgeLogic extends LogicManager {
         event.setEventAction(() -> {
             String username = SessionManager.getSessionManager().getUsername(socket);
             EdgeManager edgeManager = new EdgeManager(username);
-            if (username != null && edgeManager.updateEdge(fromType, toType, script)) {
+            if (username != null && edgeManager.updateEdge(fromType, toType, fromType, toType, script)) {
                 new DetailCollection().addDetail(username, new Date(), "updateEdge", edgeManager.getUserRollBackMessage());
                 return true;
             } else {

@@ -59,17 +59,18 @@ public class EdgeManager extends Manager {
         return true;
     }
 
-    public boolean updateEdge(String fromType, String toType, String script) {
+    public boolean updateEdge(String fromType, String toType, String newFrom, String newTo, String script) {
         BudgetEdgeCollection budgetEdgeCollection = new BudgetEdgeCollection();
         DBTable.DBData edge = budgetEdgeCollection.getEdge(username, fromType, toType);
         if (edge == null) {
             return false;
         }
-        String past = edge.object.get("script").toString();
+        UserRollBackBuilder userRollBackBuilder = new UserRollBackBuilder();
+        userRollBackBuilder.updateEdge(edge.object.get("from").toString(), edge.object.get("to").toString(), newFrom, newTo, edge.object.get("script").toString());
+        edge.object.put("from", newFrom);
+        edge.object.put("to", newTo);
         edge.object.put("script", script);
 
-        UserRollBackBuilder userRollBackBuilder = new UserRollBackBuilder();
-        userRollBackBuilder.updateEdge(fromType, toType, past);
         document.append("fromBudget", fromType)
                 .append("toBudget", toType)
                 .append("script", script)
