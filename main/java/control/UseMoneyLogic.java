@@ -1,16 +1,13 @@
 package control;
 
-import control.logic.BudgetNode;
-import control.logic.UserIO;
+import control.logic.manager.UseMoneyManager;
 import model.config.WalletDBConfig;
 import model.db.BudgetCollection;
 import model.db.BudgetEdgeCollection;
-import model.db.DBTable;
 import model.db.MoneyCollection;
 import model.session.SessionManager;
 
 import java.net.Socket;
-import java.util.Collection;
 
 /**
  * Created by xlo on 15/12/10.
@@ -27,27 +24,7 @@ public class UseMoneyLogic extends LogicManager {
                     WalletDBConfig.getConfig().getDBLockName(MoneyCollection.class),
                     WalletDBConfig.getConfig().getDBLockName(BudgetEdgeCollection.class));
             String username = SessionManager.getSessionManager().getUsername(socket);
-            if (username == null) {
-                return false;
-            }
-            UserIO userIO = new UserIO(username);
-            if (!userIO.getUserBudget().nodeExist(budgetName)) {
-                return false;
-            }
-            BudgetCollection budgetCollection = new BudgetCollection();
-            MoneyCollection moneyCollection = new MoneyCollection();
-            try {
-                Collection<BudgetNode> budgetNodes = userIO.ifIncome(budgetName, Double.valueOf(value));
-                for (BudgetNode now : budgetNodes) {
-                    DBTable.DBData data = budgetCollection.getBudget(username, now.getName());
-                    data.object.put("now income", now.getNowIncome());
-                }
-                DBTable.DBData data = moneyCollection.getMoney(username, moneyName);
-                data.object.put("value", (double) data.object.get("value") + Double.valueOf(value));
-                return true;
-            } catch (ReflectiveOperationException e) {
-                return false;
-            }
+            return username != null && new UseMoneyManager(username).income(moneyName, budgetName, value);
         });
         this.setDefaultMessage(event, "/income");
         event.submit();
@@ -59,27 +36,7 @@ public class UseMoneyLogic extends LogicManager {
                     WalletDBConfig.getConfig().getDBLockName(MoneyCollection.class),
                     WalletDBConfig.getConfig().getDBLockName(BudgetEdgeCollection.class));
             String username = SessionManager.getSessionManager().getUsername(socket);
-            if (username == null) {
-                return false;
-            }
-            UserIO userIO = new UserIO(username);
-            if (!userIO.getUserBudget().nodeExist(budgetName)) {
-                return false;
-            }
-            BudgetCollection budgetCollection = new BudgetCollection();
-            MoneyCollection moneyCollection = new MoneyCollection();
-            try {
-                Collection<BudgetNode> budgetNodes = userIO.ifExpenditure(budgetName, Double.valueOf(value));
-                for (BudgetNode now : budgetNodes) {
-                    DBTable.DBData data = budgetCollection.getBudget(username, now.getName());
-                    data.object.put("now expenditure", now.getNowExpenditure());
-                }
-                DBTable.DBData data = moneyCollection.getMoney(username, moneyName);
-                data.object.put("value", (double) data.object.get("value") - Double.valueOf(value));
-                return true;
-            } catch (ReflectiveOperationException e) {
-                return false;
-            }
+            return username != null && new UseMoneyManager(username).expenditure(moneyName, budgetName, value);
         });
         this.setDefaultMessage(event, "/expenditure");
         event.submit();

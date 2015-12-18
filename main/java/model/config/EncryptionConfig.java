@@ -4,7 +4,6 @@ import model.tool.RSA;
 import org.dom4j.Element;
 
 import java.security.KeyPair;
-import java.security.PrivateKey;
 
 /**
  * Created by xlo on 2015/11/25.

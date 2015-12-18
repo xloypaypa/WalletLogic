@@ -1,7 +1,6 @@
 package model.db;
 
 import model.config.WalletDBConfig;
-import org.junit.After;
 
 import java.util.Map;
 
