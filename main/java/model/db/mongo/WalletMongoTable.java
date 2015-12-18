@@ -13,10 +13,10 @@ import java.util.Map;
  * Created by xlo on 2015/9/14.
  * it's the mongo collection
  */
-public class BlogMongoTable implements VirtualDataTable {
+public class WalletMongoTable implements VirtualDataTable {
     MongoCollection<Document> mongoCollection;
 
-    protected BlogMongoTable(MongoCollection<Document> mongoCollection) {
+    protected WalletMongoTable(MongoCollection<Document> mongoCollection) {
         this.mongoCollection = mongoCollection;
     }
 

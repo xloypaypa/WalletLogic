@@ -12,7 +12,7 @@ import java.util.Map;
  * Created by xlo on 2015/9/14.
  * it's the virtual connection
  */
-public class BlogVirtualConnection implements VirtualDBConnection {
+public class WalletVirtualConnection implements VirtualDBConnection {
     protected static DBConfig dbConfig = (DBConfig) ConfigManager.getConfigManager().getConfig(DBConfig.class);
 
     private static Map<String, VirtualDB> dbMap = new HashMap<>();
@@ -20,11 +20,11 @@ public class BlogVirtualConnection implements VirtualDBConnection {
     public synchronized VirtualDB getDatabase(String name) {
         if (dbConfig.getDBType(name).equals("default")) {
             if (!dbMap.containsKey(name)) {
-                dbMap.put(name, new BlogVirtualDB());
+                dbMap.put(name, new WalletVirtualDB());
             }
         } else {
             if (!dbMap.containsKey(name)) {
-                dbMap.put(name, new BlogOldVirtualDB());
+                dbMap.put(name, new WalletOldVirtualDB());
             }
         }
         return dbMap.get(name);

@@ -10,7 +10,7 @@ import model.db.VirtualDBConnection;
  * Created by xlo on 2015/9/14.
  * it's the connection of mongoDB
  */
-public class BlogMongoConnection implements VirtualDBConnection {
+public class WalletMongoConnection implements VirtualDBConnection {
     protected static DBConfig dbConfig = (DBConfig) ConfigManager.getConfigManager().getConfig(DBConfig.class);
 
     protected static MongoClient mongoClient = null;
@@ -19,16 +19,16 @@ public class BlogMongoConnection implements VirtualDBConnection {
     @Override
     public VirtualDB getDatabase(String name) {
         if (mongoClient == null) {
-            synchronized (BlogMongoConnection.class) {
+            synchronized (WalletMongoConnection.class) {
                 if (mongoClient == null) {
                     mongoClient = new MongoClient(dbConfig.getHost(), dbConfig.getPort());
                 }
             }
         }
         if (dbConfig.getDBType(name).equals("default")) {
-            return new BlogMongoDB(mongoClient.getDatabase(name));
+            return new WalletMongoDB(mongoClient.getDatabase(name));
         } else {
-            return new BlogOldMongoDB(mongoClient.getDB(name));
+            return new WalletOldMongoDB(mongoClient.getDB(name));
         }
     }
 }

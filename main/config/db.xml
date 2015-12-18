@@ -1,5 +1,5 @@
 <dbs>
-    <connection>model.db.virtual.BlogVirtualConnection</connection>
+    <connection>model.db.virtual.WalletVirtualConnection</connection>
     <db name="wallet" type="default">
         <collection type="model.db.UserCollection">user</collection>
         <collection type="model.db.MoneyCollection">money</collection>

@@ -13,7 +13,7 @@ import java.util.Map;
  * Created by xlo on 2015/9/1.
  * it's the virtual collection
  */
-public class BlogVirtualTable implements VirtualDataTable {
+public class WalletVirtualTable implements VirtualDataTable {
     protected Map<String, Document> value = new HashMap<>();
 
     @Override

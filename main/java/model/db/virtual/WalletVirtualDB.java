@@ -9,14 +9,14 @@ import java.util.Map;
  * Created by xlo on 2015/9/1.
  * it's the virtual db
  */
-public class BlogVirtualDB implements VirtualDB {
+public class WalletVirtualDB implements VirtualDB {
 
-    protected Map<String, BlogVirtualTable> collectionMap = new HashMap<>();
+    protected Map<String, WalletVirtualTable> collectionMap = new HashMap<>();
 
     @Override
-    public synchronized BlogVirtualTable getTable(String collectionName) {
+    public synchronized WalletVirtualTable getTable(String collectionName) {
         if (!this.collectionMap.containsKey(collectionName)) {
-            this.collectionMap.put(collectionName, new BlogVirtualTable());
+            this.collectionMap.put(collectionName, new WalletVirtualTable());
         }
         return this.collectionMap.get(collectionName);
     }

@@ -3,7 +3,6 @@ package control.budget;
 import control.LogicTesting;
 import model.db.BudgetCollection;
 import model.db.BudgetEdgeCollection;
-import model.db.DBTable;
 import org.bson.Document;
 import org.junit.Test;
 
