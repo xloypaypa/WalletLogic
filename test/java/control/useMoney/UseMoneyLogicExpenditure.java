@@ -53,10 +53,17 @@ public class UseMoneyLogicExpenditure extends LogicTesting {
     }
 
     @Test
-    public void should_money_value_equal_10_when_income_in_b_10() {
+    public void should_money_value_equal_10_when_expenditure_in_b_10() {
         expenditure(this.socket, "a", "b", "10");
         MoneyCollection moneyCollection = new MoneyCollection();
         assertEquals(90, (double) moneyCollection.getMoneyData("username", "a").object.get("value"), 1e-3);
+    }
+
+    @Test
+    public void should_money_value_equal_10_when_income_in_b_10() {
+        income(this.socket, "a", "b", "10");
+        MoneyCollection moneyCollection = new MoneyCollection();
+        assertEquals(110, (double) moneyCollection.getMoneyData("username", "a").object.get("value"), 1e-3);
     }
 
     @Test

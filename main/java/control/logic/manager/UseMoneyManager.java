@@ -23,16 +23,14 @@ public class UseMoneyManager extends Manager {
         if (!userIO.getUserBudget().nodeExist(budgetName)) {
             return false;
         }
-        BudgetCollection budgetCollection = new BudgetCollection();
         MoneyCollection moneyCollection = new MoneyCollection();
         try {
             Collection<BudgetNode> budgetNodes = userIO.ifIncome(budgetName, Double.valueOf(value));
             for (BudgetNode now : budgetNodes) {
-                DBTable.DBData data = budgetCollection.getBudget(username, now.getName());
-                data.object.put("now income", now.getNowIncome());
+                putBudgetValue(now.getName(), now.getNowIncome()+"", now.getNowExpenditure()+"");
             }
-            DBTable.DBData data = moneyCollection.getMoney(username, moneyName);
-            data.object.put("value", (double) data.object.get("value") + Double.valueOf(value));
+            DBTable.DBData data = moneyCollection.getMoneyData(username, moneyName);
+            putMoneyValue(moneyName, ((double) data.object.get("value") + Double.valueOf(value)) + "");
             return true;
         } catch (ReflectiveOperationException e) {
             return false;
@@ -44,20 +42,29 @@ public class UseMoneyManager extends Manager {
         if (!userIO.getUserBudget().nodeExist(budgetName)) {
             return false;
         }
-        BudgetCollection budgetCollection = new BudgetCollection();
         MoneyCollection moneyCollection = new MoneyCollection();
         try {
             Collection<BudgetNode> budgetNodes = userIO.ifExpenditure(budgetName, Double.valueOf(value));
             for (BudgetNode now : budgetNodes) {
-                DBTable.DBData data = budgetCollection.getBudget(username, now.getName());
-                data.object.put("now expenditure", now.getNowExpenditure());
+                putBudgetValue(now.getName(), now.getNowIncome()+"", now.getNowExpenditure()+"");
             }
-            DBTable.DBData data = moneyCollection.getMoney(username, moneyName);
-            data.object.put("value", (double) data.object.get("value") - Double.valueOf(value));
+            DBTable.DBData data = moneyCollection.getMoneyData(username, moneyName);
+            putMoneyValue(moneyName, ((double) data.object.get("value") - Double.valueOf(value)) + "");
             return true;
         } catch (ReflectiveOperationException e) {
             return false;
         }
+    }
+
+    public void putMoneyValue(String moneyName, String value) {
+        DBTable.DBData data = new MoneyCollection().getMoney(username, moneyName);
+        data.object.put("value", Double.valueOf(value));
+    }
+
+    public void putBudgetValue(String budgetName, String nowIncome, String nowExpenditure) {
+        DBTable.DBData data = new BudgetCollection().getBudget(username, budgetName);
+        data.object.put("now income", Double.valueOf(nowIncome));
+        data.object.put("now expenditure", Double.valueOf(nowExpenditure));
     }
 
 }
