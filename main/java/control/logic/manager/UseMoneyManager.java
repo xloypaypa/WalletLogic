@@ -29,10 +29,13 @@ public class UseMoneyManager extends Manager {
         try {
             Collection<BudgetNode> budgetNodes = userIO.ifIncome(budgetName, Double.valueOf(value));
             for (BudgetNode now : budgetNodes) {
-                putBudgetValue(now.getName(), now.getNowIncome()+"", now.getNowExpenditure()+"", userRollBackBuilder);
+                DBTable.DBData data = new BudgetCollection().getBudgetData(username, now.getName());
+                userRollBackBuilder.putBudgetValue(now.getName(), data.object.get("now income").toString(), data.object.get("now expenditure").toString());
+                putBudgetValue(now.getName(), now.getNowIncome()+"", now.getNowExpenditure()+"");
             }
             DBTable.DBData data = moneyCollection.getMoneyData(username, moneyName);
-            putMoneyValue(moneyName, ((double) data.object.get("value") + Double.valueOf(value)) + "", userRollBackBuilder);
+            userRollBackBuilder.putMoneyValue(moneyName, data.object.get("value").toString());
+            putMoneyValue(moneyName, ((double) data.object.get("value") + Double.valueOf(value)) + "");
 
             document.append("moneyName", moneyName)
                     .append("budgetName", budgetName)
@@ -54,10 +57,13 @@ public class UseMoneyManager extends Manager {
         try {
             Collection<BudgetNode> budgetNodes = userIO.ifExpenditure(budgetName, Double.valueOf(value));
             for (BudgetNode now : budgetNodes) {
-                putBudgetValue(now.getName(), now.getNowIncome()+"", now.getNowExpenditure()+"", userRollBackBuilder);
+                DBTable.DBData data = new BudgetCollection().getBudgetData(username, now.getName());
+                userRollBackBuilder.putBudgetValue(now.getName(), data.object.get("now income").toString(), data.object.get("now expenditure").toString());
+                putBudgetValue(now.getName(), now.getNowIncome()+"", now.getNowExpenditure()+"");
             }
             DBTable.DBData data = moneyCollection.getMoneyData(username, moneyName);
-            putMoneyValue(moneyName, ((double) data.object.get("value") - Double.valueOf(value)) + "", userRollBackBuilder);
+            userRollBackBuilder.putMoneyValue(moneyName, data.object.get("value").toString());
+            putMoneyValue(moneyName, ((double) data.object.get("value") - Double.valueOf(value)) + "");
             document.append("moneyName", moneyName)
                     .append("budgetName", budgetName)
                     .append("value", value)
@@ -68,13 +74,15 @@ public class UseMoneyManager extends Manager {
         }
     }
 
-    public void putMoneyValue(String moneyName, String value, UserRollBackBuilder userRollBackBuilder) {
+    public void putMoneyValue(String moneyName, String value) {
+        UserRollBackBuilder userRollBackBuilder = new UserRollBackBuilder();
         DBTable.DBData data = new MoneyCollection().getMoney(username, moneyName);
         userRollBackBuilder.putMoneyValue(moneyName, data.object.get("value").toString());
         data.object.put("value", Double.valueOf(value));
     }
 
-    public void putBudgetValue(String budgetName, String nowIncome, String nowExpenditure, UserRollBackBuilder userRollBackBuilder) {
+    public void putBudgetValue(String budgetName, String nowIncome, String nowExpenditure) {
+        UserRollBackBuilder userRollBackBuilder = new UserRollBackBuilder();
         DBTable.DBData data = new BudgetCollection().getBudget(username, budgetName);
         userRollBackBuilder.putBudgetValue(budgetName, data.object.get("now income").toString(), data.object.get("now expenditure").toString());
         data.object.put("now income", Double.valueOf(nowIncome));
