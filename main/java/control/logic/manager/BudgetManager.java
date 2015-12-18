@@ -37,12 +37,11 @@ public class BudgetManager extends Manager {
         List<DBTable.DBData> relativeEdge;
         relativeEdge = edgeCollection.getAllDataListData(new Document("username", username).append("from", typename));
         for (DBTable.DBData now : relativeEdge) {
-            edgeCollection.remove(username, (String) now.object.get("from"), (String) now.object.get("to"));
+            new EdgeManager(username).removeEdge((String) now.object.get("from"), (String) now.object.get("to"));
         }
-
         relativeEdge = edgeCollection.getAllDataListData(new Document("username", username).append("to", typename));
         for (DBTable.DBData now : relativeEdge) {
-            edgeCollection.remove(username, (String) now.object.get("from"), (String) now.object.get("to"));
+            new EdgeManager(username).removeEdge((String) now.object.get("from"), (String) now.object.get("to"));
         }
 
         return true;

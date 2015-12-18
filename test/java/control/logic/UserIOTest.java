@@ -1,6 +1,8 @@
 package control.logic;
 
 import control.LogicTesting;
+import control.logic.userDataFormat.BudgetNode;
+import control.logic.userDataFormat.UserIO;
 import org.junit.Test;
 
 import java.util.Collection;

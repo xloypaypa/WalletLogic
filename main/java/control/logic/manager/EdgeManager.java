@@ -1,6 +1,6 @@
 package control.logic.manager;
 
-import control.logic.UserEdge;
+import control.logic.userDataFormat.UserEdge;
 import model.db.BudgetCollection;
 import model.db.BudgetEdgeCollection;
 import model.db.DBTable;

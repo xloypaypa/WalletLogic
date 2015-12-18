@@ -1,4 +1,4 @@
-package control.logic;
+package control.logic.userDataFormat;
 
 import model.db.BudgetCollection;
 import model.db.DBTable;

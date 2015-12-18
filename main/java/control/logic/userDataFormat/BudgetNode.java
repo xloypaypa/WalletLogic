@@ -1,4 +1,4 @@
-package control.logic;
+package control.logic.userDataFormat;
 
 /**
  * Created by xlo on 15/12/10.

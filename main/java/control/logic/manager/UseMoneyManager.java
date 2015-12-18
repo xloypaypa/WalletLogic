@@ -1,7 +1,7 @@
 package control.logic.manager;
 
-import control.logic.BudgetNode;
-import control.logic.UserIO;
+import control.logic.userDataFormat.BudgetNode;
+import control.logic.userDataFormat.UserIO;
 import model.db.BudgetCollection;
 import model.db.DBTable;
 import model.db.MoneyCollection;

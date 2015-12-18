@@ -1,4 +1,4 @@
-package control.logic;
+package control.logic.userDataFormat;
 
 import javafx.util.Pair;
 
