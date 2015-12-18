@@ -3,9 +3,7 @@ package model.db;
 import org.bson.Document;
 
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Created by xlo on 2015/12/17.
@@ -19,12 +17,6 @@ public class DetailCollection extends WalletCollection {
                 .append("date", date.getTime())
                 .append("event", event);
         this.insert(document);
-    }
-
-    public List<DBData> getDetails(Document document) {
-        this.lockCollection();
-        return this.collection.find(document).stream()
-                .map(this::addDocumentToUsing).collect(Collectors.toCollection(LinkedList::new));
     }
 
     public List<DBData> findDetails(String username, Date from, Date to) {
