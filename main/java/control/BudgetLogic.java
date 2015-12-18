@@ -35,7 +35,7 @@ public class BudgetLogic extends LogicManager {
     public void createBudget(String typename, String income, String expenditure) {
         event.setEventAction(() -> {
             String username = SessionManager.getSessionManager().getUsername(socket);
-            return username != null && new BudgetManager(username).createBudget(typename, income, expenditure);
+            return username != null && new BudgetManager(username).createBudget(typename, income, expenditure, "0", "0");
         });
         this.setDefaultMessage(event, "/createBudget");
         event.submit();

@@ -11,15 +11,15 @@ import java.util.Map;
  */
 public class BudgetCollection extends WalletCollection {
 
-    public void addBudgetType(String username, String typename, double income, double expenditure) {
+    public void addBudgetType(String username, String typename, double income, double expenditure, double nowIncome, double nowExpenditure) {
         this.lockCollection();
         Document document = new Document();
         document.append("username", username)
                 .append("typename", typename)
                 .append("income", income)
                 .append("expenditure", expenditure)
-                .append("now income", (double) 0)
-                .append("now expenditure", (double) 0);
+                .append("now income", nowIncome)
+                .append("now expenditure", nowExpenditure);
         this.insert(document);
     }
 

@@ -17,12 +17,12 @@ public class BudgetManager extends Manager {
         super(username);
     }
 
-    public boolean createBudget(String typename, String income, String expenditure) {
+    public boolean createBudget(String typename, String income, String expenditure, String nowIncome, String nowExpenditure) {
         BudgetCollection budgetCollection = new BudgetCollection();
         if (budgetCollection.getBudgetData(username, typename) != null) {
             return false;
         }
-        budgetCollection.addBudgetType(username, typename, Double.valueOf(income), Double.valueOf(expenditure));
+        budgetCollection.addBudgetType(username, typename, Double.valueOf(income), Double.valueOf(expenditure), Double.valueOf(nowIncome), Double.valueOf(nowExpenditure));
         return true;
     }
 
