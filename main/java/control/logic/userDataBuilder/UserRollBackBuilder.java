@@ -3,6 +3,7 @@ package control.logic.userDataBuilder;
 import control.logic.manager.BudgetManager;
 import control.logic.manager.EdgeManager;
 import control.logic.manager.MoneyManager;
+import control.logic.manager.UseMoneyManager;
 import org.bson.BsonArray;
 
 /**
@@ -59,5 +60,13 @@ public class UserRollBackBuilder extends Builder {
 
     public void changeBudget(String typename, String pastIncome, String pastExpenditure, String newName) {
         rollBackArray.add(this.managerCallMessageBuilder(BudgetManager.class, "changeBudget", newName, typename, pastIncome, pastExpenditure));
+    }
+
+    public void putMoneyValue(String typename, String past) {
+        rollBackArray.add(this.managerCallMessageBuilder(UseMoneyManager.class, "putMoneyValue", typename, past));
+    }
+
+    public void putBudgetValue(String typename, String pastIncome, String pastExpenditure) {
+        rollBackArray.add(this.managerCallMessageBuilder(UseMoneyManager.class, "putBudgetValue", typename, pastIncome, pastExpenditure));
     }
 }

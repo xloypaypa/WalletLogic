@@ -1,7 +1,7 @@
 package control;
 
-import model.db.DBTable;
-import model.db.DetailCollection;
+import model.config.WalletDBConfig;
+import model.db.*;
 import model.db.event.Event;
 import model.session.SessionManager;
 import org.bson.BsonArray;
@@ -46,6 +46,9 @@ public class DetailLogic extends LogicManager {
 
     public void rollBack() {
         event.setEventAction(() -> {
+            event.lock(WalletDBConfig.getConfig().getDBLockName(BudgetCollection.class),
+                    WalletDBConfig.getConfig().getDBLockName(MoneyCollection.class),
+                    WalletDBConfig.getConfig().getDBLockName(BudgetEdgeCollection.class));
             String username = SessionManager.getSessionManager().getUsername(socket);
             if (username == null) {
                 return false;

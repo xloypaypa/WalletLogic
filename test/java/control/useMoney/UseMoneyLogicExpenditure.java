@@ -60,13 +60,6 @@ public class UseMoneyLogicExpenditure extends LogicTesting {
     }
 
     @Test
-    public void should_money_value_equal_10_when_income_in_b_10() {
-        income(this.socket, "a", "b", "10");
-        MoneyCollection moneyCollection = new MoneyCollection();
-        assertEquals(110, (double) moneyCollection.getMoneyData("username", "a").object.get("value"), 1e-3);
-    }
-
-    @Test
     public void should_fail_when_income_error_budget() throws Exception {
         UseMoneyLogicNoSend useMoneyLogic = expenditure(this.socket, "a", "x", "10");
 
