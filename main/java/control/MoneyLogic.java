@@ -1,10 +1,12 @@
 package control;
 
 import control.logic.manager.MoneyManager;
+import model.db.DetailCollection;
 import model.db.MoneyCollection;
 import model.session.SessionManager;
 
 import java.net.Socket;
+import java.util.Date;
 
 /**
  * Created by xlo on 2015/11/4.
@@ -33,7 +35,13 @@ public class MoneyLogic extends LogicManager {
     public void createMoney(String typename, String value) {
         event.setEventAction(() -> {
             String username = SessionManager.getSessionManager().getUsername(socket);
-            return username != null && new MoneyManager(username).createMoney(typename, value);
+            MoneyManager moneyManager = new MoneyManager(username);
+            if(username != null && moneyManager.createMoney(typename, value)) {
+                new DetailCollection().addDetail(username, new Date(), "createMoney", moneyManager.getUserRollBackMessage());
+                return true;
+            } else {
+                return false;
+            }
         });
         this.setDefaultMessage(event, "/createMoney");
         event.submit();
@@ -42,7 +50,13 @@ public class MoneyLogic extends LogicManager {
     public void removeMoney(String typename) {
         event.setEventAction(() -> {
             String username = SessionManager.getSessionManager().getUsername(socket);
-            return username != null && new MoneyManager(username).removeMoney(typename);
+            MoneyManager moneyManager = new MoneyManager(username);
+            if (username != null && moneyManager.removeMoney(typename)) {
+                new DetailCollection().addDetail(username, new Date(), "removeMoney", moneyManager.getUserRollBackMessage());
+                return true;
+            } else {
+                return false;
+            }
         });
         this.setDefaultMessage(event, "/removeMoney");
         event.submit();
@@ -51,7 +65,13 @@ public class MoneyLogic extends LogicManager {
     public void transferMoney(String from, String to, String value) {
         event.setEventAction(() -> {
             String username = SessionManager.getSessionManager().getUsername(socket);
-            return username != null && new MoneyManager(username).transferMoney(from, to, value);
+            MoneyManager moneyManager = new MoneyManager(username);
+            if (username != null && moneyManager.transferMoney(from, to, value)) {
+                new DetailCollection().addDetail(username, new Date(), "transferMoney", moneyManager.getUserRollBackMessage());
+                return true;
+            } else {
+                return false;
+            }
         });
         this.setDefaultMessage(event, "/transferMoney");
         event.submit();
@@ -60,7 +80,13 @@ public class MoneyLogic extends LogicManager {
     public void renameMoney(String typename, String newName) {
         event.setEventAction(() -> {
             String username = SessionManager.getSessionManager().getUsername(socket);
-            return username != null && new MoneyManager(username).renameMoney(typename, newName);
+            MoneyManager moneyManager = new MoneyManager(username);
+            if (username != null && moneyManager.renameMoney(typename, newName)) {
+                new DetailCollection().addDetail(username, new Date(), "renameMoney", moneyManager.getUserRollBackMessage());
+                return true;
+            } else {
+                return false;
+            }
         });
         this.setDefaultMessage(event, "/renameMoney");
         event.submit();

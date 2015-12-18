@@ -27,7 +27,7 @@ public class DetailCollectionTest extends DBTesting {
         DetailCollection detailCollection = new DetailCollection();
         detailCollection.addDetail("username", new Date(100), "event", new Document());
         detailCollection.addDetail("username", new Date(101), "event", new Document());
-        detailCollection.addDetail("username", new Date(161), "event", new Document());
+        detailCollection.addDetail("username", new Date(520), "event", new Document());
         detailCollection.submit();
 
         assertEquals(2, detailCollection.findDetails("username", new Date(50), new Date(150)).size());
@@ -38,7 +38,7 @@ public class DetailCollectionTest extends DBTesting {
         DetailCollection detailCollection = new DetailCollection();
         detailCollection.addDetail("username", new Date(100), "event", new Document());
         detailCollection.addDetail("username", new Date(101), "event", new Document());
-        detailCollection.addDetail("username", new Date(161), "event", new Document("message", "abc"));
+        detailCollection.addDetail("username", new Date(175), "event", new Document("message", "abc"));
         detailCollection.submit();
 
         assertEquals("abc", detailCollection.findDetails("username", new Date(150), new Date(200)).get(0).object.get("message"));

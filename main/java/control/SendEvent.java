@@ -73,6 +73,6 @@ public class SendEvent extends Event {
 
     @FunctionalInterface
     public interface EventAction {
-        boolean action();
+        boolean action() throws Exception;
     }
 }

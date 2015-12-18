@@ -148,4 +148,11 @@ public abstract class LogicTesting implements NeedClearDBTesting {
         return useMoneyLogicNoSend;
     }
 
+    public static DetailLogicNoSend rollBack(Socket socket) {
+        DetailLogicNoSend detailLogicNoSend = new DetailLogicNoSend(socket);
+        detailLogicNoSend.rollBack();
+        detailLogicNoSend.waitEventEnd();
+        return detailLogicNoSend;
+    }
+
 }
