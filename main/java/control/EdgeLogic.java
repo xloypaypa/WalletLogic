@@ -4,10 +4,12 @@ import control.logic.manager.EdgeManager;
 import model.config.WalletDBConfig;
 import model.db.BudgetCollection;
 import model.db.BudgetEdgeCollection;
+import model.db.DetailCollection;
 import model.session.SessionManager;
 import org.bson.Document;
 
 import java.net.Socket;
+import java.util.Date;
 
 /**
  * Created by xlo on 2015/11/6.
@@ -39,8 +41,13 @@ public class EdgeLogic extends LogicManager {
             event.lock(WalletDBConfig.getConfig().getDBLockName(BudgetCollection.class),
                     WalletDBConfig.getConfig().getDBLockName(BudgetEdgeCollection.class));
             String username = SessionManager.getSessionManager().getUsername(socket);
-            return username != null && new EdgeManager(username).addEdge(fromType, toType, script);
-
+            EdgeManager edgeManager = new EdgeManager(username);
+            if (username != null && edgeManager.addEdge(fromType, toType, script)) {
+                new DetailCollection().addDetail(username, new Date(), "addEdge", edgeManager.getUserRollBackMessage());
+                return true;
+            } else {
+                return false;
+            }
         });
         this.setDefaultMessage(event, "/addEdge");
         event.submit();
@@ -49,7 +56,13 @@ public class EdgeLogic extends LogicManager {
     public void removeEdge(String fromType, String toType) {
         event.setEventAction(() -> {
             String username = SessionManager.getSessionManager().getUsername(socket);
-            return username != null && new EdgeManager(username).removeEdge(fromType, toType);
+            EdgeManager edgeManager = new EdgeManager(username);
+            if (username != null && edgeManager.removeEdge(fromType, toType)) {
+                new DetailCollection().addDetail(username, new Date(), "removeEdge", edgeManager.getUserRollBackMessage());
+                return true;
+            } else {
+                return false;
+            }
         });
         this.setDefaultMessage(event, "/removeEdge");
         event.submit();
@@ -58,7 +71,13 @@ public class EdgeLogic extends LogicManager {
     public void updateEdge(String fromType, String toType, String script) {
         event.setEventAction(() -> {
             String username = SessionManager.getSessionManager().getUsername(socket);
-            return username != null && new EdgeManager(username).updateEdge(fromType, toType, script);
+            EdgeManager edgeManager = new EdgeManager(username);
+            if (username != null && edgeManager.updateEdge(fromType, toType, script)) {
+                new DetailCollection().addDetail(username, new Date(), "updateEdge", edgeManager.getUserRollBackMessage());
+                return true;
+            } else {
+                return false;
+            }
         });
         this.setDefaultMessage(event, "/updateEdge");
         event.submit();

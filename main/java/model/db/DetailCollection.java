@@ -1,6 +1,7 @@
 package model.db;
 
 import org.bson.Document;
+import org.bson.types.ObjectId;
 
 import java.util.Date;
 import java.util.List;
@@ -39,8 +40,8 @@ public class DetailCollection extends WalletCollection {
 
     private void sortData(List<DBData> allDataListData) {
         allDataListData.sort((o1, o2) -> {
-            Long v1 = (Long) o1.object.get("date");
-            Long v2 = (Long) o2.object.get("date");
+            ObjectId v1 = (ObjectId) o1.object.get("_id");
+            ObjectId v2 = (ObjectId) o2.object.get("_id");
             return -v1.compareTo(v2);
         });
     }

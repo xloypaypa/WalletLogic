@@ -1,5 +1,6 @@
 package control.logic.manager;
 
+import control.logic.userDataBuilder.UserRollBackBuilder;
 import control.logic.userDataFormat.UserEdge;
 import model.db.BudgetCollection;
 import model.db.BudgetEdgeCollection;
@@ -32,15 +33,29 @@ public class EdgeManager extends Manager {
             return false;
         }
         budgetEdgeCollection.addEdge(username, fromType, toType, script);
+
+        UserRollBackBuilder userRollBackBuilder = new UserRollBackBuilder();
+        userRollBackBuilder.addEdge(fromType, toType);
+        document.append("fromBudget", fromType)
+                .append("toBudget", toType)
+                .append("script", script)
+                .append("roll back call", userRollBackBuilder.getRollBackArray());
         return true;
     }
 
     public boolean removeEdge(String fromType, String toType) {
         BudgetEdgeCollection budgetEdgeCollection = new BudgetEdgeCollection();
-        if (budgetEdgeCollection.getEdgeData(username, fromType, toType) == null) {
+        DBTable.DBData data = budgetEdgeCollection.getEdgeData(username, fromType, toType);
+        if (data == null) {
             return false;
         }
         budgetEdgeCollection.remove(username, fromType, toType);
+
+        UserRollBackBuilder userRollBackBuilder = new UserRollBackBuilder();
+        userRollBackBuilder.removeEdge(fromType, toType, data.object.get("script").toString());
+        document.append("fromBudget", fromType)
+                .append("toBudget", toType)
+                .append("roll back call", userRollBackBuilder.getRollBackArray());
         return true;
     }
 
@@ -50,7 +65,15 @@ public class EdgeManager extends Manager {
         if (edge == null) {
             return false;
         }
+        String past = edge.object.get("script").toString();
         edge.object.put("script", script);
+
+        UserRollBackBuilder userRollBackBuilder = new UserRollBackBuilder();
+        userRollBackBuilder.updateEdge(fromType, toType, past);
+        document.append("fromBudget", fromType)
+                .append("toBudget", toType)
+                .append("script", script)
+                .append("roll back call", userRollBackBuilder.getRollBackArray());
         return true;
     }
 }

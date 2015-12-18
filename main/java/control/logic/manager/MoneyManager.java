@@ -2,10 +2,7 @@ package control.logic.manager;
 
 import control.logic.userDataBuilder.UserRollBackBuilder;
 import model.db.DBTable;
-import model.db.DetailCollection;
 import model.db.MoneyCollection;
-import org.bson.Document;
-import org.bson.types.ObjectId;
 
 /**
  * Created by xlo on 2015/12/18.
@@ -43,7 +40,7 @@ public class MoneyManager extends Manager {
 
         UserRollBackBuilder userRollBackBuilder = new UserRollBackBuilder();
         userRollBackBuilder.renameMoney(typename, newName);
-        document.append("renameMoney", typename)
+        document.append("moneyType", typename)
                 .append("value", money.object.get("value").toString())
                 .append("roll back call", userRollBackBuilder.getRollBackArray());
         return true;
