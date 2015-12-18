@@ -83,7 +83,7 @@ public class BudgetLogicRemoveTest extends LogicTesting {
         removeBudget(this.socket, "a");
 
         BudgetEdgeCollection edgeCollection = new BudgetEdgeCollection();
-        assertEquals(0, edgeCollection.findEdgeList(new Document()).size());
+        assertEquals(0, edgeCollection.getAllDataListData(new Document()).size());
     }
 
 }

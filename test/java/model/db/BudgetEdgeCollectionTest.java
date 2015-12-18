@@ -70,7 +70,7 @@ public class BudgetEdgeCollectionTest extends DBTesting {
         budgetEdgeCollection.addEdge("user2", "from", "to", "2");
         budgetEdgeCollection.submit();
 
-        assertEquals(2, budgetEdgeCollection.findEdgeList(new Document("from", "from")).size());
+        assertEquals(2, budgetEdgeCollection.getAllDataListData(new Document("from", "from")).size());
     }
 
 }

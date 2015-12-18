@@ -28,7 +28,7 @@ public class EdgeLogic extends LogicManager {
             }
 
             EdgeLogic.this.setSuccessMessage(event, "/getEdgeList", new BudgetEdgeCollection()
-                    .findEdgeList(new Document("username", username)));
+                    .getAllDataListData(new Document("username", username)));
             return true;
         });
         this.setFailedMessage(event, "/getEdgeList");

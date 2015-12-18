@@ -54,10 +54,6 @@ public class BudgetCollection extends WalletCollection {
     }
 
     public List<DBData> getBudgetListData(String username) {
-        this.lockCollection();
-        List<Map<String, Object>> iterator = this.collection.find(new Document().append("username", username));
-        List<DBData> ans = iterator.stream().map(this::getDocumentNotUsing).collect(Collectors.toCollection(LinkedList::new));
-        this.unlockCollection();
-        return ans;
+        return this.getAllDataListData(new Document().append("username", username));
     }
 }

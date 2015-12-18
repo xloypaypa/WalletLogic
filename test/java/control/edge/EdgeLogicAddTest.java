@@ -84,7 +84,7 @@ public class EdgeLogicAddTest extends LogicTesting {
         addEdge(this.socket, "a", "b", "c");
 
         BudgetEdgeCollection budgetEdgeCollection = new BudgetEdgeCollection();
-        assertEquals(1, budgetEdgeCollection.findEdgeList(new Document()).size());
+        assertEquals(1, budgetEdgeCollection.getAllDataListData(new Document()).size());
     }
 
     @Test

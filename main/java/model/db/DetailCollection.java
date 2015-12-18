@@ -29,14 +29,10 @@ public class DetailCollection extends WalletCollection {
     }
 
     public List<DBData> findDetails(String username, Date from, Date to) {
-        this.lockCollection();
         Document document = new Document();
         document.append("username", username)
                 .append("date", new Document("$gt", from.getTime()).append("$lt", to.getTime()));
-        List<Map<String, Object>> list = this.collection.find(document);
-        List<DBData> ans = list.stream().map(this::getDocumentNotUsing).collect(Collectors.toCollection(LinkedList::new));
-        this.unlockCollection();
-        return ans;
+        return this.getAllDataListData(document);
     }
 
 }

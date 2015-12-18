@@ -20,7 +20,7 @@ public class UserEdge {
 
     public UserEdge(String username) {
         BudgetEdgeCollection edgeCollection = new BudgetEdgeCollection();
-        List<DBTable.DBData> userEdge = edgeCollection.findEdgeList(new Document("username", username));
+        List<DBTable.DBData> userEdge = edgeCollection.getAllDataListData(new Document("username", username));
         this.nodes = new HashMap<>();
         initKeyByType(userEdge);
         loadEdge(userEdge);

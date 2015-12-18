@@ -67,12 +67,12 @@ public class BudgetLogic extends LogicManager {
 
             BudgetEdgeCollection edgeCollection = new BudgetEdgeCollection();
             List<DBTable.DBData> relativeEdge;
-            relativeEdge = edgeCollection.findEdgeList(new Document("username", username).append("from", typename));
+            relativeEdge = edgeCollection.getAllDataListData(new Document("username", username).append("from", typename));
             for (DBTable.DBData now : relativeEdge) {
                 edgeCollection.remove(username, (String) now.object.get("from"), (String) now.object.get("to"));
             }
 
-            relativeEdge = edgeCollection.findEdgeList(new Document("username", username).append("to", typename));
+            relativeEdge = edgeCollection.getAllDataListData(new Document("username", username).append("to", typename));
             for (DBTable.DBData now : relativeEdge) {
                 edgeCollection.remove(username, (String) now.object.get("from"), (String) now.object.get("to"));
             }
@@ -102,12 +102,12 @@ public class BudgetLogic extends LogicManager {
 
             BudgetEdgeCollection edgeCollection = new BudgetEdgeCollection();
             List<DBTable.DBData> relativeEdge;
-            relativeEdge = edgeCollection.findEdgeListInUsing(new Document("username", username).append("from", typename));
+            relativeEdge = edgeCollection.getAllDataList(new Document("username", username).append("from", typename));
             for (DBTable.DBData now : relativeEdge) {
                 now.object.put("from", newName);
             }
 
-            relativeEdge = edgeCollection.findEdgeListInUsing(new Document("username", username).append("to", typename));
+            relativeEdge = edgeCollection.getAllDataList(new Document("username", username).append("to", typename));
             for (DBTable.DBData now : relativeEdge) {
                 now.object.put("to", newName);
             }

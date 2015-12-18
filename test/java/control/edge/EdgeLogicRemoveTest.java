@@ -78,7 +78,7 @@ public class EdgeLogicRemoveTest extends LogicTesting {
         removeEdge(this.socket, "a", "b");
 
         BudgetEdgeCollection budgetEdgeCollection = new BudgetEdgeCollection();
-        assertEquals(0, budgetEdgeCollection.findEdgeList(new Document()).size());
+        assertEquals(0, budgetEdgeCollection.getAllDataListData(new Document()).size());
     }
 
 }
