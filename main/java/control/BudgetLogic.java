@@ -6,6 +6,7 @@ import model.db.BudgetCollection;
 import model.db.BudgetEdgeCollection;
 import model.db.DetailCollection;
 import model.session.SessionManager;
+import org.bson.Document;
 
 import java.net.Socket;
 import java.util.Date;
@@ -27,7 +28,7 @@ public class BudgetLogic extends LogicManager {
                 return false;
             }
             BudgetCollection budgetCollection = new BudgetCollection();
-            BudgetLogic.this.setSuccessMessage(event, "/getBudget", budgetCollection.getBudgetListData(username));
+            BudgetLogic.this.setSuccessMessage(event, "/getBudget", budgetCollection.getAllDataListData(new Document("username", username)));
             return true;
         });
         this.setFailedMessage(event, "/getBudget");

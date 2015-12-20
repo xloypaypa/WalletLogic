@@ -1,8 +1,8 @@
 package control.logic;
 
 import control.LogicTesting;
-import control.logic.userDataFormat.BudgetNode;
 import control.logic.userDataFormat.UserIO;
+import model.entity.BudgetEntity;
 import org.junit.Test;
 
 import java.util.Collection;
@@ -46,14 +46,14 @@ public class UserIOTest extends LogicTesting {
     @Test
     public void should_not_have_a_when_income_in_b_10() throws ReflectiveOperationException {
         UserIO userIO = new UserIO("username");
-        Collection<BudgetNode> budgetNodes = userIO.ifIncome("b", 10);
+        Collection<BudgetEntity> budgetNodes = userIO.ifIncome("b", 10);
         budgetNodes.stream().filter(now -> now.getName().equals("a")).forEach(now -> fail());
     }
 
     @Test
     public void should_value_equal_10_when_income_in_b_10_except_f_and_e() throws ReflectiveOperationException {
         UserIO userIO = new UserIO("username");
-        Collection<BudgetNode> budgetNodes = userIO.ifIncome("b", 10);
+        Collection<BudgetEntity> budgetNodes = userIO.ifIncome("b", 10);
         budgetNodes.stream().filter(now -> !now.getName().equals("f") && !now.getName().equals("e"))
                 .forEach(now -> assertEquals(10, now.getNowIncome(), 1e-3));
     }
@@ -61,7 +61,7 @@ public class UserIOTest extends LogicTesting {
     @Test
     public void should_e_value_equal_20_when_income_in_b_10() throws ReflectiveOperationException {
         UserIO userIO = new UserIO("username");
-        Collection<BudgetNode> budgetNodes = userIO.ifIncome("b", 10);
+        Collection<BudgetEntity> budgetNodes = userIO.ifIncome("b", 10);
         budgetNodes.stream().filter(now -> now.getName().equals("e"))
                 .forEach(now -> assertEquals(20, now.getNowIncome(), 1e-3));
     }
@@ -69,7 +69,7 @@ public class UserIOTest extends LogicTesting {
     @Test
     public void should_f_value_equal_8_when_expenditure_in_b_10() throws ReflectiveOperationException {
         UserIO userIO = new UserIO("username");
-        Collection<BudgetNode> budgetNodes = userIO.ifExpenditure("b", 10);
+        Collection<BudgetEntity> budgetNodes = userIO.ifExpenditure("b", 10);
         budgetNodes.stream().filter(now -> now.getName().equals("f"))
                 .forEach(now -> assertEquals(8, now.getNowExpenditure(), 1e-3));
     }

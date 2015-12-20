@@ -1,6 +1,5 @@
 package control.logic.manager;
 
-import control.logic.userDataFormat.BudgetNode;
 import control.logic.userDataFormat.UserIO;
 import model.db.BudgetCollection;
 import model.db.MoneyCollection;
@@ -26,8 +25,8 @@ public class UseMoneyManager extends Manager {
         }
         MoneyCollection moneyCollection = new MoneyCollection();
         try {
-            Collection<BudgetNode> budgetNodes = userIO.ifIncome(budgetName, Double.valueOf(value));
-            for (BudgetNode now : budgetNodes) {
+            Collection<BudgetEntity> budgetNodes = userIO.ifIncome(budgetName, Double.valueOf(value));
+            for (BudgetEntity now : budgetNodes) {
                 BudgetEntity data = new BudgetCollection().getBudgetData(username, now.getName());
                 userRollBackBuilder.putBudgetValue(now.getName(), data.getNowIncome() + "", data.getNowExpenditure() + "");
                 putBudgetValue(now.getName(), now.getNowIncome() + "", now.getNowExpenditure() + "");
@@ -52,8 +51,8 @@ public class UseMoneyManager extends Manager {
         }
         MoneyCollection moneyCollection = new MoneyCollection();
         try {
-            Collection<BudgetNode> budgetNodes = userIO.ifExpenditure(budgetName, Double.valueOf(value));
-            for (BudgetNode now : budgetNodes) {
+            Collection<BudgetEntity> budgetNodes = userIO.ifExpenditure(budgetName, Double.valueOf(value));
+            for (BudgetEntity now : budgetNodes) {
                 BudgetEntity data = new BudgetCollection().getBudgetData(username, now.getName());
                 userRollBackBuilder.putBudgetValue(now.getName(), data.getNowIncome() + "", data.getNowExpenditure() + "");
                 putBudgetValue(now.getName(), now.getNowIncome() + "", now.getNowExpenditure() + "");

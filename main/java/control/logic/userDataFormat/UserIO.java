@@ -2,6 +2,7 @@ package control.logic.userDataFormat;
 
 import javafx.util.Pair;
 import model.config.script.ForceCacheScriptManager;
+import model.entity.BudgetEntity;
 
 import java.lang.reflect.Method;
 import java.util.*;
@@ -20,14 +21,14 @@ public class UserIO {
         userEdge = new UserEdge(username);
     }
 
-    public Collection<BudgetNode> ifIncome(String typename, double value) throws ReflectiveOperationException {
-        Map<String, BudgetNode> map = new HashMap<>();
+    public Collection<BudgetEntity> ifIncome(String typename, double value) throws ReflectiveOperationException {
+        Map<String, BudgetEntity> map = new HashMap<>();
         calculate(typename, value, map, true);
         return map.values();
     }
 
-    public Collection<BudgetNode> ifExpenditure(String typename, double value) throws ReflectiveOperationException {
-        Map<String, BudgetNode> map = new HashMap<>();
+    public Collection<BudgetEntity> ifExpenditure(String typename, double value) throws ReflectiveOperationException {
+        Map<String, BudgetEntity> map = new HashMap<>();
         calculate(typename, value, map, false);
         return map.values();
     }
@@ -49,12 +50,12 @@ public class UserIO {
      * @param flag {@code true} if income, {@code false} if expenditure
      * @throws ReflectiveOperationException
      */
-    private void calculate(String typename, double value, Map<String, BudgetNode> result, boolean flag) throws ReflectiveOperationException {
+    private void calculate(String typename, double value, Map<String, BudgetEntity> result, boolean flag) throws ReflectiveOperationException {
         incomeCalculateNowNode(typename, value, result, flag);
         incomeCalculateNextNode(typename, value, result, flag);
     }
 
-    private void incomeCalculateNextNode(String typename, double value, Map<String, BudgetNode> result, boolean flag) throws ReflectiveOperationException {
+    private void incomeCalculateNextNode(String typename, double value, Map<String, BudgetEntity> result, boolean flag) throws ReflectiveOperationException {
         List<Pair<String, String>> next = userEdge.getFather(typename);
         for (Pair<String, String> now : next) {
             Object object = ForceCacheScriptManager.getForceCacheScriptManager().runCommand(now.getValue());
@@ -64,8 +65,8 @@ public class UserIO {
         }
     }
 
-    private void incomeCalculateNowNode(String typename, double value, Map<String, BudgetNode> result, boolean flag) {
-        BudgetNode nowNode = result.get(typename);
+    private void incomeCalculateNowNode(String typename, double value, Map<String, BudgetEntity> result, boolean flag) {
+        BudgetEntity nowNode = result.get(typename);
         if (nowNode == null) {
             nowNode = userBudget.getNode(typename);
             result.put(nowNode.getName(), nowNode);

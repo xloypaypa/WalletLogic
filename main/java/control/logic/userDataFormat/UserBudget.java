@@ -1,7 +1,7 @@
 package control.logic.userDataFormat;
 
 import model.db.BudgetCollection;
-import model.db.DBTable;
+import model.entity.BudgetEntity;
 
 import java.util.HashMap;
 import java.util.List;
@@ -13,24 +13,18 @@ import java.util.Map;
  */
 public class UserBudget {
 
-    private Map<String, BudgetNode> nodes;
+    private Map<String, BudgetEntity> nodes;
 
     public UserBudget(String username) {
         this.nodes = new HashMap<>();
-        List<DBTable.DBData> userBudget = new BudgetCollection().getBudgetListData(username);
-        for (DBTable.DBData now : userBudget) {
-            String name = now.object.get("typename").toString();
-            double income = (double) now.object.get("income");
-            double expenditure = (double) now.object.get("expenditure");
-            double nowIncome = (double) now.object.get("now income");
-            double nowExpenditure = (double) now.object.get("now expenditure");
-            BudgetNode node = new BudgetNode(name, income, expenditure, nowIncome, nowExpenditure);
-            nodes.put(node.getName(), node);
+        List<BudgetEntity> userBudget = new BudgetCollection().getBudgetListData(username);
+        for (BudgetEntity now : userBudget) {
+            nodes.put(now.getName(), now);
         }
     }
 
-    public BudgetNode getNode(String typename) {
-        return new BudgetNode(nodes.get(typename));
+    public BudgetEntity getNode(String typename) {
+        return nodes.get(typename);
     }
 
     public boolean nodeExist(String typename) {

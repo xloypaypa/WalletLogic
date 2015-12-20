@@ -4,6 +4,7 @@ import control.logic.manager.MoneyManager;
 import model.db.DetailCollection;
 import model.db.MoneyCollection;
 import model.session.SessionManager;
+import org.bson.Document;
 
 import java.net.Socket;
 import java.util.Date;
@@ -25,7 +26,7 @@ public class MoneyLogic extends LogicManager {
                 return false;
             }
             MoneyCollection moneyCollection = new MoneyCollection();
-            MoneyLogic.this.setSuccessMessage(event, "/getMoney", moneyCollection.getMoneyListData(username));
+            MoneyLogic.this.setSuccessMessage(event, "/getMoney", moneyCollection.getAllDataListData(new Document("username", username)));
             return true;
         });
         this.setFailedMessage(event, "/getMoney");

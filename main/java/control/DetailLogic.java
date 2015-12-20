@@ -39,7 +39,6 @@ public class DetailLogic extends LogicManager {
             List<DetailEntity> dataList = detailCollection.findDetails(username, from, to);
 
             List<DBTable.DBData> all = dataList.stream().map(DetailEntity::getData).collect(Collectors.toCollection(LinkedList::new));
-
             DetailLogic.this.setSuccessMessage(event, "/getDetail", all);
             return true;
         });

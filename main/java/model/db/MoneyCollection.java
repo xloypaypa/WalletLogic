@@ -3,8 +3,10 @@ package model.db;
 import model.entity.MoneyEntity;
 import org.bson.Document;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Created by xlo on 2015/11/4.
@@ -49,8 +51,9 @@ public class MoneyCollection extends WalletCollection {
         this.remove(document);
     }
 
-    public List<DBData> getMoneyListData(String username) {
-        return this.getAllDataListData(new Document().append("username", username));
+    public List<MoneyEntity> getMoneyListData(String username) {
+        List<DBData> listData = this.getAllDataListData(new Document().append("username", username));
+        return listData.stream().map(MoneyEntity::new).collect(Collectors.toCollection(LinkedList::new));
     }
 
 }

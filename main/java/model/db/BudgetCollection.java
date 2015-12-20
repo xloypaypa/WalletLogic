@@ -3,8 +3,10 @@ package model.db;
 import model.entity.BudgetEntity;
 import org.bson.Document;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Created by xlo on 2015/11/5.
@@ -52,7 +54,8 @@ public class BudgetCollection extends WalletCollection {
         this.remove(document);
     }
 
-    public List<DBData> getBudgetListData(String username) {
-        return this.getAllDataListData(new Document().append("username", username));
+    public List<BudgetEntity> getBudgetListData(String username) {
+        List<DBData> listData = this.getAllDataListData(new Document().append("username", username));
+        return listData.stream().map(BudgetEntity::new).collect(Collectors.toCollection(LinkedList::new));
     }
 }

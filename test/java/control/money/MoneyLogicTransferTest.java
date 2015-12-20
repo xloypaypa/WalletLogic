@@ -3,8 +3,8 @@ package control.money;
 import control.LogicTesting;
 import control.tool.MoneyLogicNoSend;
 import control.user.UserLogicLoginTest;
-import model.db.DBTable;
 import model.db.MoneyCollection;
+import model.entity.MoneyEntity;
 import model.session.SessionManager;
 import net.sf.json.JSONObject;
 import org.junit.Test;
@@ -95,11 +95,11 @@ public class MoneyLogicTransferTest extends LogicTesting {
         transferMoney(this.socket, "type1", "type2", 30);
 
         MoneyCollection moneyCollection = new MoneyCollection();
-        for (DBTable.DBData now : moneyCollection.getMoneyListData("username")) {
-            if (now.object.get("typename").equals("type1")) {
-                assertEquals(70.0, (double) now.object.get("value"), 1e-3);
-            } else if (now.object.get("typename").equals("type2")) {
-                assertEquals(130.0, (double) now.object.get("value"), 1e-3);
+        for (MoneyEntity now : moneyCollection.getMoneyListData("username")) {
+            if (now.getName().equals("type1")) {
+                assertEquals(70.0, now.getValue(), 1e-3);
+            } else if (now.getName().equals("type2")) {
+                assertEquals(130.0, now.getValue(), 1e-3);
             } else {
                 fail();
             }

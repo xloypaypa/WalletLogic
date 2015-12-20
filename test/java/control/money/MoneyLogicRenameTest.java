@@ -70,7 +70,7 @@ public class MoneyLogicRenameTest extends LogicTesting {
         renameMoney(this.socket, "type", "name");
 
         MoneyCollection moneyCollection = new MoneyCollection();
-        assertEquals("name", moneyCollection.getMoneyListData("username").get(0).object.get("typename"));
+        assertEquals("name", moneyCollection.getMoneyListData("username").get(0).getName());
     }
 
 }
