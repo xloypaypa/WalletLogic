@@ -8,24 +8,24 @@ import model.db.DBTable;
  */
 public class MoneyEntity extends Entity {
 
-    protected MoneyEntity(DBTable.DBData data) {
+    public MoneyEntity(DBTable.DBData data) {
         super(data);
     }
 
-    public String getMoneyName() {
+    public String getName() {
         return this.getObject().get("typename").toString();
     }
 
     public double getValue() {
-        return Double.valueOf(this.getObject().get("value").toString());
+        return Double.parseDouble(this.getObject().get("value").toString());
     }
 
-    public String setMoneyName(String typename) {
+    public String setName(String typename) {
         return this.getObject().put("typename", typename).toString();
     }
 
-    public double setMoneyValue(double value) {
-        return Double.valueOf(this.getObject().put("value", value).toString());
+    public double setValue(double value) {
+        return Double.parseDouble(this.getObject().put("value", value).toString());
     }
 
 }
