@@ -1,11 +1,14 @@
 package model.db;
 
+import model.entity.DetailEntity;
 import org.bson.BsonArray;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by xlo on 2015/12/17.
@@ -21,23 +24,24 @@ public class DetailCollection extends WalletCollection {
         this.insertData(document);
     }
 
-    public DBData findLastDetail(String username) {
+    public DetailEntity findLastDetail(String username) {
         List<DBData> allDataListData = this.getAllDataListData(new Document("username", username));
         sortData(allDataListData);
         if (allDataListData.size() != 0) {
-            return allDataListData.get(0);
+            return new DetailEntity(allDataListData.get(0));
         } else {
             return null;
         }
     }
 
-    public List<DBData> findDetails(String username, Date from, Date to) {
+    public List<DetailEntity> findDetails(String username, Date from, Date to) {
         Document document = new Document();
         document.append("username", username)
                 .append("date", new Document("$gt", from.getTime()).append("$lt", to.getTime()));
         List<DBData> allDataListData = this.getAllDataListData(document);
         sortData(allDataListData);
-        return allDataListData;
+
+        return allDataListData.stream().map(DetailEntity::new).collect(Collectors.toCollection(LinkedList::new));
     }
 
     private void sortData(List<DBData> allDataListData) {

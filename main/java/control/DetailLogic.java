@@ -3,6 +3,7 @@ package control;
 import model.config.WalletDBConfig;
 import model.db.*;
 import model.db.event.Event;
+import model.entity.DetailEntity;
 import model.session.SessionManager;
 import org.bson.BsonArray;
 import org.bson.BsonDocument;
@@ -12,9 +13,8 @@ import org.bson.BsonValue;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by xlo on 2015/12/18.
@@ -36,8 +36,11 @@ public class DetailLogic extends LogicManager {
             Date to = new Date(Long.valueOf(toTime));
 
             DetailCollection detailCollection = new DetailCollection();
-            List<DBTable.DBData> dataList = detailCollection.findDetails(username, from, to);
-            DetailLogic.this.setSuccessMessage(event, "/getDetail", dataList);
+            List<DetailEntity> dataList = detailCollection.findDetails(username, from, to);
+
+            List<DBTable.DBData> all = dataList.stream().map(DetailEntity::getData).collect(Collectors.toCollection(LinkedList::new));
+
+            DetailLogic.this.setSuccessMessage(event, "/getDetail", all);
             return true;
         });
         this.setFailedMessage(event, "/getDetail");
@@ -55,7 +58,7 @@ public class DetailLogic extends LogicManager {
             }
 
             DetailCollection detailCollection = new DetailCollection();
-            BsonArray bsonArray = (BsonArray) detailCollection.findLastDetail(username).object.get("roll back call");
+            BsonArray bsonArray = detailCollection.findLastDetail(username).getRollbackMessage();
             for (BsonValue value : bsonArray.getValues()) {
                 BsonDocument bsonDocument = (BsonDocument) value;
                 String managerName = bsonDocument.getString("manager").getValue();

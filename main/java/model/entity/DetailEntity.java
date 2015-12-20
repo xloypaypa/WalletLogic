@@ -31,4 +31,8 @@ public class DetailEntity extends Entity {
         return this.getObject().get(key).toString();
     }
 
+    public DBTable.DBData getData() {
+        return this.data;
+    }
+
 }

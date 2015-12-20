@@ -42,7 +42,7 @@ public class DetailCollectionTest extends DBTesting {
         detailCollection.addDetail("username", new Date(175), "event", new BsonArray(), new Document("message", "abc"));
         detailCollection.submit();
 
-        assertEquals("abc", detailCollection.findDetails("username", new Date(150), new Date(200)).get(0).object.get("message"));
+        assertEquals("abc", detailCollection.findDetails("username", new Date(150), new Date(200)).get(0).getItem("message"));
     }
 
 }
