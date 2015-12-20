@@ -1,6 +1,5 @@
 package control.logic.manager;
 
-import control.logic.userDataBuilder.UserRollBackBuilder;
 import control.logic.userDataFormat.BudgetNode;
 import control.logic.userDataFormat.UserIO;
 import model.db.BudgetCollection;
@@ -26,7 +25,6 @@ public class UseMoneyManager extends Manager {
             return false;
         }
         MoneyCollection moneyCollection = new MoneyCollection();
-        UserRollBackBuilder userRollBackBuilder = new UserRollBackBuilder();
         try {
             Collection<BudgetNode> budgetNodes = userIO.ifIncome(budgetName, Double.valueOf(value));
             for (BudgetNode now : budgetNodes) {
@@ -40,8 +38,7 @@ public class UseMoneyManager extends Manager {
 
             document.append("moneyName", moneyName)
                     .append("budgetName", budgetName)
-                    .append("value", value)
-                    .append("roll back call", userRollBackBuilder.getRollBackArray());
+                    .append("value", value);
             return true;
         } catch (ReflectiveOperationException e) {
             return false;
@@ -54,7 +51,6 @@ public class UseMoneyManager extends Manager {
             return false;
         }
         MoneyCollection moneyCollection = new MoneyCollection();
-        UserRollBackBuilder userRollBackBuilder = new UserRollBackBuilder();
         try {
             Collection<BudgetNode> budgetNodes = userIO.ifExpenditure(budgetName, Double.valueOf(value));
             for (BudgetNode now : budgetNodes) {
@@ -67,8 +63,7 @@ public class UseMoneyManager extends Manager {
             putMoneyValue(moneyName, (data.getValue() - Double.valueOf(value)) + "");
             document.append("moneyName", moneyName)
                     .append("budgetName", budgetName)
-                    .append("value", value)
-                    .append("roll back call", userRollBackBuilder.getRollBackArray());
+                    .append("value", value);
             return true;
         } catch (ReflectiveOperationException e) {
             return false;
@@ -76,14 +71,12 @@ public class UseMoneyManager extends Manager {
     }
 
     public void putMoneyValue(String moneyName, String value) {
-        UserRollBackBuilder userRollBackBuilder = new UserRollBackBuilder();
         MoneyEntity money = new MoneyCollection().getMoney(username, moneyName);
         userRollBackBuilder.putMoneyValue(moneyName, money.getValue() + "");
         money.setValue(Double.valueOf(value));
     }
 
     public void putBudgetValue(String budgetName, String nowIncome, String nowExpenditure) {
-        UserRollBackBuilder userRollBackBuilder = new UserRollBackBuilder();
         BudgetEntity data = new BudgetCollection().getBudget(username, budgetName);
         userRollBackBuilder.putBudgetValue(budgetName, data.getNowIncome() + "", data.getNowExpenditure() + "");
         data.setNowIncome(Double.valueOf(nowIncome));

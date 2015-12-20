@@ -39,7 +39,8 @@ public class BudgetLogic extends LogicManager {
             String username = SessionManager.getSessionManager().getUsername(socket);
             BudgetManager budgetManager = new BudgetManager(username);
             if (username != null && budgetManager.createBudget(typename, income, expenditure, "0", "0")) {
-                new DetailCollection().addDetail(username, new Date(), "createBudget", budgetManager.getUserRollBackMessage());
+                new DetailCollection().addDetail(username, new Date(), "createBudget",
+                        budgetManager.getUserRollBackMessage(), budgetManager.getDetailMessage());
                 return true;
             } else {
                 return false;
@@ -56,7 +57,8 @@ public class BudgetLogic extends LogicManager {
             String username = SessionManager.getSessionManager().getUsername(socket);
             BudgetManager budgetManager = new BudgetManager(username);
             if (username != null && budgetManager.removeBudget(typename)) {
-                new DetailCollection().addDetail(username, new Date(), "removeBudget", budgetManager.getUserRollBackMessage());
+                new DetailCollection().addDetail(username, new Date(), "removeBudget",
+                        budgetManager.getUserRollBackMessage(), budgetManager.getDetailMessage());
                 return true;
             } else {
                 return false;
@@ -73,7 +75,8 @@ public class BudgetLogic extends LogicManager {
             String username = SessionManager.getSessionManager().getUsername(socket);
             BudgetManager budgetManager = new BudgetManager(username);
             if (username != null && budgetManager.changeBudget(typename, newName, income, expenditure)) {
-                new DetailCollection().addDetail(username, new Date(), "changeBudget", budgetManager.getUserRollBackMessage());
+                new DetailCollection().addDetail(username, new Date(), "changeBudget",
+                        budgetManager.getUserRollBackMessage(), budgetManager.getDetailMessage());
                 return true;
             } else {
                 return false;

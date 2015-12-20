@@ -1,6 +1,5 @@
 package control.logic.manager;
 
-import control.logic.userDataBuilder.UserRollBackBuilder;
 import control.logic.userDataFormat.UserEdge;
 import model.db.BudgetCollection;
 import model.db.BudgetEdgeCollection;
@@ -35,12 +34,10 @@ public class EdgeManager extends Manager {
         }
         budgetEdgeCollection.addEdge(username, fromType, toType, script);
 
-        UserRollBackBuilder userRollBackBuilder = new UserRollBackBuilder();
         userRollBackBuilder.addEdge(fromType, toType);
         document.append("fromBudget", fromType)
                 .append("toBudget", toType)
-                .append("script", script)
-                .append("roll back call", userRollBackBuilder.getRollBackArray());
+                .append("script", script);
         return true;
     }
 
@@ -52,11 +49,9 @@ public class EdgeManager extends Manager {
         }
         budgetEdgeCollection.remove(username, fromType, toType);
 
-        UserRollBackBuilder userRollBackBuilder = new UserRollBackBuilder();
         userRollBackBuilder.removeEdge(fromType, toType, data.getScript());
         document.append("fromBudget", fromType)
-                .append("toBudget", toType)
-                .append("roll back call", userRollBackBuilder.getRollBackArray());
+                .append("toBudget", toType);
         return true;
     }
 
@@ -66,7 +61,6 @@ public class EdgeManager extends Manager {
         if (edge == null) {
             return false;
         }
-        UserRollBackBuilder userRollBackBuilder = new UserRollBackBuilder();
         userRollBackBuilder.updateEdge(edge.getFrom(), edge.getTo(), newFrom, newTo, edge.getScript());
         edge.setFrom(newFrom);
         edge.setTo(newTo);
@@ -74,8 +68,7 @@ public class EdgeManager extends Manager {
 
         document.append("fromBudget", fromType)
                 .append("toBudget", toType)
-                .append("script", script)
-                .append("roll back call", userRollBackBuilder.getRollBackArray());
+                .append("script", script);
         return true;
     }
 }

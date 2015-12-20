@@ -28,7 +28,8 @@ public class UseMoneyLogic extends LogicManager {
             String username = SessionManager.getSessionManager().getUsername(socket);
             UseMoneyManager useMoneyManager = new UseMoneyManager(username);
             if(username != null && useMoneyManager.income(moneyName, budgetName, value)) {
-                new DetailCollection().addDetail(username, new Date(), "income", useMoneyManager.getUserRollBackMessage());
+                new DetailCollection().addDetail(username, new Date(), "income",
+                        useMoneyManager.getUserRollBackMessage(), useMoneyManager.getDetailMessage());
                 return true;
             } else {
                 return false;
@@ -46,7 +47,8 @@ public class UseMoneyLogic extends LogicManager {
             String username = SessionManager.getSessionManager().getUsername(socket);
             UseMoneyManager useMoneyManager = new UseMoneyManager(username);
             if (username != null && useMoneyManager.expenditure(moneyName, budgetName, value)) {
-                new DetailCollection().addDetail(username, new Date(), "expenditure", useMoneyManager.getUserRollBackMessage());
+                new DetailCollection().addDetail(username, new Date(), "expenditure",
+                        useMoneyManager.getUserRollBackMessage(), useMoneyManager.getDetailMessage());
                 return true;
             } else {
                 return false;

@@ -1,5 +1,6 @@
 package model.db;
 
+import org.bson.BsonArray;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
@@ -12,9 +13,10 @@ import java.util.List;
  */
 public class DetailCollection extends WalletCollection {
 
-    public void addDetail(String username, Date date, String event, Document document) {
+    public void addDetail(String username, Date date, String event, BsonArray rollBackMessage, Document document) {
         document.append("username", username)
                 .append("date", date.getTime())
+                .append("roll back call", rollBackMessage)
                 .append("event", event);
         this.insertData(document);
     }

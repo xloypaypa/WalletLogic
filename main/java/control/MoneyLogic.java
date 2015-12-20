@@ -37,7 +37,8 @@ public class MoneyLogic extends LogicManager {
             String username = SessionManager.getSessionManager().getUsername(socket);
             MoneyManager moneyManager = new MoneyManager(username);
             if(username != null && moneyManager.createMoney(typename, value)) {
-                new DetailCollection().addDetail(username, new Date(), "createMoney", moneyManager.getUserRollBackMessage());
+                new DetailCollection().addDetail(username, new Date(), "createMoney",
+                        moneyManager.getUserRollBackMessage(), moneyManager.getDetailMessage());
                 return true;
             } else {
                 return false;
@@ -52,7 +53,8 @@ public class MoneyLogic extends LogicManager {
             String username = SessionManager.getSessionManager().getUsername(socket);
             MoneyManager moneyManager = new MoneyManager(username);
             if (username != null && moneyManager.removeMoney(typename)) {
-                new DetailCollection().addDetail(username, new Date(), "removeMoney", moneyManager.getUserRollBackMessage());
+                new DetailCollection().addDetail(username, new Date(), "removeMoney",
+                        moneyManager.getUserRollBackMessage(), moneyManager.getDetailMessage());
                 return true;
             } else {
                 return false;
@@ -67,7 +69,8 @@ public class MoneyLogic extends LogicManager {
             String username = SessionManager.getSessionManager().getUsername(socket);
             MoneyManager moneyManager = new MoneyManager(username);
             if (username != null && moneyManager.transferMoney(from, to, value)) {
-                new DetailCollection().addDetail(username, new Date(), "transferMoney", moneyManager.getUserRollBackMessage());
+                new DetailCollection().addDetail(username, new Date(), "transferMoney",
+                        moneyManager.getUserRollBackMessage(), moneyManager.getDetailMessage());
                 return true;
             } else {
                 return false;
@@ -82,7 +85,8 @@ public class MoneyLogic extends LogicManager {
             String username = SessionManager.getSessionManager().getUsername(socket);
             MoneyManager moneyManager = new MoneyManager(username);
             if (username != null && moneyManager.renameMoney(typename, newName)) {
-                new DetailCollection().addDetail(username, new Date(), "renameMoney", moneyManager.getUserRollBackMessage());
+                new DetailCollection().addDetail(username, new Date(), "renameMoney",
+                        moneyManager.getUserRollBackMessage(), moneyManager.getDetailMessage());
                 return true;
             } else {
                 return false;

@@ -1,6 +1,5 @@
 package control.logic.manager;
 
-import control.logic.userDataBuilder.UserRollBackBuilder;
 import model.db.MoneyCollection;
 import model.entity.MoneyEntity;
 
@@ -21,11 +20,9 @@ public class MoneyManager extends Manager {
         }
         moneyCollection.createMoney(username, typename, Double.valueOf(value));
 
-        UserRollBackBuilder userRollBackBuilder = new UserRollBackBuilder();
         userRollBackBuilder.createMoney(typename);
         document.append("moneyType", typename)
-                .append("value", value)
-                .append("roll back call", userRollBackBuilder.getRollBackArray());
+                .append("value", value);
 
         return true;
     }
@@ -38,11 +35,9 @@ public class MoneyManager extends Manager {
         }
         money.setName(newName);
 
-        UserRollBackBuilder userRollBackBuilder = new UserRollBackBuilder();
         userRollBackBuilder.renameMoney(typename, newName);
         document.append("moneyType", typename)
-                .append("value", money.getValue() + "")
-                .append("roll back call", userRollBackBuilder.getRollBackArray());
+                .append("value", money.getValue() + "");
         return true;
     }
 
@@ -54,11 +49,9 @@ public class MoneyManager extends Manager {
         }
         moneyCollection.removeMoney(username, typename);
 
-        UserRollBackBuilder userRollBackBuilder = new UserRollBackBuilder();
         userRollBackBuilder.removeMoney(typename, moneyData.getValue() + "");
         document.append("moneyType", typename)
-                .append("value", 0)
-                .append("roll back call", userRollBackBuilder.getRollBackArray());
+                .append("value", 0);
         return true;
     }
 
@@ -78,13 +71,11 @@ public class MoneyManager extends Manager {
         fromType.setValue(fromValue - need);
         aimType.setValue(aimValue + need);
 
-        UserRollBackBuilder userRollBackBuilder = new UserRollBackBuilder();
         userRollBackBuilder.transferMoney(from, to, value);
         document.append("fromMoneyType", from)
                 .append("toMoneyType", to)
                 .append("fromMoneyValue", fromType.getValue() + "")
-                .append("toMoneyValue", aimType.getValue() + "")
-                .append("roll back call", userRollBackBuilder.getRollBackArray());
+                .append("toMoneyValue", aimType.getValue() + "");
         return true;
     }
 

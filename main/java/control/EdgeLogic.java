@@ -43,7 +43,8 @@ public class EdgeLogic extends LogicManager {
             String username = SessionManager.getSessionManager().getUsername(socket);
             EdgeManager edgeManager = new EdgeManager(username);
             if (username != null && edgeManager.addEdge(fromType, toType, script)) {
-                new DetailCollection().addDetail(username, new Date(), "addEdge", edgeManager.getUserRollBackMessage());
+                new DetailCollection().addDetail(username, new Date(), "addEdge",
+                        edgeManager.getUserRollBackMessage(), edgeManager.getDetailMessage());
                 return true;
             } else {
                 return false;
@@ -58,7 +59,8 @@ public class EdgeLogic extends LogicManager {
             String username = SessionManager.getSessionManager().getUsername(socket);
             EdgeManager edgeManager = new EdgeManager(username);
             if (username != null && edgeManager.removeEdge(fromType, toType)) {
-                new DetailCollection().addDetail(username, new Date(), "removeEdge", edgeManager.getUserRollBackMessage());
+                new DetailCollection().addDetail(username, new Date(), "removeEdge",
+                        edgeManager.getUserRollBackMessage(), edgeManager.getDetailMessage());
                 return true;
             } else {
                 return false;
@@ -73,7 +75,8 @@ public class EdgeLogic extends LogicManager {
             String username = SessionManager.getSessionManager().getUsername(socket);
             EdgeManager edgeManager = new EdgeManager(username);
             if (username != null && edgeManager.updateEdge(fromType, toType, fromType, toType, script)) {
-                new DetailCollection().addDetail(username, new Date(), "updateEdge", edgeManager.getUserRollBackMessage());
+                new DetailCollection().addDetail(username, new Date(), "updateEdge",
+                        edgeManager.getUserRollBackMessage(), edgeManager.getDetailMessage());
                 return true;
             } else {
                 return false;
