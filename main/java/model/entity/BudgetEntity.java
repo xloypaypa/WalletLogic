@@ -43,7 +43,7 @@ public class BudgetEntity extends Entity {
         return Double.parseDouble(this.getObject().put("expenditure", expenditure).toString());
     }
 
-    public double setNoeIncome(double nowIncome) {
+    public double setNowIncome(double nowIncome) {
         return Double.parseDouble(this.getObject().put("now income", nowIncome).toString());
     }
 

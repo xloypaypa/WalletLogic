@@ -1,5 +1,6 @@
 package model.db;
 
+import model.entity.EdgeEntity;
 import org.bson.Document;
 
 import java.util.List;
@@ -21,27 +22,27 @@ public class BudgetEdgeCollection extends WalletCollection {
         this.insert(document);
     }
 
-    public DBData getEdge(String username, String from, String to) {
+    public EdgeEntity getEdge(String username, String from, String to) {
         this.lockCollection();
         List<Map<String, Object>> list = this.collection.find(new Document("username", username).append("from", from).append("to", to));
         if (list.size() == 0) {
             return null;
         } else {
-            return addDocumentToUsing(list.get(0));
+            return new EdgeEntity(addDocumentToUsing(list.get(0)));
         }
     }
 
-    public DBData getEdgeData(String username, String from, String to) {
+    public EdgeEntity getEdgeData(String username, String from, String to) {
         this.lockCollection();
         List<Map<String, Object>> list = this.collection.find(new Document("username", username).append("from", from).append("to", to));
         DBData ans;
         if (list.size() == 0) {
-            ans = null;
+            return null;
         } else {
             ans = getDocumentNotUsing(list.get(0));
         }
         this.unlockCollection();
-        return ans;
+        return new EdgeEntity(ans);
     }
 
     public void remove(String username, String from, String to) {

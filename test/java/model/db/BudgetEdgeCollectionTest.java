@@ -35,10 +35,10 @@ public class BudgetEdgeCollectionTest extends DBTesting {
         budgetEdgeCollection.addEdge("username", "from", "to", "");
         budgetEdgeCollection.submit();
 
-        budgetEdgeCollection.getEdge("username", "from", "to").object.put("script", "1");
+        budgetEdgeCollection.getEdge("username", "from", "to").setScript("1");
         budgetEdgeCollection.submit();
 
-        assertEquals("1", budgetEdgeCollection.getEdgeData("username", "from", "to").object.get("script"));
+        assertEquals("1", budgetEdgeCollection.getEdgeData("username", "from", "to").getScript());
     }
 
     @Test
@@ -48,7 +48,7 @@ public class BudgetEdgeCollectionTest extends DBTesting {
         budgetEdgeCollection.addEdge("user2", "from", "to", "2");
         budgetEdgeCollection.submit();
 
-        assertEquals("2", budgetEdgeCollection.getEdgeData("user2", "from", "to").object.get("script"));
+        assertEquals("2", budgetEdgeCollection.getEdgeData("user2", "from", "to").getScript());
     }
 
     @Test

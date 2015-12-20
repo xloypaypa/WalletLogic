@@ -1,8 +1,8 @@
 package control.money;
 
 import control.LogicTesting;
-import model.db.DBTable;
 import model.db.MoneyCollection;
+import model.entity.MoneyEntity;
 import org.bson.Document;
 import org.junit.Test;
 
@@ -55,8 +55,8 @@ public class MoneyRollBackTest extends LogicTesting {
         transferMoney(this.socket, "a", "b", 30);
         rollBack(this.socket);
 
-        DBTable.DBData data = new MoneyCollection().getMoneyData("username", "a");
-        assertEquals(100, (Double) data.object.get("value"), 1e-3);
+        MoneyEntity data = new MoneyCollection().getMoneyData("username", "a");
+        assertEquals(100, data.getValue(), 1e-3);
     }
 
 }

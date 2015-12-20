@@ -80,7 +80,7 @@ public class EdgeLogicUpdateTest extends LogicTesting {
         updateEdge(this.socket, "a", "b", "d");
 
         BudgetEdgeCollection budgetEdgeCollection = new BudgetEdgeCollection();
-        assertEquals("d", budgetEdgeCollection.getEdgeData("username", "a", "b").object.get("script"));
+        assertEquals("d", budgetEdgeCollection.getEdgeData("username", "a", "b").getScript());
     }
 
 }

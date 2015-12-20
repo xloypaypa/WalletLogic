@@ -49,14 +49,14 @@ public class UseMoneyLogicIncome extends LogicTesting {
     public void should_budget_value_equal_10_when_income_in_b_10_except_f_and_e() {
         income(this.socket, "a", "b", "10");
         BudgetCollection budgetCollection = new BudgetCollection();
-        assertEquals(10, (double) budgetCollection.getBudgetData("username", "d").object.get("now income"), 1e-3);
+        assertEquals(10, budgetCollection.getBudgetData("username", "d").getNowIncome(), 1e-3);
     }
 
     @Test
     public void should_money_value_equal_10_when_income_in_b_10() {
         income(this.socket, "a", "b", "10");
         MoneyCollection moneyCollection = new MoneyCollection();
-        assertEquals(10, (double) moneyCollection.getMoneyData("username", "a").object.get("value"), 1e-3);
+        assertEquals(10, moneyCollection.getMoneyData("username", "a").getValue(), 1e-3);
     }
 
     @Test
@@ -81,7 +81,7 @@ public class UseMoneyLogicIncome extends LogicTesting {
     public void should_data_not_change_when_income_fail() throws Exception {
         income(this.socket, "x", "b", "10");
         BudgetCollection budgetCollection = new BudgetCollection();
-        assertEquals(0, (double) budgetCollection.getBudgetData("username", "d").object.get("now income"), 1e-3);
+        assertEquals(0, budgetCollection.getBudgetData("username", "d").getNowIncome(), 1e-3);
     }
 
 }

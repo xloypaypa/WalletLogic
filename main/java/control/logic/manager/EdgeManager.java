@@ -4,7 +4,8 @@ import control.logic.userDataBuilder.UserRollBackBuilder;
 import control.logic.userDataFormat.UserEdge;
 import model.db.BudgetCollection;
 import model.db.BudgetEdgeCollection;
-import model.db.DBTable;
+import model.entity.BudgetEntity;
+import model.entity.EdgeEntity;
 
 /**
  * Created by xlo on 2015/12/18.
@@ -18,8 +19,8 @@ public class EdgeManager extends Manager {
 
     public boolean addEdge(String fromType, String toType, String script) {
         BudgetCollection budgetCollection = new BudgetCollection();
-        DBTable.DBData from = budgetCollection.getBudgetData(username, fromType);
-        DBTable.DBData to = budgetCollection.getBudgetData(username, toType);
+        BudgetEntity from = budgetCollection.getBudgetData(username, fromType);
+        BudgetEntity to = budgetCollection.getBudgetData(username, toType);
         if (from == null || to == null) {
             return false;
         }
@@ -45,14 +46,14 @@ public class EdgeManager extends Manager {
 
     public boolean removeEdge(String fromType, String toType) {
         BudgetEdgeCollection budgetEdgeCollection = new BudgetEdgeCollection();
-        DBTable.DBData data = budgetEdgeCollection.getEdgeData(username, fromType, toType);
+        EdgeEntity data = budgetEdgeCollection.getEdgeData(username, fromType, toType);
         if (data == null) {
             return false;
         }
         budgetEdgeCollection.remove(username, fromType, toType);
 
         UserRollBackBuilder userRollBackBuilder = new UserRollBackBuilder();
-        userRollBackBuilder.removeEdge(fromType, toType, data.object.get("script").toString());
+        userRollBackBuilder.removeEdge(fromType, toType, data.getScript());
         document.append("fromBudget", fromType)
                 .append("toBudget", toType)
                 .append("roll back call", userRollBackBuilder.getRollBackArray());
@@ -61,15 +62,15 @@ public class EdgeManager extends Manager {
 
     public boolean updateEdge(String fromType, String toType, String newFrom, String newTo, String script) {
         BudgetEdgeCollection budgetEdgeCollection = new BudgetEdgeCollection();
-        DBTable.DBData edge = budgetEdgeCollection.getEdge(username, fromType, toType);
+        EdgeEntity edge = budgetEdgeCollection.getEdge(username, fromType, toType);
         if (edge == null) {
             return false;
         }
         UserRollBackBuilder userRollBackBuilder = new UserRollBackBuilder();
-        userRollBackBuilder.updateEdge(edge.object.get("from").toString(), edge.object.get("to").toString(), newFrom, newTo, edge.object.get("script").toString());
-        edge.object.put("from", newFrom);
-        edge.object.put("to", newTo);
-        edge.object.put("script", script);
+        userRollBackBuilder.updateEdge(edge.getFrom(), edge.getTo(), newFrom, newTo, edge.getScript());
+        edge.setFrom(newFrom);
+        edge.setTo(newTo);
+        edge.setScript(script);
 
         document.append("fromBudget", fromType)
                 .append("toBudget", toType)

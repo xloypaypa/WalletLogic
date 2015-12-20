@@ -1,7 +1,7 @@
 package model.config;
 
-import model.db.DBTable;
 import model.db.UserCollection;
+import model.entity.UserEntity;
 import model.tool.PasswordEncoder;
 
 /**
@@ -29,11 +29,11 @@ public class UserAccessConfig implements ConfigInterface {
             return false;
         }
         UserCollection userCollection = new UserCollection();
-        DBTable.DBData user = userCollection.getUserData(username);
+        UserEntity user = userCollection.getUserData(username);
         if (user == null) {
             return false;
         }
-        String ans = PasswordEncoder.encode(user.object.get("password").toString() + sessionID);
+        String ans = PasswordEncoder.encode(user.getPassword() + sessionID);
         return password.equals(ans);
     }
 }

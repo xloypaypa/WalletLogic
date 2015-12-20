@@ -34,10 +34,10 @@ public class UserCollectionTest extends DBTesting {
         userCollection.addUser("test", "pass");
         userCollection.submit();
 
-        userCollection.getUser("test").object.put("password", "password");
+        userCollection.getUser("test").setPassword("password");
         userCollection.submit();
 
-        assertEquals("password", userCollection.getUserData("test").object.get("password"));
+        assertEquals("password", userCollection.getUserData("test").getPassword());
     }
 
 }

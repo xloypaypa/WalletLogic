@@ -4,7 +4,8 @@ import control.LogicTesting;
 import control.tool.BudgetLogicNoSend;
 import model.db.BudgetCollection;
 import model.db.BudgetEdgeCollection;
-import model.db.DBTable;
+import model.entity.BudgetEntity;
+import model.entity.EdgeEntity;
 import model.session.SessionManager;
 import net.sf.json.JSONObject;
 import org.junit.Test;
@@ -71,11 +72,11 @@ public class BudgetLogicChange extends LogicTesting {
         changeBudget(this.socket, "a", "c", "2", "3");
 
         BudgetCollection budgetCollection = new BudgetCollection();
-        DBTable.DBData dbData = budgetCollection.getBudgetData("username", "c");
+        BudgetEntity dbData = budgetCollection.getBudgetData("username", "c");
         assertNotNull(dbData);
-        assertEquals("c", dbData.object.get("typename"));
-        assertEquals(2.0, (double) dbData.object.get("income"), 1e-3);
-        assertEquals(3.0, (double) dbData.object.get("expenditure"), 1e-3);
+        assertEquals("c", dbData.getName());
+        assertEquals(2.0, dbData.getIncome(), 1e-3);
+        assertEquals(3.0, dbData.getExpenditure(), 1e-3);
     }
 
     @Test
@@ -88,7 +89,7 @@ public class BudgetLogicChange extends LogicTesting {
         changeBudget(this.socket, "a", "c", "2", "3");
 
         BudgetEdgeCollection edgeCollection = new BudgetEdgeCollection();
-        DBTable.DBData dbData = edgeCollection.getEdgeData("username", "c", "b");
+        EdgeEntity dbData = edgeCollection.getEdgeData("username", "c", "b");
         assertNotNull(dbData);
     }
 

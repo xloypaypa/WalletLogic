@@ -1,5 +1,6 @@
 package model.db;
 
+import model.entity.BudgetEntity;
 import org.bson.Document;
 
 import java.util.List;
@@ -23,16 +24,16 @@ public class BudgetCollection extends WalletCollection {
         this.insert(document);
     }
 
-    public DBData getBudget(String username, String typeName) {
+    public BudgetEntity getBudget(String username, String typeName) {
         this.lockCollection();
         List<Map<String, Object>> iterator = this.collection.find(new Document().append("username", username).append("typename", typeName));
         if (iterator.size() == 0) {
             return null;
         }
-        return this.addDocumentToUsing(iterator.get(0));
+        return new BudgetEntity(this.addDocumentToUsing(iterator.get(0)));
     }
 
-    public DBData getBudgetData(String username, String typeName) {
+    public BudgetEntity getBudgetData(String username, String typeName) {
         this.lockCollection();
         List<Map<String, Object>> iterator = this.collection.find(new Document().append("username", username).append("typename", typeName));
         if (iterator.size() == 0) {
@@ -40,7 +41,7 @@ public class BudgetCollection extends WalletCollection {
         }
         DBData dbData = this.getDocumentNotUsing(iterator.get(0));
         this.unlockCollection();
-        return dbData;
+        return new BudgetEntity(dbData);
     }
 
     public void removeBudget(String username, String typename) {

@@ -34,10 +34,10 @@ public class BudgetCollectionTest extends DBTesting {
         budgetCollection.addBudgetType("username", "type", 100, 100, (double) 0, (double) 0);
         budgetCollection.submit();
 
-        budgetCollection.getBudget("username", "type").object.put("income", 1.0);
+        budgetCollection.getBudget("username", "type").setIncome(1);
         budgetCollection.submit();
 
-        assertEquals(1.0, (double)budgetCollection.getBudgetData("username", "type").object.get("income"), 1e-3);
+        assertEquals(1.0, budgetCollection.getBudgetData("username", "type").getIncome(), 1e-3);
     }
 
     @Test
@@ -47,7 +47,7 @@ public class BudgetCollectionTest extends DBTesting {
         budgetCollection.addBudgetType("user2", "type", 101, 101, (double) 0, (double) 0);
         budgetCollection.submit();
 
-        assertEquals(101.0, (double) budgetCollection.getBudgetData("user2", "type").object.get("income"), 1e-3);
+        assertEquals(101.0, budgetCollection.getBudgetData("user2", "type").getIncome(), 1e-3);
     }
 
     @Test

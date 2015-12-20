@@ -34,10 +34,10 @@ public class MoneyCollectionTest extends DBTesting {
         moneyCollection.createMoney("username", "type", 100);
         moneyCollection.submit();
 
-        moneyCollection.getMoney("username", "type").object.put("value", 101.0);
+        moneyCollection.getMoney("username", "type").setValue(101.0);
         moneyCollection.submit();
 
-        assertEquals(101.0, (double) moneyCollection.getMoneyData("username", "type").object.get("value"), 1e-3);
+        assertEquals(101.0, moneyCollection.getMoneyData("username", "type").getValue(), 1e-3);
     }
 
     @Test
@@ -47,7 +47,7 @@ public class MoneyCollectionTest extends DBTesting {
         moneyCollection.createMoney("user2", "type", 101);
         moneyCollection.submit();
 
-        assertEquals(101.0, (double)moneyCollection.getMoneyData("user2", "type").object.get("value"), 1e-3);
+        assertEquals(101.0, moneyCollection.getMoneyData("user2", "type").getValue(), 1e-3);
     }
 
     @Test

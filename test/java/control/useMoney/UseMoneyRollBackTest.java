@@ -42,7 +42,7 @@ public class UseMoneyRollBackTest extends LogicTesting {
         rollBack(this.socket);
 
         MoneyCollection moneyCollection = new MoneyCollection();
-        assertEquals(100, (double) moneyCollection.getMoneyData("username", "a").object.get("value"), 1e-3);
+        assertEquals(100, moneyCollection.getMoneyData("username", "a").getValue(), 1e-3);
     }
 
     @Test
@@ -51,6 +51,6 @@ public class UseMoneyRollBackTest extends LogicTesting {
         rollBack(this.socket);
 
         BudgetCollection budgetCollection = new BudgetCollection();
-        assertEquals(0, (double) budgetCollection.getBudgetData("username", "d").object.get("now income"), 1e-3);
+        assertEquals(0, budgetCollection.getBudgetData("username", "d").getNowIncome(), 1e-3);
     }
 }

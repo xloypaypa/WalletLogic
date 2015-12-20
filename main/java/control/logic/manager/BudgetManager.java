@@ -4,6 +4,7 @@ import control.logic.userDataBuilder.UserRollBackBuilder;
 import model.db.BudgetCollection;
 import model.db.BudgetEdgeCollection;
 import model.db.DBTable;
+import model.entity.BudgetEntity;
 import org.bson.Document;
 
 import java.util.List;
@@ -36,14 +37,14 @@ public class BudgetManager extends Manager {
 
     public boolean removeBudget(String typename) {
         BudgetCollection budgetCollection = new BudgetCollection();
-        DBTable.DBData budgetData = budgetCollection.getBudgetData(username, typename);
+        BudgetEntity budgetData = budgetCollection.getBudgetData(username, typename);
         if (budgetData == null) {
             return false;
         }
         UserRollBackBuilder userRollBackBuilder = new UserRollBackBuilder();
         budgetCollection.removeBudget(username, typename);
-        userRollBackBuilder.removeBudget(typename, budgetData.object.get("income").toString(), budgetData.object.get("expenditure").toString(),
-                budgetData.object.get("now income").toString(), budgetData.object.get("now expenditure").toString());
+        userRollBackBuilder.removeBudget(typename, budgetData.getIncome() + "", budgetData.getExpenditure() + "",
+                budgetData.getNowIncome() + "", budgetData.getNowExpenditure() + "");
 
         BudgetEdgeCollection edgeCollection = new BudgetEdgeCollection();
         List<DBTable.DBData> relativeEdge;
@@ -66,15 +67,15 @@ public class BudgetManager extends Manager {
 
     public boolean changeBudget(String typename, String newName, String income, String expenditure) {
         BudgetCollection budgetCollection = new BudgetCollection();
-        DBTable.DBData budget = budgetCollection.getBudget(username, typename);
+        BudgetEntity budget = budgetCollection.getBudget(username, typename);
         if (budget == null) {
             return false;
         }
         UserRollBackBuilder userRollBackBuilder = new UserRollBackBuilder();
-        userRollBackBuilder.changeBudget(typename, budget.object.get("income").toString(), budget.object.get("expenditure").toString(), newName);
-        budget.object.put("typename", newName);
-        budget.object.put("income", Double.valueOf(income));
-        budget.object.put("expenditure", Double.valueOf(expenditure));
+        userRollBackBuilder.changeBudget(typename, budget.getIncome() + "", budget.getExpenditure() + "", newName);
+        budget.setName(newName);
+        budget.setIncome(Double.valueOf(income));
+        budget.setExpenditure(Double.valueOf(expenditure));
 
         BudgetEdgeCollection edgeCollection = new BudgetEdgeCollection();
         List<DBTable.DBData> relativeEdge;

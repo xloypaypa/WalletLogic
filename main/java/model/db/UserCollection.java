@@ -1,5 +1,6 @@
 package model.db;
 
+import model.entity.UserEntity;
 import org.bson.Document;
 
 import java.util.List;
@@ -19,23 +20,23 @@ public class UserCollection extends WalletCollection {
         this.insert(document);
     }
 
-    public DBData getUser(String username) {
+    public UserEntity getUser(String username) {
         this.lockCollection();
         List<Map<String, Object>> iterator = this.collection.find(new Document().append("username", username));
         if (iterator.size() == 0) {
             return null;
         }
-        return this.addDocumentToUsing(iterator.get(0));
+        return new UserEntity(this.addDocumentToUsing(iterator.get(0)));
     }
 
-    public DBData getUserData(String username) {
+    public UserEntity getUserData(String username) {
         this.lockCollection();
         List<Map<String, Object>> iterator = this.collection.find(new Document().append("username", username));
         this.unlockCollection();
         if (iterator.size() == 0) {
             return null;
         }
-        return this.getDocumentNotUsing(iterator.get(0));
+        return new UserEntity(this.getDocumentNotUsing(iterator.get(0)));
     }
 
 }
