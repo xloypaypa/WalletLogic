@@ -108,4 +108,14 @@
             <data>value</data>
         </method>
     </solver>
+
+    <solver name="get money detail" url="/getMoneyDetail" manager="control.DetailLogic">
+        <method name="getMoneyDetail">
+            <data>fromTime</data>
+            <data>toTime</data>
+        </method>
+    </solver>
+    <solver name="roll back" url="/rollBack" manager="control.DetailLogic">
+        <method name="rollBack"/>
+    </solver>
 </command>
