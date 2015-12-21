@@ -20,24 +20,12 @@ public class UseMoneyManager extends Manager {
 
     public boolean income(String moneyName, String budgetName, String value) {
         UserIO userIO = new UserIO(username);
-        if (!userIO.getUserBudget().nodeExist(budgetName)) {
-            return false;
-        }
+        if (!checkBudgetExist(budgetName, userIO)) return false;
         MoneyCollection moneyCollection = new MoneyCollection();
         try {
             Collection<BudgetEntity> budgetNodes = userIO.ifIncome(budgetName, Double.valueOf(value));
-            for (BudgetEntity now : budgetNodes) {
-                BudgetEntity data = new BudgetCollection().getBudgetData(username, now.getName());
-                userRollBackBuilder.putBudgetValue(now.getName(), data.getNowIncome() + "", data.getNowExpenditure() + "");
-                putBudgetValue(now.getName(), now.getNowIncome() + "", now.getNowExpenditure() + "");
-            }
-            MoneyEntity data = moneyCollection.getMoneyData(username, moneyName);
-            userRollBackBuilder.putMoneyValue(moneyName, data.getValue() + "");
-            putMoneyValue(moneyName, (data.getValue() + Double.valueOf(value)) + "");
-
-            document.append("moneyType", moneyName)
-                    .append("budgetType", budgetName)
-                    .append("value", (data.getValue() + Double.valueOf(value)) + "");
+            updateBudget(budgetNodes);
+            updateMoney(moneyName, budgetName, moneyCollection, Double.valueOf(value));
             return true;
         } catch (ReflectiveOperationException e) {
             return false;
@@ -46,27 +34,25 @@ public class UseMoneyManager extends Manager {
 
     public boolean expenditure(String moneyName, String budgetName, String value) {
         UserIO userIO = new UserIO(username);
-        if (!userIO.getUserBudget().nodeExist(budgetName)) {
-            return false;
-        }
+        if (!checkBudgetExist(budgetName, userIO)) return false;
         MoneyCollection moneyCollection = new MoneyCollection();
         try {
             Collection<BudgetEntity> budgetNodes = userIO.ifExpenditure(budgetName, Double.valueOf(value));
-            for (BudgetEntity now : budgetNodes) {
-                BudgetEntity data = new BudgetCollection().getBudgetData(username, now.getName());
-                userRollBackBuilder.putBudgetValue(now.getName(), data.getNowIncome() + "", data.getNowExpenditure() + "");
-                putBudgetValue(now.getName(), now.getNowIncome() + "", now.getNowExpenditure() + "");
-            }
-            MoneyEntity data = moneyCollection.getMoneyData(username, moneyName);
-            userRollBackBuilder.putMoneyValue(moneyName, data.getValue() + "");
-            putMoneyValue(moneyName, (data.getValue() - Double.valueOf(value)) + "");
-            document.append("moneyType", moneyName)
-                    .append("budgetType", budgetName)
-                    .append("value", (data.getValue() - Double.valueOf(value)) + "");
+            updateBudget(budgetNodes);
+            updateMoney(moneyName, budgetName, moneyCollection, -Double.valueOf(value));
             return true;
         } catch (ReflectiveOperationException e) {
             return false;
         }
+    }
+
+    private void updateMoney(String moneyName, String budgetName, MoneyCollection moneyCollection, double aDouble) {
+        MoneyEntity data = moneyCollection.getMoneyData(username, moneyName);
+        userRollBackBuilder.putMoneyValue(moneyName, data.getValue() + "");
+        putMoneyValue(moneyName, (data.getValue() + aDouble) + "");
+        document.append("moneyType", moneyName)
+                .append("budgetType", budgetName)
+                .append("value", (data.getValue() + aDouble) + "");
     }
 
     public void putMoneyValue(String moneyName, String value) {
@@ -80,6 +66,18 @@ public class UseMoneyManager extends Manager {
         userRollBackBuilder.putBudgetValue(budgetName, data.getNowIncome() + "", data.getNowExpenditure() + "");
         data.setNowIncome(Double.valueOf(nowIncome));
         data.setNowExpenditure(Double.valueOf(nowExpenditure));
+    }
+
+    private boolean checkBudgetExist(String budgetName, UserIO userIO) {
+        return userIO.getUserBudget().nodeExist(budgetName);
+    }
+
+    private void updateBudget(Collection<BudgetEntity> budgetNodes) {
+        for (BudgetEntity now : budgetNodes) {
+            BudgetEntity data = new BudgetCollection().getBudgetData(username, now.getName());
+            userRollBackBuilder.putBudgetValue(now.getName(), data.getNowIncome() + "", data.getNowExpenditure() + "");
+            putBudgetValue(now.getName(), now.getNowIncome() + "", now.getNowExpenditure() + "");
+        }
     }
 
 }
