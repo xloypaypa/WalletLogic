@@ -45,17 +45,20 @@ public class DetailLogic extends LogicManager {
                     HashMap<String, String> map = new HashMap<>();
                     map.put("moneyType", now.getItem("moneyType"));
                     map.put("value", now.getItem("value"));
+                    map.put("date", now.getDate().getTime() + "");
                     mapList.add(map);
                 } else if (now.getEvent().equals("transferMoney")) {
                     HashMap<String, String> map;
                     map = new HashMap<>();
                     map.put("moneyType", now.getItem("toMoneyType"));
                     map.put("value", now.getItem("toMoneyValue"));
+                    map.put("date", now.getDate().getTime() + "");
                     mapList.add(map);
 
                     map = new HashMap<>();
                     map.put("moneyType", now.getItem("fromMoneyType"));
                     map.put("value", now.getItem("fromMoneyValue"));
+                    map.put("date", now.getDate().getTime() + "");
                     mapList.add(map);
                 }
             }
