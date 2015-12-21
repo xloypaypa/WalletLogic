@@ -1,7 +1,10 @@
 package control;
 
 import model.config.WalletDBConfig;
-import model.db.*;
+import model.db.BudgetCollection;
+import model.db.BudgetEdgeCollection;
+import model.db.DetailCollection;
+import model.db.MoneyCollection;
 import model.db.event.Event;
 import model.entity.DetailEntity;
 import model.session.SessionManager;
@@ -14,7 +17,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.Socket;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Created by xlo on 2015/12/18.
@@ -25,7 +27,7 @@ public class DetailLogic extends LogicManager {
         super(socket);
     }
 
-    public void getDetail(String fromTime, String toTime) {
+    public void getMoneyDetail(String fromTime, String toTime) {
         event.setEventAction(() -> {
             String username = SessionManager.getSessionManager().getUsername(socket);
             if (username == null) {
@@ -37,12 +39,30 @@ public class DetailLogic extends LogicManager {
 
             DetailCollection detailCollection = new DetailCollection();
             List<DetailEntity> dataList = detailCollection.findDetails(username, from, to);
+            List<Map<String, String>> mapList = new LinkedList<>();
+            for (DetailEntity now : dataList) {
+                if (now.haveItem("moneyType")) {
+                    HashMap<String, String> map = new HashMap<>();
+                    map.put("moneyType", now.getItem("moneyType"));
+                    map.put("value", now.getItem("value"));
+                    mapList.add(map);
+                } else if (now.getEvent().equals("transferMoney")) {
+                    HashMap<String, String> map;
+                    map = new HashMap<>();
+                    map.put("moneyType", now.getItem("toMoneyType"));
+                    map.put("value", now.getItem("toMoneyValue"));
+                    mapList.add(map);
 
-            List<DBTable.DBData> all = dataList.stream().map(DetailEntity::getData).collect(Collectors.toCollection(LinkedList::new));
-            DetailLogic.this.setSuccessMessage(event, "/getDetail", all);
+                    map = new HashMap<>();
+                    map.put("moneyType", now.getItem("fromMoneyType"));
+                    map.put("value", now.getItem("fromMoneyValue"));
+                    mapList.add(map);
+                }
+            }
+            DetailLogic.this.setSuccessMessage(event, "/getMoneyDetail", mapList);
             return true;
         });
-        this.setFailedMessage(event, "/getDetail");
+        this.setFailedMessage(event, "/getMoneyDetail");
         event.submit();
     }
 

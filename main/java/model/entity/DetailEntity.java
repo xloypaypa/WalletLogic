@@ -31,6 +31,10 @@ public class DetailEntity extends Entity {
         return this.getObject().get(key).toString();
     }
 
+    public boolean haveItem(String key) {
+        return this.getObject().containsKey(key);
+    }
+
     public DBTable.DBData getData() {
         return this.data;
     }

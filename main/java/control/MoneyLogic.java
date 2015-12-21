@@ -3,11 +3,11 @@ package control;
 import control.logic.manager.MoneyManager;
 import model.db.DetailCollection;
 import model.db.MoneyCollection;
+import model.entity.MoneyEntity;
 import model.session.SessionManager;
-import org.bson.Document;
 
 import java.net.Socket;
-import java.util.Date;
+import java.util.*;
 
 /**
  * Created by xlo on 2015/11/4.
@@ -26,7 +26,15 @@ public class MoneyLogic extends LogicManager {
                 return false;
             }
             MoneyCollection moneyCollection = new MoneyCollection();
-            MoneyLogic.this.setSuccessMessage(event, "/getMoney", moneyCollection.getAllDataListData(new Document("username", username)));
+            List<MoneyEntity> listData = moneyCollection.getMoneyListData(username);
+            List<Map<String, String>> mapList = new LinkedList<>();
+            for (MoneyEntity now : listData) {
+                HashMap<String, String> map = new HashMap<>();
+                map.put("typename", now.getName());
+                map.put("value", now.getValue() + "");
+                mapList.add(map);
+            }
+            MoneyLogic.this.setSuccessMessage(event, "/getMoney", mapList);
             return true;
         });
         this.setFailedMessage(event, "/getMoney");
@@ -37,7 +45,7 @@ public class MoneyLogic extends LogicManager {
         event.setEventAction(() -> {
             String username = SessionManager.getSessionManager().getUsername(socket);
             MoneyManager moneyManager = new MoneyManager(username);
-            if(username != null && moneyManager.createMoney(typename, value)) {
+            if (username != null && moneyManager.createMoney(typename, value)) {
                 new DetailCollection().addDetail(username, new Date(), "createMoney",
                         moneyManager.getUserRollBackMessage(), moneyManager.getDetailMessage());
                 return true;

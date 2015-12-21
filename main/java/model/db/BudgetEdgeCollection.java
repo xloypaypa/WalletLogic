@@ -3,8 +3,10 @@ package model.db;
 import model.entity.EdgeEntity;
 import org.bson.Document;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Created by xlo on 2015/11/6.
@@ -48,6 +50,11 @@ public class BudgetEdgeCollection extends WalletCollection {
     public void remove(String username, String from, String to) {
         this.lockCollection();
         this.remove(new Document("username", username).append("from", from).append("to", to));
+    }
+
+    public List<EdgeEntity> getEdgeListData(String username) {
+        List<DBData> listData = this.getAllDataListData(new Document().append("username", username));
+        return listData.stream().map(EdgeEntity::new).collect(Collectors.toCollection(LinkedList::new));
     }
 
 }

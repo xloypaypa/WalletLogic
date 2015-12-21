@@ -7,6 +7,7 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import java.net.Socket;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -49,7 +50,7 @@ public abstract class LogicManager {
         event.sendWhileSuccess(url, bytes);
     }
 
-    public void setSuccessMessage(SendEvent event, String url, List<DBTable.DBData> list) {
+    public void setSuccessMessage(SendEvent event, String url, List<Map<String, String>> list) {
         byte[] bytes = buildArrayResult(list);
         event.sendWhileSuccess(url, bytes);
     }
@@ -69,11 +70,11 @@ public abstract class LogicManager {
         return jsonObject.toString().getBytes();
     }
 
-    protected byte[] buildArrayResult(List<DBTable.DBData> list) {
+    protected byte[] buildArrayResult(List<Map<String, String>> list) {
         JSONArray jsonArray = new JSONArray();
-        for (DBTable.DBData now : list) {
+        for (Map<String, String> now : list) {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.putAll(now.object);
+            jsonObject.putAll(now);
             jsonArray.add(jsonObject);
         }
         return jsonArray.toString().getBytes();

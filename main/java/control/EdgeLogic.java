@@ -5,11 +5,11 @@ import model.config.WalletDBConfig;
 import model.db.BudgetCollection;
 import model.db.BudgetEdgeCollection;
 import model.db.DetailCollection;
+import model.entity.EdgeEntity;
 import model.session.SessionManager;
-import org.bson.Document;
 
 import java.net.Socket;
-import java.util.Date;
+import java.util.*;
 
 /**
  * Created by xlo on 2015/11/6.
@@ -28,8 +28,16 @@ public class EdgeLogic extends LogicManager {
                 return false;
             }
 
-            EdgeLogic.this.setSuccessMessage(event, "/getEdgeList", new BudgetEdgeCollection()
-                    .getAllDataListData(new Document("username", username)));
+            List<EdgeEntity> listData = new BudgetEdgeCollection().getEdgeListData(username);
+            List<Map<String, String>> mapList = new LinkedList<>();
+            for (EdgeEntity now : listData) {
+                HashMap<String, String> map = new HashMap<>();
+                map.put("from", now.getFrom());
+                map.put("to", now.getTo());
+                map.put("script", now.getScript());
+                mapList.add(map);
+            }
+            EdgeLogic.this.setSuccessMessage(event, "/getEdgeList", mapList);
             return true;
         });
         this.setFailedMessage(event, "/getEdgeList");

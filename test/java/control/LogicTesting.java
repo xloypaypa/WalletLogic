@@ -155,4 +155,11 @@ public abstract class LogicTesting implements NeedClearDBTesting {
         return detailLogicNoSend;
     }
 
+    public static DetailLogicNoSend getMoneyDetail(Socket socket, String from, String to) {
+        DetailLogicNoSend detailLogicNoSend = new DetailLogicNoSend(socket);
+        detailLogicNoSend.getMoneyDetail(from, to);
+        detailLogicNoSend.waitEventEnd();
+        return detailLogicNoSend;
+    }
+
 }
