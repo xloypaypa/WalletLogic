@@ -1,11 +1,13 @@
 package main;
 
+import model.db.event.Event;
 import net.PackageServer;
 import net.server.Server;
 
 import javax.swing.*;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.concurrent.Executors;
 
 /**
  * Created by xlo on 2015/11/3.
@@ -49,7 +51,9 @@ public class MainPage {
                 serverPort.setEnabled(false);
                 num.setEnabled(false);
                 Server server = Server.getNewServer("server", PackageServer::new);
-                server.getInstance(Integer.valueOf(serverPort.getText()), Integer.valueOf(num.getText()));
+                Integer num = Integer.valueOf(MainPage.this.num.getText());
+                Event.executorService = Executors.newFixedThreadPool(num);
+                server.getInstance(Integer.valueOf(serverPort.getText()), num);
                 server.accept();
             }
         }.start());
