@@ -35,9 +35,9 @@ public class UseMoneyManager extends Manager {
             userRollBackBuilder.putMoneyValue(moneyName, data.getValue() + "");
             putMoneyValue(moneyName, (data.getValue() + Double.valueOf(value)) + "");
 
-            document.append("moneyName", moneyName)
-                    .append("budgetName", budgetName)
-                    .append("value", value);
+            document.append("moneyType", moneyName)
+                    .append("budgetType", budgetName)
+                    .append("value", (data.getValue() + Double.valueOf(value)) + "");
             return true;
         } catch (ReflectiveOperationException e) {
             return false;
@@ -60,9 +60,9 @@ public class UseMoneyManager extends Manager {
             MoneyEntity data = moneyCollection.getMoneyData(username, moneyName);
             userRollBackBuilder.putMoneyValue(moneyName, data.getValue() + "");
             putMoneyValue(moneyName, (data.getValue() - Double.valueOf(value)) + "");
-            document.append("moneyName", moneyName)
-                    .append("budgetName", budgetName)
-                    .append("value", value);
+            document.append("moneyType", moneyName)
+                    .append("budgetType", budgetName)
+                    .append("value", (data.getValue() - Double.valueOf(value)) + "");
             return true;
         } catch (ReflectiveOperationException e) {
             return false;
