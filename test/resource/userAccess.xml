@@ -1,0 +1,5 @@
+<user>
+    <access command="control.MoneyLogic">
+        <need>root</need>
+    </access>
+</user>
