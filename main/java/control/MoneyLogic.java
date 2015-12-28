@@ -13,7 +13,7 @@ import java.util.*;
  * Created by xlo on 2015/11/4.
  * it's the logic of money
  */
-public class MoneyLogic extends LogicManager {
+public class MoneyLogic extends NeedLicenseLogic {
 
     public MoneyLogic(Socket socket) {
         super(socket);

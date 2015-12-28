@@ -15,7 +15,7 @@ import java.util.*;
  * Created by xlo on 2015/11/6.
  * it's the edge logic
  */
-public class EdgeLogic extends LogicManager {
+public class EdgeLogic extends NeedLicenseLogic {
 
     public EdgeLogic(Socket socket) {
         super(socket);

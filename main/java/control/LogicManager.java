@@ -1,13 +1,11 @@
 package control;
 
-import model.db.DBTable;
 import model.session.SessionManager;
 import net.PackageServer;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import java.net.Socket;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -20,7 +18,7 @@ public abstract class LogicManager {
     protected PackageServer packageServer;
     protected SendEvent event;
 
-    public LogicManager(Socket socket) {
+    protected LogicManager(Socket socket) {
         this.socket = socket;
         this.packageServer = SessionManager.getSessionManager().getPackageServer(this.socket);
         this.event = buildSendEvent(this.socket);

@@ -15,7 +15,7 @@ import java.util.Date;
  * Created by xlo on 15/12/10.
  * it's the use money logic
  */
-public class UseMoneyLogic extends LogicManager {
+public class UseMoneyLogic extends NeedLicenseLogic {
     public UseMoneyLogic(Socket socket) {
         super(socket);
     }

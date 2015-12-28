@@ -22,7 +22,7 @@ import java.util.*;
  * Created by xlo on 2015/12/18.
  * it's the detail logic
  */
-public class DetailLogic extends LogicManager {
+public class DetailLogic extends NeedLicenseLogic {
     public DetailLogic(Socket socket) {
         super(socket);
     }

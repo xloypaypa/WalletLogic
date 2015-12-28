@@ -15,7 +15,7 @@ import java.util.*;
  * Created by xlo on 2015/11/5.
  * it's the budget logic
  */
-public class BudgetLogic extends LogicManager {
+public class BudgetLogic extends NeedLicenseLogic {
 
     public BudgetLogic(Socket socket) {
         super(socket);

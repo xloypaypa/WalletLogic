@@ -1,5 +1,5 @@
 <user>
-    <access command="control.MoneyLogic">
+    <access command="control.tool.MoneyLogicNoSendNeedLicense">
         <need>root</need>
     </access>
 </user>

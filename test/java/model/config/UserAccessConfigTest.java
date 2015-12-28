@@ -22,14 +22,14 @@ public class UserAccessConfigTest implements NeedClearDBTesting {
 
     @Test
     public void should_only_have_root_need_for_money_logic() {
-        Set<String> set = UserAccessConfig.getConfig().getNeedAccess("control.MoneyLogic");
+        Set<String> set = UserAccessConfig.getConfig().getNeedAccess("control.tool.MoneyLogicNoSendNeedLicense");
         assertEquals(1, set.size());
         assertTrue(set.contains("root"));
     }
 
     @Test
     public void should_not_have_license() {
-        assertFalse(UserAccessConfig.getConfig().haveLicense("username", "control.MoneyLogic"));
+        assertFalse(UserAccessConfig.getConfig().haveLicense("username", "control.tool.MoneyLogicNoSendNeedLicense"));
     }
 
     @Test
@@ -37,7 +37,7 @@ public class UserAccessConfigTest implements NeedClearDBTesting {
         UserLicenseCollection userLicenseCollection = new UserLicenseCollection();
         userLicenseCollection.giveLicense("username", "root");
         userLicenseCollection.submit();
-        assertTrue(UserAccessConfig.getConfig().haveLicense("username", "control.MoneyLogic"));
+        assertTrue(UserAccessConfig.getConfig().haveLicense("username", "control.tool.MoneyLogicNoSendNeedLicense"));
     }
 
 }
