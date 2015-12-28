@@ -1,6 +1,7 @@
 package model.config;
 
 import model.db.UserCollection;
+import model.db.UserLicenseCollection;
 import model.entity.UserEntity;
 import model.tool.PasswordEncoder;
 import org.dom4j.Element;
@@ -40,7 +41,8 @@ public class UserAccessConfig implements ConfigInterface {
 
     @Override
     public void reload() throws Exception {
-
+        this.access.clear();
+        init();
     }
 
     public Set<String> getNeedAccess(String command) {
@@ -49,6 +51,17 @@ public class UserAccessConfig implements ConfigInterface {
         } else {
             return new HashSet<>();
         }
+    }
+
+    public boolean haveLicense(String username, String command) {
+        UserLicenseCollection userLicenseCollection = new UserLicenseCollection();
+        Set<String> need = this.getNeedAccess(command);
+        for (String now : need) {
+            if (!userLicenseCollection.haveLicense(username, now)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public boolean checkUser(String username, String password, long sessionID) {

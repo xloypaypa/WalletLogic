@@ -6,6 +6,7 @@
         <collection type="model.db.BudgetCollection">budget</collection>
         <collection type="model.db.BudgetEdgeCollection">edge</collection>
         <collection type="model.db.DetailCollection">detail</collection>
+        <collection type="model.db.UserLicenseCollection">license</collection>
     </db>
     <db name="image" type="file">
     </db>
