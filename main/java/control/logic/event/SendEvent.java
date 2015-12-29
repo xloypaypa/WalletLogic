@@ -1,4 +1,4 @@
-package control;
+package control.logic.event;
 
 import javafx.util.Pair;
 import model.db.event.Event;

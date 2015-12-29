@@ -6,7 +6,6 @@ import model.db.BudgetCollection;
 import model.db.BudgetEdgeCollection;
 import model.db.DetailCollection;
 import model.db.MoneyCollection;
-import model.session.SessionManager;
 
 import java.net.Socket;
 import java.util.Date;
@@ -25,9 +24,8 @@ public class UseMoneyLogic extends NeedLicenseLogic {
             event.lock(WalletDBConfig.getConfig().getDBLockName(BudgetCollection.class),
                     WalletDBConfig.getConfig().getDBLockName(MoneyCollection.class),
                     WalletDBConfig.getConfig().getDBLockName(BudgetEdgeCollection.class));
-            String username = SessionManager.getSessionManager().getUsername(socket);
             UseMoneyManager useMoneyManager = new UseMoneyManager(username);
-            if(username != null && useMoneyManager.income(moneyName, budgetName, value)) {
+            if(useMoneyManager.income(moneyName, budgetName, value)) {
                 new DetailCollection().addDetail(username, new Date(), "income",
                         useMoneyManager.getUserRollBackMessage(), useMoneyManager.getDetailMessage());
                 return true;
@@ -44,9 +42,8 @@ public class UseMoneyLogic extends NeedLicenseLogic {
             event.lock(WalletDBConfig.getConfig().getDBLockName(BudgetCollection.class),
                     WalletDBConfig.getConfig().getDBLockName(MoneyCollection.class),
                     WalletDBConfig.getConfig().getDBLockName(BudgetEdgeCollection.class));
-            String username = SessionManager.getSessionManager().getUsername(socket);
             UseMoneyManager useMoneyManager = new UseMoneyManager(username);
-            if (username != null && useMoneyManager.expenditure(moneyName, budgetName, value)) {
+            if (useMoneyManager.expenditure(moneyName, budgetName, value)) {
                 new DetailCollection().addDetail(username, new Date(), "expenditure",
                         useMoneyManager.getUserRollBackMessage(), useMoneyManager.getDetailMessage());
                 return true;

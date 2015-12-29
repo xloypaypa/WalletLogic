@@ -21,10 +21,6 @@ public class MoneyLogic extends NeedLicenseLogic {
 
     public void getMoney() {
         event.setEventAction(() -> {
-            String username = SessionManager.getSessionManager().getUsername(socket);
-            if (username == null) {
-                return false;
-            }
             MoneyCollection moneyCollection = new MoneyCollection();
             List<MoneyEntity> listData = moneyCollection.getMoneyListData(username);
             List<Map<String, String>> mapList = new LinkedList<>();
@@ -43,9 +39,8 @@ public class MoneyLogic extends NeedLicenseLogic {
 
     public void createMoney(String typename, String value) {
         event.setEventAction(() -> {
-            String username = SessionManager.getSessionManager().getUsername(socket);
             MoneyManager moneyManager = new MoneyManager(username);
-            if (username != null && moneyManager.createMoney(typename, value)) {
+            if (moneyManager.createMoney(typename, value)) {
                 new DetailCollection().addDetail(username, new Date(), "createMoney",
                         moneyManager.getUserRollBackMessage(), moneyManager.getDetailMessage());
                 return true;
@@ -59,7 +54,6 @@ public class MoneyLogic extends NeedLicenseLogic {
 
     public void removeMoney(String typename) {
         event.setEventAction(() -> {
-            String username = SessionManager.getSessionManager().getUsername(socket);
             MoneyManager moneyManager = new MoneyManager(username);
             if (username != null && moneyManager.removeMoney(typename)) {
                 new DetailCollection().addDetail(username, new Date(), "removeMoney",
@@ -75,9 +69,8 @@ public class MoneyLogic extends NeedLicenseLogic {
 
     public void transferMoney(String from, String to, String value) {
         event.setEventAction(() -> {
-            String username = SessionManager.getSessionManager().getUsername(socket);
             MoneyManager moneyManager = new MoneyManager(username);
-            if (username != null && moneyManager.transferMoney(from, to, value)) {
+            if (moneyManager.transferMoney(from, to, value)) {
                 new DetailCollection().addDetail(username, new Date(), "transferMoney",
                         moneyManager.getUserRollBackMessage(), moneyManager.getDetailMessage());
                 return true;

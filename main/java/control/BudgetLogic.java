@@ -6,7 +6,6 @@ import model.db.BudgetCollection;
 import model.db.BudgetEdgeCollection;
 import model.db.DetailCollection;
 import model.entity.BudgetEntity;
-import model.session.SessionManager;
 
 import java.net.Socket;
 import java.util.*;
@@ -23,10 +22,6 @@ public class BudgetLogic extends NeedLicenseLogic {
 
     public void getBudget() {
         event.setEventAction(() -> {
-            String username = SessionManager.getSessionManager().getUsername(socket);
-            if (username == null) {
-                return false;
-            }
             BudgetCollection budgetCollection = new BudgetCollection();
             List<BudgetEntity> listData = budgetCollection.getBudgetListData(username);
             List<Map<String, String>> mapList = new LinkedList<>();
@@ -48,9 +43,8 @@ public class BudgetLogic extends NeedLicenseLogic {
 
     public void createBudget(String typename, String income, String expenditure) {
         event.setEventAction(() -> {
-            String username = SessionManager.getSessionManager().getUsername(socket);
             BudgetManager budgetManager = new BudgetManager(username);
-            if (username != null && budgetManager.createBudget(typename, income, expenditure, "0", "0")) {
+            if (budgetManager.createBudget(typename, income, expenditure, "0", "0")) {
                 new DetailCollection().addDetail(username, new Date(), "createBudget",
                         budgetManager.getUserRollBackMessage(), budgetManager.getDetailMessage());
                 return true;
@@ -66,9 +60,8 @@ public class BudgetLogic extends NeedLicenseLogic {
         event.setEventAction(() -> {
             event.lock(WalletDBConfig.getConfig().getDBLockName(BudgetCollection.class),
                     WalletDBConfig.getConfig().getDBLockName(BudgetEdgeCollection.class));
-            String username = SessionManager.getSessionManager().getUsername(socket);
             BudgetManager budgetManager = new BudgetManager(username);
-            if (username != null && budgetManager.removeBudget(typename)) {
+            if (budgetManager.removeBudget(typename)) {
                 new DetailCollection().addDetail(username, new Date(), "removeBudget",
                         budgetManager.getUserRollBackMessage(), budgetManager.getDetailMessage());
                 return true;
@@ -84,9 +77,8 @@ public class BudgetLogic extends NeedLicenseLogic {
         event.setEventAction(() -> {
             event.lock(WalletDBConfig.getConfig().getDBLockName(BudgetCollection.class),
                     WalletDBConfig.getConfig().getDBLockName(BudgetEdgeCollection.class));
-            String username = SessionManager.getSessionManager().getUsername(socket);
             BudgetManager budgetManager = new BudgetManager(username);
-            if (username != null && budgetManager.changeBudget(typename, newName, income, expenditure)) {
+            if (budgetManager.changeBudget(typename, newName, income, expenditure)) {
                 new DetailCollection().addDetail(username, new Date(), "changeBudget",
                         budgetManager.getUserRollBackMessage(), budgetManager.getDetailMessage());
                 return true;

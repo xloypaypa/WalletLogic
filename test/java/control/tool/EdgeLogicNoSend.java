@@ -1,7 +1,7 @@
 package control.tool;
 
 import control.EdgeLogic;
-import control.SendEvent;
+import control.logic.event.SendEvent;
 
 import java.net.Socket;
 
@@ -30,7 +30,7 @@ public class EdgeLogicNoSend extends EdgeLogic implements NeedWaitEvent {
     @Override
     protected SendEvent buildSendEvent(Socket socket) {
         this.eventCounter = new EventCounter();
-        return new NoSendEvent(socket, eventCounter);
+        return new NoSendNeedLoginEvent(socket, eventCounter, this.getClass());
     }
 
 }

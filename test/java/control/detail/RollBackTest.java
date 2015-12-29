@@ -2,11 +2,8 @@ package control.detail;
 
 import control.LogicTesting;
 import model.db.DetailCollection;
-import model.db.lock.NameLockManager;
 import model.entity.DetailEntity;
 import org.junit.Test;
-
-import java.util.Set;
 
 import static org.junit.Assert.assertNull;
 

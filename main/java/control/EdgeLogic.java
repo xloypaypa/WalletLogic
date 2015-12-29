@@ -6,7 +6,6 @@ import model.db.BudgetCollection;
 import model.db.BudgetEdgeCollection;
 import model.db.DetailCollection;
 import model.entity.EdgeEntity;
-import model.session.SessionManager;
 
 import java.net.Socket;
 import java.util.*;
@@ -23,11 +22,6 @@ public class EdgeLogic extends NeedLicenseLogic {
 
     public void getEdgeList() {
         event.setEventAction(() -> {
-            String username = SessionManager.getSessionManager().getUsername(socket);
-            if (username == null) {
-                return false;
-            }
-
             List<EdgeEntity> listData = new BudgetEdgeCollection().getEdgeListData(username);
             List<Map<String, String>> mapList = new LinkedList<>();
             for (EdgeEntity now : listData) {
@@ -48,9 +42,8 @@ public class EdgeLogic extends NeedLicenseLogic {
         event.setEventAction(() -> {
             event.lock(WalletDBConfig.getConfig().getDBLockName(BudgetCollection.class),
                     WalletDBConfig.getConfig().getDBLockName(BudgetEdgeCollection.class));
-            String username = SessionManager.getSessionManager().getUsername(socket);
             EdgeManager edgeManager = new EdgeManager(username);
-            if (username != null && edgeManager.addEdge(fromType, toType, script)) {
+            if (edgeManager.addEdge(fromType, toType, script)) {
                 new DetailCollection().addDetail(username, new Date(), "addEdge",
                         edgeManager.getUserRollBackMessage(), edgeManager.getDetailMessage());
                 return true;
@@ -64,9 +57,8 @@ public class EdgeLogic extends NeedLicenseLogic {
 
     public void removeEdge(String fromType, String toType) {
         event.setEventAction(() -> {
-            String username = SessionManager.getSessionManager().getUsername(socket);
             EdgeManager edgeManager = new EdgeManager(username);
-            if (username != null && edgeManager.removeEdge(fromType, toType)) {
+            if (edgeManager.removeEdge(fromType, toType)) {
                 new DetailCollection().addDetail(username, new Date(), "removeEdge",
                         edgeManager.getUserRollBackMessage(), edgeManager.getDetailMessage());
                 return true;
@@ -80,9 +72,8 @@ public class EdgeLogic extends NeedLicenseLogic {
 
     public void updateEdge(String fromType, String toType, String script) {
         event.setEventAction(() -> {
-            String username = SessionManager.getSessionManager().getUsername(socket);
             EdgeManager edgeManager = new EdgeManager(username);
-            if (username != null && edgeManager.updateEdge(fromType, toType, fromType, toType, script)) {
+            if (edgeManager.updateEdge(fromType, toType, fromType, toType, script)) {
                 new DetailCollection().addDetail(username, new Date(), "updateEdge",
                         edgeManager.getUserRollBackMessage(), edgeManager.getDetailMessage());
                 return true;

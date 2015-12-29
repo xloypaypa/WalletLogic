@@ -1,6 +1,6 @@
 package control.tool;
 
-import control.SendEvent;
+import control.logic.event.SendEvent;
 import control.SessionLogic;
 
 import java.net.Socket;
