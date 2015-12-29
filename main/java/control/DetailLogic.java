@@ -80,7 +80,8 @@ public class DetailLogic extends NeedLicenseLogic {
             }
 
             DetailCollection detailCollection = new DetailCollection();
-            BsonArray bsonArray = detailCollection.findLastDetail(username).getRollbackMessage();
+            DetailEntity lastDetail = detailCollection.findLastDetail(username);
+            BsonArray bsonArray = lastDetail.getRollbackMessage();
             for (BsonValue value : bsonArray.getValues()) {
                 BsonDocument bsonDocument = (BsonDocument) value;
                 String managerName = bsonDocument.getString("manager").getValue();
@@ -94,6 +95,8 @@ public class DetailLogic extends NeedLicenseLogic {
 
                 call(username, managerName, methodName, param);
             }
+            detailCollection = new DetailCollection();
+            detailCollection.removeLastDetail(username);
             return true;
         });
         this.setDefaultMessage(event, "/rollBack");

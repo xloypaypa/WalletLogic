@@ -44,6 +44,15 @@ public class DetailCollection extends WalletCollection {
         return allDataListData.stream().map(DetailEntity::new).collect(Collectors.toCollection(LinkedList::new));
     }
 
+    public void removeLastDetail(String username) {
+        this.lockCollection();
+        List<DBData> allDataListData = this.getAllDataListData(new Document("username", username));
+        sortData(allDataListData);
+        if (allDataListData.size() != 0) {
+            remove(new Document(getIdObjectKey(), allDataListData.get(0).id));
+        }
+    }
+
     private void sortData(List<DBData> allDataListData) {
         allDataListData.sort((o1, o2) -> {
             ObjectId v1 = (ObjectId) o1.object.get("_id");
