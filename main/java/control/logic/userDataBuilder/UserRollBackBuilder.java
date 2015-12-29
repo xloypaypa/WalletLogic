@@ -5,6 +5,9 @@ import control.logic.manager.EdgeManager;
 import control.logic.manager.MoneyManager;
 import control.logic.manager.UseMoneyManager;
 import org.bson.BsonArray;
+import org.bson.Document;
+
+import java.util.ArrayList;
 
 /**
  * Created by xlo on 2015/12/18.
@@ -12,13 +15,13 @@ import org.bson.BsonArray;
  */
 public class UserRollBackBuilder extends Builder {
 
-    private BsonArray rollBackArray;
+    private ArrayList<Document> rollBackArray;
 
     public UserRollBackBuilder() {
-        rollBackArray = new BsonArray();
+        rollBackArray = new ArrayList<>();
     }
 
-    public BsonArray getRollBackArray() {
+    public ArrayList<Document> getRollBackArray() {
         return rollBackArray;
     }
 

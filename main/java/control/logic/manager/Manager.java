@@ -4,6 +4,8 @@ import control.logic.userDataBuilder.UserRollBackBuilder;
 import org.bson.BsonArray;
 import org.bson.Document;
 
+import java.util.ArrayList;
+
 /**
  * Created by xlo on 2015/12/18.
  * it's the manager
@@ -24,7 +26,7 @@ public abstract class Manager {
         return this.document;
     }
 
-    public BsonArray getUserRollBackMessage() {
+    public ArrayList<Document> getUserRollBackMessage() {
         return userRollBackBuilder.getRollBackArray();
     }
 }

@@ -1,9 +1,10 @@
 package control.logic.userDataBuilder;
 
 import control.logic.manager.Manager;
-import org.bson.BsonArray;
-import org.bson.BsonDocument;
 import org.bson.BsonString;
+import org.bson.Document;
+
+import java.util.ArrayList;
 
 /**
  * Created by xlo on 2015/12/18.
@@ -11,14 +12,14 @@ import org.bson.BsonString;
  */
 public abstract class Builder {
 
-    protected BsonDocument managerCallMessageBuilder(Class<? extends Manager> manager, String method, String... params) {
-        BsonDocument bsonDocument = new BsonDocument();
-        bsonDocument.append("manager", new BsonString(manager.getName()));
-        bsonDocument.append("method", new BsonString(method));
+    protected Document managerCallMessageBuilder(Class<? extends Manager> manager, String method, String... params) {
+        Document bsonDocument = new Document();
+        bsonDocument.append("manager", new Document("value", manager.getName()));
+        bsonDocument.append("method", new Document("value", method));
 
-        BsonArray bsonArray = new BsonArray();
+        ArrayList<Document> bsonArray = new ArrayList<>();
         for (String param : params) {
-            bsonArray.add(new BsonString(param));
+            bsonArray.add(new Document("value", param));
         }
         bsonDocument.append("param", bsonArray);
 

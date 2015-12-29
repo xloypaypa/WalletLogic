@@ -1,9 +1,10 @@
 package model.entity;
 
 import model.db.DBTable;
-import org.bson.BsonArray;
+import org.bson.Document;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by xlo on 15/12/20.
@@ -23,8 +24,9 @@ public class DetailEntity extends Entity {
         return this.getObject().get("event").toString();
     }
 
-    public BsonArray getRollbackMessage() {
-        return (BsonArray) this.getObject().get("roll back call");
+    @SuppressWarnings("unchecked")
+    public List<Document> getRollbackMessage() {
+        return (List<Document>) this.getObject().get("roll back call");
     }
 
     public String getItem(String key) {

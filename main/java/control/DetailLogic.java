@@ -8,15 +8,13 @@ import model.db.MoneyCollection;
 import model.db.event.Event;
 import model.entity.DetailEntity;
 import model.session.SessionManager;
-import org.bson.BsonArray;
-import org.bson.BsonDocument;
-import org.bson.BsonString;
-import org.bson.BsonValue;
+import org.bson.*;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.Socket;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by xlo on 2015/12/18.
@@ -81,17 +79,13 @@ public class DetailLogic extends NeedLicenseLogic {
 
             DetailCollection detailCollection = new DetailCollection();
             DetailEntity lastDetail = detailCollection.findLastDetail(username);
-            BsonArray bsonArray = lastDetail.getRollbackMessage();
-            for (BsonValue value : bsonArray.getValues()) {
-                BsonDocument bsonDocument = (BsonDocument) value;
-                String managerName = bsonDocument.getString("manager").getValue();
-                String methodName = bsonDocument.getString("method").getValue();
+            List<Document> bsonArray = lastDetail.getRollbackMessage();
+            for (Document bsonDocument : bsonArray) {
+                String managerName = ((Document)bsonDocument.get("manager")).getString("value");
+                String methodName = ((Document)bsonDocument.get("method")).getString("value");
                 List<String> param = new ArrayList<>();
-                BsonArray paramArray = bsonDocument.getArray("param");
-                for (BsonValue paramValue : paramArray) {
-                    BsonString paramString = (BsonString) paramValue;
-                    param.add(paramString.getValue());
-                }
+                @SuppressWarnings("unchecked") ArrayList<Document> paramArray = (ArrayList<Document>) bsonDocument.get("param");
+                param.addAll(paramArray.stream().map(paramValue -> paramValue.getString("value")).collect(Collectors.toList()));
 
                 call(username, managerName, methodName, param);
             }
