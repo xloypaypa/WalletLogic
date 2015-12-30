@@ -115,7 +115,7 @@
             <data>toTime</data>
         </method>
     </solver>
-    <solver name="get all detail" url="/getMoneyDetail" manager="control.DetailLogic">
+    <solver name="get all detail" url="/getAllDetail" manager="control.DetailLogic">
         <method name="getAllDetail">
             <data>fromTime</data>
             <data>toTime</data>
