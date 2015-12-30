@@ -115,6 +115,12 @@
             <data>toTime</data>
         </method>
     </solver>
+    <solver name="get all detail" url="/getMoneyDetail" manager="control.DetailLogic">
+        <method name="getAllDetail">
+            <data>fromTime</data>
+            <data>toTime</data>
+        </method>
+    </solver>
     <solver name="roll back" url="/rollBack" manager="control.DetailLogic">
         <method name="rollBack"/>
     </solver>

@@ -67,6 +67,33 @@ public class DetailLogic extends NeedLicenseLogic {
         event.submit();
     }
 
+    public void getAllDetail(String fromTime, String toTime) {
+        event.setEventAction(() -> {
+            String username = SessionManager.getSessionManager().getUsername(socket);
+            if (username == null) {
+                return false;
+            }
+
+            Date from = new Date(Long.valueOf(fromTime));
+            Date to = new Date(Long.valueOf(toTime));
+
+            DetailCollection detailCollection = new DetailCollection();
+            List<DetailEntity> dataList = detailCollection.findDetails(username, from, to);
+            List<Map<String, String>> mapList = new LinkedList<>();
+            for (DetailEntity now : dataList) {
+                HashMap<String, String> map = new HashMap<>();
+                map.put("id", now.getId());
+                map.put("event", now.getEvent());
+                map.put("date", now.getDate().getTime() + "");
+                mapList.add(map);
+            }
+            DetailLogic.this.setSuccessMessage(event, "/getMoneyDetail", mapList);
+            return true;
+        });
+        this.setFailedMessage(event, "/getMoneyDetail");
+        event.submit();
+    }
+
     public void rollBack() {
         event.setEventAction(() -> {
             event.lock(WalletDBConfig.getConfig().getDBLockName(BudgetCollection.class),

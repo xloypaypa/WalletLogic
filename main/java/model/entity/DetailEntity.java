@@ -24,6 +24,10 @@ public class DetailEntity extends Entity {
         return this.getObject().get("event").toString();
     }
 
+    public String getId() {
+        return this.data.object.get("_id").toString();
+    }
+
     @SuppressWarnings("unchecked")
     public List<Document> getRollbackMessage() {
         return (List<Document>) this.getObject().get("roll back call");

@@ -44,7 +44,6 @@ public class GetMoneyDetailTest extends LogicTesting {
         expenditure(this.socket, "b", "c", "20");
     }
 
-
     @Test
     public void should_have_5_detail() {
         DetailLogicNoSend detailLogic = getMoneyDetail(this.socket, "0", new Date().getTime() + "");
