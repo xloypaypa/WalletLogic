@@ -87,10 +87,10 @@ public class DetailLogic extends NeedLicenseLogic {
                 map.put("date", now.getDate().getTime() + "");
                 mapList.add(map);
             }
-            DetailLogic.this.setSuccessMessage(event, "/getMoneyDetail", mapList);
+            DetailLogic.this.setSuccessMessage(event, "/getAllDetail", mapList);
             return true;
         });
-        this.setFailedMessage(event, "/getMoneyDetail");
+        this.setFailedMessage(event, "/getAllDetail");
         event.submit();
     }
 
