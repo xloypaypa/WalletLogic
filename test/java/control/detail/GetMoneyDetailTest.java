@@ -45,6 +45,12 @@ public class GetMoneyDetailTest extends LogicTesting {
     }
 
     @Test
+    public void checkUrl() {
+        DetailLogicNoSend detailLogic = getMoneyDetail(this.socket, "0", new Date().getTime() + "");
+        assertEquals("/getMoneyDetail", detailLogic.getEvent().getMessage().get(0).getKey());
+    }
+
+    @Test
     public void should_have_5_detail() {
         DetailLogicNoSend detailLogic = getMoneyDetail(this.socket, "0", new Date().getTime() + "");
         JSONArray jsonArray = JSONArray.fromObject(new String(detailLogic.getEvent().getMessage().get(0).getValue()));

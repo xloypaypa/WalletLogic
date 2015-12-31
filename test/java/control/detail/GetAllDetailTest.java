@@ -45,6 +45,12 @@ public class GetAllDetailTest extends LogicTesting {
     }
 
     @Test
+    public void checkUrl() {
+        DetailLogicNoSend detailLogic = getAllDetail(this.socket, "0", new Date().getTime() + "");
+        assertEquals("/getAllDetail", detailLogic.getEvent().getMessage().get(0).getKey());
+    }
+
+    @Test
     public void should_have_17_detail() {
         DetailLogicNoSend detailLogic = getAllDetail(this.socket, "0", new Date().getTime() + "");
         JSONArray jsonArray = JSONArray.fromObject(new String(detailLogic.getEvent().getMessage().get(0).getValue()));
