@@ -7,8 +7,8 @@ import model.db.DetailCollection;
 import model.db.MoneyCollection;
 import model.db.event.Event;
 import model.entity.DetailEntity;
-import model.session.SessionManager;
-import org.bson.*;
+import net.sf.json.JSONObject;
+import org.bson.Document;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -27,11 +27,6 @@ public class DetailLogic extends NeedLicenseLogic {
 
     public void getMoneyDetail(String fromTime, String toTime) {
         event.setEventAction(() -> {
-            String username = SessionManager.getSessionManager().getUsername(socket);
-            if (username == null) {
-                return false;
-            }
-
             Date from = new Date(Long.valueOf(fromTime));
             Date to = new Date(Long.valueOf(toTime));
 
@@ -67,13 +62,21 @@ public class DetailLogic extends NeedLicenseLogic {
         event.submit();
     }
 
+    public void getDetailDetail(String id) {
+        event.setEventAction(() -> {
+            DetailEntity detailEntity = new DetailCollection().getDetail(username, id);
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.putAll(detailEntity.getData().object);
+            jsonObject.remove("roll back call");
+            this.setSuccessMessage(event, "/getDetailDetail", jsonObject.toString());
+            return true;
+        });
+        this.setFailedMessage(event, "/getDetailDetail");
+        event.submit();
+    }
+
     public void getAllDetail(String fromTime, String toTime) {
         event.setEventAction(() -> {
-            String username = SessionManager.getSessionManager().getUsername(socket);
-            if (username == null) {
-                return false;
-            }
-
             Date from = new Date(Long.valueOf(fromTime));
             Date to = new Date(Long.valueOf(toTime));
 
@@ -99,11 +102,6 @@ public class DetailLogic extends NeedLicenseLogic {
             event.lock(WalletDBConfig.getConfig().getDBLockName(BudgetCollection.class),
                     WalletDBConfig.getConfig().getDBLockName(MoneyCollection.class),
                     WalletDBConfig.getConfig().getDBLockName(BudgetEdgeCollection.class));
-            String username = SessionManager.getSessionManager().getUsername(socket);
-            if (username == null) {
-                return false;
-            }
-
             DetailCollection detailCollection = new DetailCollection();
             DetailEntity lastDetail = detailCollection.findLastDetail(username);
             List<Document> bsonArray = lastDetail.getRollbackMessage();

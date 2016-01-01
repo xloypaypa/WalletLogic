@@ -1,14 +1,10 @@
 package model.db;
 
 import model.entity.DetailEntity;
-import org.bson.BsonArray;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -23,6 +19,15 @@ public class DetailCollection extends WalletCollection {
                 .append("roll back call", rollBackMessage)
                 .append("event", event);
         this.insertData(document);
+    }
+
+    public DetailEntity getDetail(String username, String id) {
+        this.lockCollection();
+        List<Map<String, Object>> iterator = this.collection.find(new Document().append("username", username).append("_id", new ObjectId(id)));
+        if (iterator.size() == 0) {
+            return null;
+        }
+        return new DetailEntity(this.addDocumentToUsing(iterator.get(0)));
     }
 
     public DetailEntity findLastDetail(String username) {
