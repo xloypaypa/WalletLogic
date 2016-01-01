@@ -68,7 +68,9 @@ public class DetailLogic extends NeedLicenseLogic {
             JSONObject jsonObject = new JSONObject();
             jsonObject.putAll(detailEntity.getData().object);
             jsonObject.remove("roll back call");
-            this.setSuccessMessage(event, "/getDetailDetail", jsonObject.toString());
+            JSONObject result = new JSONObject();
+            result.put("message", jsonObject.toString());
+            this.setSuccessMessage(event, "/getDetailDetail", result.toString());
             return true;
         });
         this.setFailedMessage(event, "/getDetailDetail");
