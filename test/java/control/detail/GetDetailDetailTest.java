@@ -58,7 +58,7 @@ public class GetDetailDetailTest extends LogicTesting {
 
         DetailLogicNoSend detailLogic = getDetailDetail(this.socket, id);
         JSONObject jsonObject = JSONObject.fromObject(new String(detailLogic.getEvent().getMessage().get(0).getValue()));
-        assertEquals("createBudget", ((JSONObject) ((JSONObject) jsonObject.get("result")).get("message")).getString("event"));
+        assertEquals("createBudget", ((JSONObject) jsonObject.get("result")).getString("event"));
     }
 
 }
